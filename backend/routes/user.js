@@ -5,3 +5,4 @@ const { registerUser } = require("../controllers/userController");
 router.route("/register").get(registerUser);
 
 module.exports = router;
+//routes
