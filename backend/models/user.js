@@ -4,7 +4,7 @@ const tableName = "user";
 class User {
 
     //New User Creation
-    static addNewUser = async ({name,email,password})=>{
+    static addNewUser = async (name,email,password)=>{
         return new Promise((resolve,reject)=>{
             const sqlStatement = `INSERT INTO ${tableName} (name, email, password) VALUES ("${name}", "${email}", "${password}")`;
             conn.query(sqlStatement,(error,results)=>{
@@ -19,7 +19,7 @@ class User {
     }
 
     //Update Existing User
-    static updateUserDetails = async ({name,email,password})=>{
+    static updateUserDetails = async (gender,DateOfBirth,password)=>{
 
     }
 
