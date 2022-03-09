@@ -15,7 +15,7 @@ app.use(bodyParser.json());
 app.use(express.json());
 dotenv.config({path:"config/config.env"});
 
-app.use("/api/v1",userRoute);
+app.use("/api/v1/user",userRoute);
 
 
 app.listen(process.env.PORT,()=>{
