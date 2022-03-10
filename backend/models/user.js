@@ -20,7 +20,7 @@ class User {
     }
 
     //Update Existing User
-    static updateUserDetails = async (userID,name,dateOfBirth,email,phoneNumber,gender,address,city,state,zipcode,country,profileImg)=>{
+    static updateUserDetails = async (userID,name=null,dateOfBirth,email,phoneNumber,gender,address,city,state,zipcode,country,profileImg)=>{
 
         return new Promise((resolve,reject)=>{
             const sqlStatement = `UPDATE ${tableName} set name ="${name}", dob="${dateOfBirth}", email="${email}", phoneNumber="${phoneNumber}", gender="${gender}", address="${address}", city="${city}", state="${state}", zipcode="${zipcode}", country="${country}", profileImg="${profileImg}" where userID="${userID}"`;
