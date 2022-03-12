@@ -487,8 +487,18 @@ textarea.input {
   font-weight: 700;
   border: none;
   border-radius: 0px 40px 40px 0px;
+  font-size: 12px;
 }
-
+.login-btn
+{
+  height: 40px;
+  width: 100px;
+  background: #D10024;
+  color: #FFF;
+  font-weight: 700;
+  border: none;
+  font-size: 12px;
+}
 /*----------------------------*\
 	Cart
 \*----------------------------*/

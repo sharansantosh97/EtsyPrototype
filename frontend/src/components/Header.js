@@ -1,18 +1,17 @@
 import React from 'react'
-import '../styles/Header.css';
 function Header() {
   return (
     <header>
 			{/*<!-- MAIN HEADER -->*/}
 			<div id="header">
 				{/*<!-- container -->*/}
-				<div class="container">
+				<div className="container">
 					{/*<!-- row -->*/}
-					<div class="row">
+					<div className="row">
 						{/*<!-- LOGO -->*/}
-						<div class="col-md-2">
-							<div class="header-logo">
-								<a href="#" class="logo">
+						<div className="col-md-2">
+							<div className="header-logo">
+								<a href="#" className="logo">
 									<h1 style={{ color: "white", fontSize:"50px" }}>Etsy</h1>
 								</a>
 							</div>
@@ -20,109 +19,113 @@ function Header() {
 						{/*<!-- /LOGO -->*/}
 
 						{/*<!-- SEARCH BAR -->*/}
-						<div class="col-md-5">
-							<div class="header-search">
+						<div className="col-md-4">
+							<div className="header-search">
 								<form>
-									<input class="input" placeholder="Search here"></input>
-									<button class="search-btn">Search</button>
+									<input className="input" placeholder="Search here"></input>
+									<button className="search-btn">Search</button>
 								</form>
 							</div>
 						</div>
 						{/*<!-- /SEARCH BAR -->*/}
 
 						{/*<!-- ACCOUNT -->*/}
-						<div class="col-md-5 clearfix">
-							<div class="header-ctn">
+						<div className="col-md-6 clearfix">
+							<div className="header-ctn">
 								{/*<!-- Wishlist -->*/}
 								<div>
 									<a href="#">
-										<i class="fa fa-heart-o"></i>
+										<i className="fa fa-heart-o"></i>
 										<span>Your Wishlist</span>
-										<div class="qty">2</div>
+										<div className="qty">2</div>
 									</a>
 								</div>
 								{/*<!-- /Wishlist -->*/}
 
 								{/*<!-- Cart -->*/}
-								<div class="dropdown">
-									<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
-										<i class="fa fa-shopping-cart"></i>
+								<div className="dropdown">
+									<a className="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+										<i className="fa fa-shopping-cart"></i>
 										<span>Your Cart</span>
-										<div class="qty">3</div>
+										<div className="qty">3</div>
 									</a>
-									<div class="cart-dropdown">
-										<div class="cart-list">
-											<div class="product-widget">
-												<div class="product-img">
+									<div className="cart-dropdown">
+										<div className="cart-list">
+											<div className="product-widget">
+												<div className="product-img">
 													<img src="./img/product01.png" alt=""></img>
 												</div>
-												<div class="product-body">
-													<h3 class="product-name"><a href="#">product name goes here</a></h3>
-													<h4 class="product-price"><span class="qty">1x</span>$980.00</h4>
+												<div className="product-body">
+													<h3 className="product-name"><a href="#">product name goes here</a></h3>
+													<h4 className="product-price"><span className="qty">1x</span>$980.00</h4>
 												</div>
-												<button class="delete"><i class="fa fa-close"></i></button>
+												<button className="delete"><i className="fa fa-close"></i></button>
 											</div>
 
-											<div class="product-widget">
-												<div class="product-img">
+											<div className="product-widget">
+												<div className="product-img">
 													<img src="./img/product02.png" alt=""></img>
 												</div>
-												<div class="product-body">
-													<h3 class="product-name"><a href="#">product name goes here</a></h3>
-													<h4 class="product-price"><span class="qty">3x</span>$980.00</h4>
+												<div className="product-body">
+													<h3 className="product-name"><a href="#">product name goes here</a></h3>
+													<h4 className="product-price"><span className="qty">3x</span>$980.00</h4>
 												</div>
-												<button class="delete"><i class="fa fa-close"></i></button>
+												<button className="delete"><i className="fa fa-close"></i></button>
 											</div>
 										</div>
-										<div class="cart-summary">
+										<div className="cart-summary">
 											<small>3 Item(s) selected</small>
 											<h5>SUBTOTAL: $2940.00</h5>
 										</div>
-										<div class="cart-btns">
+										<div className="cart-btns">
 											<a href="#">View Cart</a>
-											<a href="#">Checkout  <i class="fa fa-arrow-circle-right"></i></a>
+											<a href="#">Checkout  <i className="fa fa-arrow-circle-right"></i></a>
 										</div>
 									</div>
 								</div>
 			
 								{/*<!-- /Cart -->*/}
 
-								<div class="dropdown">
-									<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
-										<i class="fa fa-user-circle" aria-hidden="true"></i>
+								<div className="dropdown">
+									<a className="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+										<i className="fa fa-user-circle" aria-hidden="true"></i>
 										<span>Profile</span>
 									</a>
-									<div class="cart-dropdown">
-										<div class="cart-list">
-											<div class="product-widget">
-												<div class="product-body">
-													<h3 class="product-name"><a href="#">View your Profile</a></h3>
+									<div className="cart-dropdown">
+										<div className="cart-list">
+											<div className="product-widget">
+												<div className="product-body">
+													<h3 className="product-name"><a href="#">View your Profile</a></h3>
 												</div>
 											</div>
 										</div>
 									</div>
 								</div>
 
-								<div class="dropdown">
-									<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
-									<i class="fa fa-shopping-bag" aria-hidden="true"></i>
+								<div className="dropdown">
+									<a className="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+									<i className="fa fa-shopping-bag" aria-hidden="true"></i>
 										<span>Shop</span>
 									</a>
-									<div class="cart-dropdown">
-										<div class="cart-list">
-											<div class="product-widget">
-												<div class="product-body">
-													<h3 class="product-name"><a href="#">View Shop</a></h3>
+									<div className="cart-dropdown">
+										<div className="cart-list">
+											<div className="product-widget">
+												<div className="product-body">
+													<h3 className="product-name"><a href="#">View Shop</a></h3>
 												</div>
 											</div>
 										</div>
 									</div>
+								</div>
+
+								<div className="loginbutton">
+									<button className="login-btn">Login</button>
 								</div>
 
 								{/*<!-- Menu Toogle -->*/}
-								<div class="menu-toggle">
+								<div className="menu-toggle">
 									<a href="#">
-										<i class="fa fa-bars"></i>
+										<i className="fa fa-bars"></i>
 										<span>Menu</span>
 									</a>
 								</div>

@@ -1,0 +1,15 @@
+body{
+    margin-top:20px;
+    background:#f8f8f8
+}
+
+.saveChanges-btn
+{
+  height: 40px;
+  width: 120px;
+  background: #D10024;
+  color: #FFF;
+  font-weight: 700;
+  border: none;
+  font-size: 12px;
+}
