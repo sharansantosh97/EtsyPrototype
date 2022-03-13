@@ -1,4 +1,5 @@
 import React from 'react'
+import {NavLink} from "react-router-dom";
 function Header() {
   return (
     <header>
@@ -119,7 +120,7 @@ function Header() {
 								</div>
 
 								<div className="loginbutton">
-									<button className="login-btn">Login</button>
+									<NavLink to="/login"><button className="login-btn">Login</button></NavLink>
 								</div>
 
 								{/*<!-- Menu Toogle -->*/}

@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 import '../styles/Login.css';
 function Login() {
   return (
@@ -32,7 +33,7 @@ function Login() {
                 </div>
 
                 <div>
-                  <p class="mb-0">Don't have an account? <a href="#!" class="text-white-50 fw-bold">Sign Up</a></p>
+                  <p class="mb-0">Don't have an account? <NavLink to="/signup"> <p class="text-white-50 fw-bold">Sign Up</p></NavLink></p>
                 </div>
 
               </div>

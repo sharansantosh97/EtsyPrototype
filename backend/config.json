@@ -1,0 +1,9 @@
+{
+    "DB":{
+        "host" : "etsyprototype.cw2vtx36a6pa.us-east-1.rds.amazonaws.com",
+        "username" : "sharansantosh97",
+        "password" : "Sharan1997",
+        "port" : "3306",
+        "database" : "EtsyPrototype"
+    }
+}
