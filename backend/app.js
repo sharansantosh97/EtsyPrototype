@@ -20,8 +20,8 @@ async function createServer() {
       return initRestApis(app);
     })
     .then(() => {
-      app.listen(3030, function () {
-        console.log("Server listening on port 3030");
+      app.listen(3001, function () {
+        console.log("Server listening on port 3001");
       });
     });
 }

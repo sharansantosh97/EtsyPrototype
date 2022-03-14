@@ -1,11 +1,11 @@
 import mysql from 'mysql'
 
 var connection = mysql.createPool({
-        "host" : "etsyprototype.cw2vtx36a6pa.us-east-1.rds.amazonaws.com",
-        "username" : "sharansantosh97",
+        "host" : "etsydb.cw2vtx36a6pa.us-east-1.rds.amazonaws.com",
+        "user" : "Sharan1997",
         "password" : "Sharan1997",
         "port" : "3306",
-        "database" : "etsyprototype"
+        "database" : "EtsyDB"
 });
 
 var categories = [

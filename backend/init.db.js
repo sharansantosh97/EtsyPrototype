@@ -14,7 +14,7 @@ function initdb() {
     return new Promise((resolve, reject) => {
         var connection = mysql.createPool({
             host:config.DB.host,
-            user:config.DB.username,
+            user:config.DB.user,
             password: config.DB.password,
             port: config.DB.port,
             database: config.DB.database 
