@@ -9,28 +9,36 @@ function Header() {
 	const navigate = useNavigate();
 	const { authState, authDispatch } = useContext(GlobalContext);
 
-	const shopView = async ()=>
+	const shopView = async (e)=>
 	{
-		console.log("inside");
-		try{
-			const response = await axiosInstance.get(`${config.baseUrl}/users/${authState.auth.data.data.userId}/shops`);
-			if(response)
-			{
-				if(response.hasOwnProperty("msg"))
+		e.preventDefault();
+		const token = localStorage.getItem("token");
+		if(!token){
+			navigate("/login", {replace:true});
+		}
+		else
+		{
+			try{
+				const response = await axiosInstance.get(`${config.baseUrl}/users/${authState.auth.data.data.userId}/shops`);
+				console.log(`${config.baseUrl}/users/${authState.auth.data.data.userId}/shops`);
+				if(response)
 				{
-					navigate("/newshop");
+					if(response.hasOwnProperty("msg"))
+					{
+						navigate("/usershop", {replace:true});
+					}else
+					{
+						navigate("/newshop", {replace:true});
+					}
 				}else
 				{
-					navigate("/usershop");
+					console.log("Error Getting Response from Shops API")
 				}
-			}else
-			{
-				console.log("Error Getting Response from Shops API")
-			}
 
-		}catch(e)
-		{
-			console.log(e);
+			}catch(e)
+			{
+				console.log(e);
+			}
 		}
 	}
   return (
@@ -144,7 +152,7 @@ function Header() {
 										<div className="cart-list">
 											<div className="product-widget">
 												<div className="product-body">
-													<h3 className="product-name"><a href="" onClick={()=>{shopView()}}> View Shops</a></h3>
+													<h3 className="product-name"><a href="" onClick={(e)=>{shopView(e)}}> View Shop</a></h3>
 												</div>
 											</div>
 										</div>
