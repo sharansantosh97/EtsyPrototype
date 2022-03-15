@@ -1,7 +1,71 @@
-import React from 'react'
+import React, { useContext, useEffect, useState } from "react";
+import { GlobalContext } from "../context/Provider"
 import '../styles/SignUp.css';
-import {NavLink} from "react-router-dom";
+import {NavLink,useNavigate} from "react-router-dom";
+//import { useHistory } from "react-router-dom"
+import { Loader } from "semantic-ui-react";
+import axiosInstance from "../utils/axios"
+import { REGISTER_ERROR, REGISTER_LOADING, REGISTER_SUCCESS, } from "../context/actions/actionTypes"
+
 function SignUp() {
+
+  const { authState, authDispatch } = useContext(GlobalContext);
+  const navigate = useNavigate();
+  const { auth } = authState
+  const { loading, error, data } = auth
+  //const history = useHistory()
+  const [form, setForm] = useState({
+    username: "",
+    email: "",
+    password: "",
+  })
+  const [errorMsg, setErrorMsg] = useState("")
+  useEffect(() => {
+    if (error) {
+      console.log("error", error)
+      setErrorMsg(error.msg)
+    }
+  }, [error])
+
+  useEffect(() => {
+    if (data) {
+      setForm({ username: "", email: "", password: "" })
+      setTimeout(() => {
+       // history.push("/login")
+      }, 2000)
+    }
+  }, [data])
+
+  const handleChange = (e) => {
+    const value = e.target.value
+    setForm({
+      ...form,
+      [e.target.name]: value,
+    })
+  }
+
+  const submitHandler = (e) => {
+    console.log("submitHandler")
+    axiosInstance
+    .post("/signUp", form)
+    .then((response) => {
+      console.log("response from registerAction", response.data)
+      authDispatch({ type: REGISTER_SUCCESS, payload: response.data })
+      navigate("/login", {replace:true});
+    })
+    .catch((error) => {
+      console.log("error from registerAction", error)
+      authDispatch({
+        type: REGISTER_ERROR,
+        payload: error.response ? error.response.data : "Could not connect",
+      })
+    })
+    console.log(authState)
+  }
+
+
+
+
   return (
     <>
     <section class="vh-100 gradient-custom">
@@ -17,26 +81,26 @@ function SignUp() {
                   <p class="text-white-50 mb-5">Please enter the below details</p>
                   
                   <div class="form-outline form-white mb-4">
-                    <input type="name" id="typeNameX" class="form-control form-control-lg" />
+                    <input type="name" id="typeNameX" class="form-control form-control-lg" value={form.username} onChange={handleChange} name='username'/>
                     <label class="form-label" for="typeNameX">Username</label>
                   </div>
 
                   <div class="form-outline form-white mb-4">
-                    <input type="email" id="typeEmailX" class="form-control form-control-lg" />
+                    <input type="email" id="typeEmailX" class="form-control form-control-lg" value={form.email} onChange={handleChange} name='email'/>
                     <label class="form-label" for="typeEmailX">Email</label>
                   </div>
 
                   <div class="form-outline form-white mb-4">
-                    <input type="password" id="typePasswordX" class="form-control form-control-lg" />
+                    <input type="password" id="typePasswordX" class="form-control form-control-lg" value={form.password} onChange={handleChange} name='password'/>
                     <label class="form-label" for="typePasswordX">Password</label>
                   </div>
 
-                  <button class="login-btn" type="Sign Up">Sign Up</button>
+                  <button class="login-btn" type="Sign Up" onClick={submitHandler}>Sign Up</button>
 
                 </div>
 
                 <div>
-                <p class="mb-0">Already Have an account? <NavLink to="/login"> <p class="text-white-50 fw-bold">Login</p></NavLink></p>
+                <p class="mb-0">Already Have an account? <NavLink to="/login"> <p class="text-white-50 fw-bold" >Login</p></NavLink></p>
                 </div>
 
               </div>

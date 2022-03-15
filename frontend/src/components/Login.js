@@ -1,83 +1,93 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import '../styles/Login.css';
-import customAxios from '../utils/axiosUrl';
-import api from "../utils/axiosUrl";
-import {useState, useRef, useEffect} from 'react';
-
+import {useState, useRef, useEffect,useContext} from 'react';
 import {Link, useNavigate, useLocation } from "react-router-dom";
-import { connect } from "react-redux";
-import { addUser } from "../redux/actions/actions.js";
+import { GlobalContext } from "../context/Provider";
+import axiosInstance from "../utils/axios";
+import { LOGIN_ERROR, LOGIN_LOADING, LOGIN_SUCCESS } from "../context/actions/actionTypes";
 
+const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
+const EMAIL_REGEX = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
-const ConnectedLogin = ({user,addUser}) => {
+  const Login = () => {
 
-
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [loggingIn, setLoggingIn] = useState(false);
-  const [errorMsg, setErrorMsg] = useState('');
-  const [success, setSuccess] = useState(false);
+  const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
+  const EMAIL_REGEX = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+  
+  const { authState, authDispatch } = useContext(GlobalContext);
   const navigate = useNavigate();
+  const {
+    auth: { data, loading, error },
+  } = authState
+
+
+  const [form, setForm] = useState({
+    email: "",
+    password: "",
+  })
+
+  const [errorMsg, setErrorMsg] = useState("")
+
+  useEffect(() => {
+    if (error) {
+      console.log("error", error)
+      setErrorMsg(error.msg)
+    }
+  }, [error])
+
+  useEffect(() => {
+    if (data) {
+      if (data.data) {
+        setForm({ email: "", password: "" })
+        console.log("data", data)
+        
+      }
+    }
+  }, [data])
+
   useEffect(() => {
     const token = localStorage.getItem("token");
-    const user = localStorage.getItem("user");
-    if(token && user){
+    if(token){
         navigate("/profile", {replace:true});
     }
-},[]);
+   },[]);
 
-useEffect(() => {
-  setErrorMsg('');
-}, [email, password])
-
-  const loginUser = async ()=>{
-    // make AXIOS api call
-    setLoggingIn(true);
-    const user = {email,password};
-    try{
-      console.log("in login hanfler");
-        const response = await api.post("http://localhost:3001/login",user);
-        if(response && response.data){
-          console.log(response.data);
-            if(response.status==200){
-                const user = response.data;
-                console.log(user);
-                if(user && user.token){
-                    const token = user.token;
-                    localStorage.setItem("token",token);
-                    delete user.token;
-                    localStorage.setItem("user",JSON.stringify(user));
-                    addUser(user);
-                    setLoggingIn(false);
-                    setSuccess(true);
-                    navigate("/profile", {replace:true});
-                }
-            }else{
-                setSuccess(false);
-                setErrorMsg("Some unexpected error occurred!");
-                setLoggingIn(false);
-            }
-        }else{
-            setSuccess(false);
-            setErrorMsg("Some unexpected error occurred!");
-            setLoggingIn(false);
-        }
-    }catch(err){
-        setSuccess(false);
-        if(err && err.response && err.response.data && err.response.data.error){
-            setErrorMsg(err.response.data.error);
-        }
-        setLoggingIn(false);
-    }
+  const handleChange = (e) => {
+    const value = e.target.value
+    setForm({
+      ...form,
+      [e.target.name]: value,
+    })
   }
 
 
+  const submitHandler = (e) => {
+    console.log("submitHandler from login")
+    console.log("before"+JSON.stringify(authState));
+    
+    axiosInstance
+    .post("/login", form)
+    .then((response) => {
+      localStorage.token = response.data.token;
+      console.log("response from LOGINAction", response.data);     
+      authDispatch({ type: LOGIN_SUCCESS, payload: response.data });
+      navigate("/profile", {replace:true});
+    })
+    .catch((error) => {
+      console.log("error from LOGINAction", error)
+      authDispatch({
+        type: LOGIN_ERROR,
+        payload: error.response ? error.response.data : "Could not connect",
+      })
+    })
 
-  const handleUserLoginSubmit = (e)=>{
-    e.preventDefault();
-    loginUser();
+    
+
   }
+    
+
+
 
   return (
     <>
@@ -91,16 +101,16 @@ useEffect(() => {
                     <h2 className="fw-bold mb-2 text-uppercase">Login</h2>
                     <p className="text-white-50 mb-5">Please enter your login and password!</p>
                     <div className="form-outline form-white mb-4">
-                      <input type="email" id="typeEmailX" className="form-control form-control-lg" name="email" onChange={(e)=>{setEmail(e.target.value)}}/>
+                      <input type="email" id="typeEmailX" className="form-control form-control-lg" name="email" value={form.email} onChange={handleChange}/>
                       <label className="form-label" for="typeEmailX">Email</label>
                     </div>
 
                     <div className="form-outline form-white mb-4">
-                      <input type="password" id="typePasswordX" className="form-control form-control-lg" name="password" onChange={(e)=>{setPassword(e.target.value)}}/>
+                      <input type="password" id="typePasswordX" className="form-control form-control-lg" name="password" value={form.password} onChange={handleChange}/>
                       <label className="form-label" for="typePasswordX">Password</label>
                     </div>
 
-                    <button className="login-btn" type="submit" onClick={handleUserLoginSubmit}>Login</button>
+                    <button className="login-btn" type="submit" onClick={submitHandler}>Login</button>
 
                   </div>
 
@@ -117,16 +127,5 @@ useEffect(() => {
     </>
   )
 }
-function mapDispatchToProps(dispatch) {
-  return {
-    addUser: user => dispatch(addUser(user))
-  };
-}
 
-
-const mapStateToProps = state => {
-  return { user: state.user };
-};
-
-const Login = connect(mapStateToProps,mapDispatchToProps)(ConnectedLogin);
 export default Login;

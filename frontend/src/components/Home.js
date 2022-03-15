@@ -3,7 +3,7 @@ import NavigationBar from './NavigationBar'
 
 function Home() {
   return (
-    <NavigationBar />
+    <h1>as</h1>
   )
 }
 

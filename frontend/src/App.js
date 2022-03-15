@@ -10,6 +10,8 @@ import ProfileEditPage from './components/ProfileEditPage';
 import FavoritesPage from './components/FavoritesPage';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom'
 import Footer from './components/Footer';
+import NewShop from './components/NewShop';
+import UserShop from './components/UserShop';
 function App() {
   return (
     <Router>
@@ -19,8 +21,11 @@ function App() {
           <Route exact path="/signup" element={<SignUp/>}/>
           <Route exact path="/profile" element={<FavoritesPage/>}/>
           <Route exact path="/profileEdit" element={<ProfileEditPage/>}/>
+          <Route exact path="/productpage/:id" element={<ProductPage/>}/>
+          <Route exact path="/newshop" element={<NewShop/>}/>
+          <Route exact path="/usershop" element={<UserShop/>}/>
+          <Route exact path="/" element={<Home/>}/>
         </Routes>
-      <Footer />
     </Router>
   );
 }

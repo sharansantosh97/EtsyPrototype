@@ -1,6 +1,38 @@
-import React from 'react'
+import React, {useContext} from 'react'
+import { GlobalContext } from "../context/Provider";
 import {NavLink} from "react-router-dom";
+import axiosInstance from "../utils/axios";
+import {useNavigate} from "react-router-dom";
+import config from "../utils/config.js";
 function Header() {
+
+	const navigate = useNavigate();
+	const { authState, authDispatch } = useContext(GlobalContext);
+
+	const shopView = async ()=>
+	{
+		console.log("inside");
+		try{
+			const response = await axiosInstance.get(`${config.baseUrl}/users/${authState.auth.data.data.userId}/shops`);
+			if(response)
+			{
+				if(response.hasOwnProperty("msg"))
+				{
+					navigate("/newshop");
+				}else
+				{
+					navigate("/usershop");
+				}
+			}else
+			{
+				console.log("Error Getting Response from Shops API")
+			}
+
+		}catch(e)
+		{
+			console.log(e);
+		}
+	}
   return (
     <header>
 			{/*<!-- MAIN HEADER -->*/}
@@ -96,7 +128,7 @@ function Header() {
 										<div className="cart-list">
 											<div className="product-widget">
 												<div className="product-body">
-													<h3 className="product-name"><a href="#">View your Profile</a></h3>
+													<h3 className="product-name"><NavLink to="/profile"><p>View your Profile</p></NavLink></h3>
 												</div>
 											</div>
 										</div>
@@ -112,7 +144,7 @@ function Header() {
 										<div className="cart-list">
 											<div className="product-widget">
 												<div className="product-body">
-													<h3 className="product-name"><a href="#">View Shop</a></h3>
+													<h3 className="product-name"><a href="" onClick={()=>{shopView()}}> View Shops</a></h3>
 												</div>
 											</div>
 										</div>
