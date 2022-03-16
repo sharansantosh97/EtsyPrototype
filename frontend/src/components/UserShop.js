@@ -6,11 +6,15 @@ import{useNavigate} from 'react-router-dom';
 import "../styles/UserShop.css";
 import FavoriteItem from "./FavoriteItem";
 import ShopProducts from './ShopProducts';
+import ShopModal from './ShopModal';
+import { Button } from "react-bootstrap";
+import ShopPopUp from './ShopPopUp';
 function UserShop() {
 
 
   const navigate = useNavigate();
   const [shopDetails,setShopDetails] = useState({});
+  const [shopUp,setShopUp] = useState(false);
   const [shopProducts,setShopProducts] = useState([]);
   const { authState, authDispatch } = useContext(GlobalContext);
   
@@ -117,6 +121,15 @@ function UserShop() {
           </div>
       </div>
     </div>
+
+
+
+
+    {!shopUp && <ShopPopUp/>}
+
+
+
+
     <div className="container">
       <div className="row">          
           {shopProducts && shopProducts.map((eachFavoriteItem)=>{

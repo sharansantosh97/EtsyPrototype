@@ -12,10 +12,11 @@ import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom'
 import Footer from './components/Footer';
 import NewShop from './components/NewShop';
 import UserShop from './components/UserShop';
+import Sample from './components/Sample';
 function App() {
   return (
     <Router>
-      <Header />
+        <Header />
         <Routes>
           <Route exact path="/login" element={<Login/>}/>
           <Route exact path="/signup" element={<SignUp/>}/>
@@ -25,6 +26,7 @@ function App() {
           <Route exact path="/newshop" element={<NewShop/>}/>
           <Route exact path="/usershop" element={<UserShop/>}/>
           <Route exact path="/" element={<Home/>}/>
+          <Route exact path="/sample" element={<Sample/>}/>
         </Routes>
     </Router>
   );

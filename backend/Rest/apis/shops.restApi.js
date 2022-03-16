@@ -10,7 +10,7 @@ function checkShopNameAvailability(req, res) {
         return;
       }
       if (results && results.length > 0) {
-        res.status(400).json({ available: false });
+        res.status(200).json({ available: false });
       } else {
         res.status(200).json({ available: true });
       }
