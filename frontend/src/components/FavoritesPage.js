@@ -52,6 +52,8 @@ const FavoritesPage = () => {
                     <img
                       src='https://bootdey.com/img/Content/avatar/avatar2.png'
                       alt=''
+                      width = "100px"
+                      height = "100px"
                     />{" "}
                   </div>
                 </div>

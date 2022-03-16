@@ -72,7 +72,7 @@ const EMAIL_REGEX = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
       localStorage.token = response.data.token;
       console.log("response from LOGINAction", response.data);     
       authDispatch({ type: LOGIN_SUCCESS, payload: response.data });
-      navigate("/profile", {replace:true});
+      navigate("/", {replace:true});
     })
     .catch((error) => {
       console.log("error from LOGINAction", error)

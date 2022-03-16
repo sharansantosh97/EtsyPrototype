@@ -1,4 +1,4 @@
-import React, {useContext} from 'react'
+import React, {useContext,useEffect} from 'react'
 import { GlobalContext } from "../context/Provider";
 import {NavLink} from "react-router-dom";
 import axiosInstance from "../utils/axios";
@@ -6,8 +6,12 @@ import {useNavigate} from "react-router-dom";
 import config from "../utils/config.js";
 function Header() {
 
+
+
 	const navigate = useNavigate();
 	const { authState, authDispatch } = useContext(GlobalContext);
+
+
 
 	const shopView = async (e)=>
 	{
@@ -19,16 +23,18 @@ function Header() {
 		else
 		{
 			try{
+				console.log(`${config.baseUrl}/users/${authState.auth.data.data.userId}/shops`);
 				const response = await axiosInstance.get(`${config.baseUrl}/users/${authState.auth.data.data.userId}/shops`);
 				console.log(`${config.baseUrl}/users/${authState.auth.data.data.userId}/shops`);
-				if(response)
+				console.log(response);
+				if(response.data)
 				{
-					if(response.hasOwnProperty("msg"))
-					{
-						navigate("/usershop", {replace:true});
-					}else
+					if(response.data.hasOwnProperty("msg"))
 					{
 						navigate("/newshop", {replace:true});
+					}else
+					{
+						navigate("/usershop", {replace:true});
 					}
 				}else
 				{
@@ -41,6 +47,19 @@ function Header() {
 			}
 		}
 	}
+
+
+
+
+
+
+
+	
+
+
+
+
+
   return (
     <header>
 			{/*<!-- MAIN HEADER -->*/}

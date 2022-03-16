@@ -3,13 +3,30 @@ import { GlobalContext } from "../context/Provider";
 import "../styles/NewShop.css";
 import axiosInstance from "../utils/axios";
 import config from "../utils/config.js";
+import {useNavigate} from "react-router-dom";
 function NewShop() {
 
   const [shopName, setShopName] = useState("");
   const [shopAvailable, setShopAvailable] = useState();
+  const navigate = useNavigate();
   const { authState, authDispatch } = useContext(GlobalContext);
-  const createShop = async ()=>{
-    
+  const createShop = async ()=>
+  {
+    if(shopName)
+    {
+      const reqBody = {};
+      reqBody.name = shopName;
+      const response = await axiosInstance.post(`${config.baseUrl}/users/${authState.auth.data.data.userId}/shops`,reqBody);
+      if(response)
+      {
+        navigate("/usershop");
+      }else
+      {
+        console.log("SHOP creation unsuccessfull");
+      }
+
+
+    }
   }
   const checkAvailability = async ()=>
   {
@@ -55,7 +72,7 @@ function NewShop() {
             }
             {!shopAvailable &&
               <div className="create-shop-notavl">
-                <div className="shopcreate-error">Not Available! Please choose a different name.</div>
+                <div className="shopcreate-error">Shop Name Already taken! Please choose a different name to continue</div>
               </div>
             }
         </div>
