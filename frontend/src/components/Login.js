@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import { NavLink } from 'react-router-dom';
 import '../styles/Login.css';
 import {useState, useRef, useEffect,useContext} from 'react';
@@ -63,26 +64,28 @@ const EMAIL_REGEX = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
 
   const submitHandler = (e) => {
-    console.log("submitHandler from login")
-    console.log("before"+JSON.stringify(authState));
-    
-    axiosInstance
-    .post("/login", form)
-    .then((response) => {
-      localStorage.token = response.data.token;
-      console.log("response from LOGINAction", response.data);     
-      authDispatch({ type: LOGIN_SUCCESS, payload: response.data });
-      navigate("/", {replace:true});
-    })
-    .catch((error) => {
-      console.log("error from LOGINAction", error)
-      authDispatch({
-        type: LOGIN_ERROR,
-        payload: error.response ? error.response.data : "Could not connect",
+    if(form.email!="" && form.password!="")
+    {
+      console.log("submitHandler from login")
+      console.log("before"+JSON.stringify(authState));
+      
+      axiosInstance
+      .post("/login", form)
+      .then((response) => {
+        localStorage.token = response.data.token;
+        console.log("response from LOGINAction", response.data);     
+        authDispatch({ type: LOGIN_SUCCESS, payload: response.data });
+        navigate("/", {replace:true});
       })
-    })
+      .catch((error) => {
+        console.log("error from LOGINAction", error)
+        authDispatch({
+          type: LOGIN_ERROR,
+          payload: error.response ? error.response.data : "Could not connect",
+        })
+      })
 
-    
+  }
 
   }
     
@@ -98,8 +101,15 @@ const EMAIL_REGEX = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
               <div className="card bg-dark text-white" style={{borderRadius: "1rem"}}>
                 <div className="card-body p-5 text-center">
                   <div className="mb-md-5 mt-md-4 pb-5">
-                    <h2 className="fw-bold mb-2 text-uppercase">Login</h2>
-                    <p className="text-white-50 mb-5">Please enter your login and password!</p>
+                    <h2 className="fw-bold mb-2 text-uppercase" style={{color:"white"}}>Login</h2>
+                    <p className="text-white-50 mb-5" style={{color:"white"}}>Please enter your login and password!</p>
+
+                    {error ? (
+                      <div class='alert alert-danger' role='alert'>
+                        {errorMsg}
+                      </div>
+                    ) : null}
+
                     <div className="form-outline form-white mb-4">
                       <input type="email" id="typeEmailX" className="form-control form-control-lg" name="email" value={form.email} onChange={handleChange}/>
                       <label className="form-label" for="typeEmailX">Email</label>
@@ -115,6 +125,7 @@ const EMAIL_REGEX = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
                   </div>
 
                   <div>
+                   {loading ? <p>Loading..</p> : null}
                     <p className="mb-0">Don't have an account? <NavLink to="/signup"> <p className="text-white-50 fw-bold">Sign Up</p></NavLink></p>
                   </div>
 

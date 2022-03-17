@@ -9,6 +9,7 @@ import ShopProducts from './ShopProducts';
 import ShopModal from './ShopModal';
 import { Button } from "react-bootstrap";
 import ShopPopUp from './ShopPopUp';
+import axios from "axios";
 function UserShop() {
 
 
@@ -21,7 +22,7 @@ function UserShop() {
   const getShopDetails = async ()=>
   {
     try{
-    const response = await axiosInstance.get(`${config.baseUrl}/users/${authState.auth.data.data.userId}/shops`);
+    const response = await axiosInstance.get(`${config.baseUrl}/users/${authState.auth.data.data.userId}/shops`,{headers:{'Authorization':localStorage.getItem("token")}});
     if(response.data)
     {
       setShopDetails(response.data);
@@ -44,7 +45,7 @@ function UserShop() {
       if(shopDetails._id)
       {
       console.log("SPD"+JSON.stringify(shopDetails));
-      const response = await axiosInstance.get(`${config.baseUrl}/users/${authState.auth.data.data.userId}/shops/${shopDetails._id}/products`);
+      const response = await axios.post(`${config.baseUrl}/users/${authState.auth.data.data.userId}/shops/${shopDetails._id}/products`,{headers:{'Authorization':localStorage.getItem("token")}});
       console.log(`${config.baseUrl}/users/${authState.auth.data.data.userId}/shops/${shopDetails._id}/products`);
       if(response.data)
       {

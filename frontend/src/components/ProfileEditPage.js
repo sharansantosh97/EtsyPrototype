@@ -1,8 +1,30 @@
-import React, {useState} from 'react';
+import React, {useState,useContext,useEffect} from 'react';
+import {useNavigate} from "react-router-dom";
+import {NavLink} from "react-router-dom";
 import '../styles/ProfileEditPage.css';
+import { GlobalContext } from "../context/Provider";
 import countries from '../countries';
 function ProfileEditPage() {
+    const { authState, authDispatch } = useContext(GlobalContext);
+    const navigate = useNavigate();
+    const [progress , setProgress] = useState(0);
+    const [selectedFile, setSelectedFile] = useState(null);
+    const [form, setForm] = useState({
+        username: "",
+        password: "",
+      })
 
+
+    const handleFileInput = (e) => {
+        setSelectedFile(e.target.files[0]);
+    }
+
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        if(!token){
+            navigate("/login", {replace:true});
+        }
+    },[]);
   return (
     <>
         <div className="container">
@@ -26,7 +48,7 @@ function ProfileEditPage() {
                         </div>
                         <div className="col d-flex flex-column flex-sm-row justify-content-between mb-3">
                         <div className="text-center text-sm-left mb-2 mb-sm-0">
-                            <h4 className="pt-sm-2 pb-1 mb-0 text-nowrap" style = {{fontSize: "17px"}}>John Smith</h4>
+                            <h4 className="pt-sm-2 pb-1 mb-0 text-nowrap" style = {{fontSize: "17px"}}>{authState.auth.data.data.username}</h4>
                             <div className="mt-2">
                             <button className="profilePicture-btn" style = {{fontSize: "12px"}} type="button">
                                 <i className="fa fa-fw fa-camera"></i>
@@ -138,12 +160,26 @@ function ProfileEditPage() {
                                     </div>
                                 </div>
                                 </div>
+
+                                <div className="row">
+                                <div className="col">
+                                <div>
+                                    <div>Upload Profile Photo</div>
+                                    <div>Progress is {progress}%</div>
+                                    <input type="file" onChange={handleFileInput}/>
+                                </div>
+                                </div>
+                    
+                                </div>
+
                             </div>
                             </div>
                             <div className="row">
                             <div className="col d-flex justify-content-end">
+                                <NavLink to="/profile"><button className="saveChanges-btn" type="submit">Cancel</button></NavLink>
                                 <button className="saveChanges-btn" type="submit">Save Changes</button>
                             </div>
+                            
                             </div>
                         </form>
 

@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from "react";
 import { GlobalContext } from "../context/Provider"
 import '../styles/SignUp.css';
 import {NavLink,useNavigate} from "react-router-dom";
-//import { useHistory } from "react-router-dom"
 import { Loader } from "semantic-ui-react";
 import axiosInstance from "../utils/axios"
 import { REGISTER_ERROR, REGISTER_LOADING, REGISTER_SUCCESS, } from "../context/actions/actionTypes"
@@ -13,7 +12,6 @@ function SignUp() {
   const navigate = useNavigate();
   const { auth } = authState
   const { loading, error, data } = auth
-  //const history = useHistory()
   const [form, setForm] = useState({
     username: "",
     email: "",
@@ -31,7 +29,6 @@ function SignUp() {
     if (data) {
       setForm({ username: "", email: "", password: "" })
       setTimeout(() => {
-       // history.push("/login")
       }, 2000)
     }
   }, [data])
@@ -45,7 +42,8 @@ function SignUp() {
   }
 
   const submitHandler = (e) => {
-    console.log("submitHandler")
+    if(form.email!="" && form.password!="" && form.username!="")
+    {
     axiosInstance
     .post("/signUp", form)
     .then((response) => {
@@ -62,6 +60,7 @@ function SignUp() {
     })
     console.log(authState)
   }
+  }
 
 
 
@@ -77,8 +76,14 @@ function SignUp() {
 
                 <div class="mb-md-5 mt-md-4 pb-5">
 
-                  <h2 class="fw-bold mb-2 text-uppercase">Create an Account</h2>
+                  <h2 class="fw-bold mb-2 text-uppercase" style={{color:"white"}}>Create an Account</h2>
                   <p class="text-white-50 mb-5">Please enter the below details</p>
+
+                      {error ? (
+                    <div class='alert alert-danger' role='alert'>
+                      {errorMsg}
+                    </div>
+                  ) : null}
                   
                   <div class="form-outline form-white mb-4">
                     <input type="name" id="typeNameX" class="form-control form-control-lg" value={form.username} onChange={handleChange} name='username'/>

@@ -4,13 +4,14 @@ import {NavLink} from "react-router-dom";
 import axiosInstance from "../utils/axios";
 import {useNavigate} from "react-router-dom";
 import config from "../utils/config.js";
+import axios from "axios";
 function Header() {
 
 
 
 	const navigate = useNavigate();
 	const { authState, authDispatch } = useContext(GlobalContext);
-
+    
 
 
 	const shopView = async (e)=>
@@ -24,7 +25,7 @@ function Header() {
 		{
 			try{
 				console.log(`${config.baseUrl}/users/${authState.auth.data.data.userId}/shops`);
-				const response = await axiosInstance.get(`${config.baseUrl}/users/${authState.auth.data.data.userId}/shops`);
+				const response = await axios.get(`${config.baseUrl}/users/${authState.auth.data.data.userId}/shops`,{headers:{'Authorization':localStorage.getItem("token")}});
 				console.log(`${config.baseUrl}/users/${authState.auth.data.data.userId}/shops`);
 				console.log(response);
 				if(response.data)
@@ -72,7 +73,7 @@ function Header() {
 						<div className="col-md-2">
 							<div className="header-logo">
 								<a href="#" className="logo">
-									<h1 style={{ color: "white", fontSize:"50px" }}>Etsy</h1>
+								<NavLink to="/"><h1 style={{ color: "white", fontSize:"50px" }}>Etsy</h1></NavLink>
 								</a>
 							</div>
 						</div>
@@ -93,12 +94,20 @@ function Header() {
 						<div className="col-md-6 clearfix">
 							<div className="header-ctn">
 								{/*<!-- Wishlist -->*/}
-								<div>
-									<a href="#">
-										<i className="fa fa-heart-o"></i>
+								<div className="dropdown">
+									<a className="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+										<i className="fa fa-heart-o" aria-hidden="true"></i>
 										<span>Your Wishlist</span>
-										<div className="qty">2</div>
 									</a>
+									<div className="cart-dropdown">
+										<div className="cart-list">
+											<div className="product-widget">
+												<div className="product-body">
+													<h3 className="product-name"><NavLink to="/profile"><p>View your Profile</p></NavLink></h3>
+												</div>
+											</div>
+										</div>
+									</div>
 								</div>
 								{/*<!-- /Wishlist -->*/}
 
@@ -177,7 +186,7 @@ function Header() {
 										</div>
 									</div>
 								</div>
-
+								
 								<div className="loginbutton">
 									<NavLink to="/login"><button className="login-btn">Login</button></NavLink>
 								</div>
