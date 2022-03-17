@@ -1,4 +1,3 @@
-
 {
     "DB":{
         "host" : "etsydb.cw2vtx36a6pa.us-east-1.rds.amazonaws.com",
@@ -8,3 +7,4 @@
         "database" : "EtsyDB"
     }
 }
+

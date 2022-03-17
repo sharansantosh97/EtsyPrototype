@@ -13,7 +13,7 @@ async function updateProfile(req, res) {
             req.body.country ? req.body.country : null,
             req.body.about ? req.body.about : null,
         ];
-        console.log(profileData);
+
         let results = await query(
             `update users set username='${req.body.username}', imageUrl='${req.body.imageUrl}', dob='${req.body.dob}', gender= '${req.body.gender}', address='${req.body.address}', city= '${req.body.city}', state='${req.body.state}', country='${req.body.country}', about= '${req.body.about}' where _id='${req.params.userId}'`,
             profileData

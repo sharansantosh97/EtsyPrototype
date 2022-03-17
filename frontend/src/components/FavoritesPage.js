@@ -95,7 +95,7 @@ const FavoritesPage = () => {
                     {" "}
                     <img
                       src={userDetails.imageUrl}
-                      alt=''
+                      alt='Profile Image Not Available'
                       width = "100px"
                       height = "100px"
                     />{" "}
@@ -150,7 +150,7 @@ const FavoritesPage = () => {
                                 <div className="col">
                                     <div className="form-group">
                                     <label>Date of Birth</label>
-                                    <p>{userDetails.dob}</p>
+                                    <p>{userDetails.dob.slice(0,10)}</p>
                                     </div>
                                 </div>
                                 </div>

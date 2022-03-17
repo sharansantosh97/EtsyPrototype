@@ -24,12 +24,25 @@ function ProfileEditPage() {
         email:"",
         phoneNo:""
       });
-
+    
+    const [form, setForm] = useState({
+        username:"",
+        imageUrl:"",
+        dob:"",
+        gender:"",
+        address:"",
+        city:"",
+        state:"",
+        country:"",
+        about:"",
+        email:"",
+        phoneNo:""
+      })
 
       const handleChange = (e) => {
         const value = e.target.value
-        setUserDetails({
-          ...userDetails,
+        setForm({
+          ...form,
           [e.target.name]: value,
         })
       }
@@ -53,6 +66,21 @@ function ProfileEditPage() {
             email:response.data.email,
             phoneNo:response.data.phoneNo
             })
+
+            setForm({
+            username:response.data.username,
+            imageUrl:response.data.imageUrl,
+            dob:response.data.dob,
+            gender:response.data.gender,
+            address:response.data.address,
+            city:response.data.city,
+            state:response.data.state,
+            country:response.data.country,
+            about:response.data.about,
+            email:response.data.email,
+            phoneNo:response.data.phoneNo
+            })
+            console.log(JSON.stringify(userDetails));
         }else{
             console.log("Error Getting Response from get User API");
         }
@@ -67,25 +95,7 @@ function ProfileEditPage() {
 
     const postuserData = async()=>
     {
-        try
-        {
-
-        
-        console.log(JSON.stringify(userDetails));
-        const response = await axios.put(`${config.baseUrl}/users/${authState.auth.data.data.userId}/profile`,userDetails,{headers:{'Authorization':localStorage.getItem("token"),'Content-Type':"application/json"}});
-        console.log(JSON.stringify(response));
-        if(response && response.data)
-        {
-            console.log("update profile successfull");
-            navigate("/profile", {replace:true});
-        }else{
-            console.log("error posting data to API");
-        }
-        }catch(e)
-        {
-            console.log("error posting data to API");
-        }
-
+        console.log(JSON.stringify(form));
     }
 
     useEffect(() => {
@@ -96,32 +106,6 @@ function ProfileEditPage() {
             getUserDetails();
      }
     },[]);
-    
-    const handleFileInput = (e) => {
-        setSelectedFile(e.target.files[0]);
-    
-    }
-    const handleUpload = async (file)=>
-    {
-       
-        var bodyFormData = new FormData();
-        bodyFormData.append('myImage',selectedFile);
-        const response = await axios.post(`${config.baseUrl}/upload`,bodyFormData,{headers:{'Authorization':localStorage.getItem("token")}});
-        const iUrl = response.data.imageUrl;
-
-        setUserDetails({
-            ...userDetails,
-            imageUrl: iUrl,
-          })
-
-    }
-
-    const handleRadio = (e) =>{
-        setUserDetails({
-            ...userDetails,
-            gender: e.target.value,
-          })
-      }
   return (
     <>
         <div className="container">
@@ -154,7 +138,7 @@ function ProfileEditPage() {
                                 <div className="col">
                                     <div className="form-group">
                                     <label>Date of Birth</label>
-                                    <input className="form-control" type="date" name="dob"  value={userDetails.dob.slice(0,10)} onChange={handleChange}></input>
+                                    <input className="form-control" type="date" name="dob"  onChange={handleChange}></input>
                                     </div>
                                 </div>
                                 </div>
@@ -162,22 +146,12 @@ function ProfileEditPage() {
                                 <div className="col">
                                     <div className="form-group">
                                         <label>Gender</label>
-                                    
-                                        {/*<div class="form-check">
-                                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"/>
-                                        <label class="form-check-label" for="flexRadioDefault1"> Male</label>
-                                        </div>
-                                        <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" />
-                                        <label class="form-check-label" for="flexRadioDefault2"> Female </label>
-                                        </div>*/}
-                                        <div onChange={handleRadio}>
-                                            <input type="radio" value="Male" name="gender" /> Male
-                                            <br></br>
-                                            <input type="radio" value="Female" name="gender" /> Female
-                                            <br></br>
-                                            <input type="radio" value="Other" name="gender" /> Other
-                                       </div>
+                                        {/*<input className="form-check-input" type="radio" id="huey" name="drone" value="huey"checked></input>
+                                        <label for="huey">Huey</label>
+                                        <input className="form-check-input" type="radio" id="dewey" name="drone" value="dewey"></input>
+                                        <label for="dewey">Dewey</label>
+                                        <input className="form-check-input" type="radio" id="louie" name="drone" value="louie"></input>
+                                        <label for="louie">Louie</label>*/}
                                     </div>
                                 </div>
                                 </div>
@@ -185,13 +159,13 @@ function ProfileEditPage() {
                                 <div className="col">
                                     <div className="form-group">
                                     <label>Email</label>
-                                    <input className="form-control" type="text" placeholder="user@example.com" name="email" value={userDetails.email} onChange={handleChange}></input>
+                                    <input className="form-control" type="text" placeholder="user@example.com" name="email" onChange={handleChange}></input>
                                     </div>
                                 </div>
                                 <div className="col">
                                     <div className="form-group">
                                     <label>Phone Number</label>
-                                    <input className="form-control" type="tel" placeholder="123-456-7890" name="phoneNo" value={userDetails.phoneNo} /*pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"*/ onChange={handleChange}></input>
+                                    <input className="form-control" type="tel" placeholder="123-456-7890" name="phoneNo" /*pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"*/ onChange={handleChange}></input>
                                     </div>
                                 </div>
                                 </div>
@@ -199,7 +173,7 @@ function ProfileEditPage() {
                                 <div className="col mb-3">
                                     <div className="form-group">
                                     <label>About</label>
-                                    <textarea className="form-control" rows="5" placeholder="My Bio"  name="about" value={userDetails.about} onChange={handleChange}></textarea>
+                                    <textarea className="form-control" rows="5" placeholder="My Bio"  name="about" onChange={handleChange}></textarea>
                                     </div>
                                 </div>
                                 </div>
@@ -207,7 +181,7 @@ function ProfileEditPage() {
                                 <div className="col">
                                     <div className="form-group">
                                     <label>Address</label>
-                                    <input className="form-control" type="text"  name="address" onChange={handleChange} value={userDetails.address}></input>
+                                    <input className="form-control" type="text"  name="address" onChange={handleChange}></input>
                                     </div>
                                 </div>
                         
@@ -216,13 +190,13 @@ function ProfileEditPage() {
                                 <div className="col">
                                     <div className="form-group">
                                     <label>City</label>
-                                    <input className="form-control" type="text"  name="city" onChange={handleChange} value={userDetails.city}></input>
+                                    <input className="form-control" type="text"  name="city" onChange={handleChange}></input>
                                     </div>
                                 </div>
                                 <div className="col">
                                     <div className="form-group">
                                     <label>State</label>
-                                    <input className="form-control" type="text"  name="state" onChange={handleChange} value={userDetails.state}></input>
+                                    <input className="form-control" type="text"  name="state" onChange={handleChange}></input>
                                     </div>
                                 </div>
                                 </div>
@@ -230,7 +204,7 @@ function ProfileEditPage() {
                                 <div className="col">
                                     <div className="form-group">
                                     <label>Country</label>
-                                    <select className="form-control"  name="country" onChange={handleChange} value={userDetails.country}>
+                                    <select className="form-control"  name="country" onChange={handleChange}>
                                      <option value="Select the country">Select the country</option>
                                      {countries.map((country) => <option key={country.name} value={country.name}>{country.name}</option>)}
                                     </select>
@@ -244,8 +218,6 @@ function ProfileEditPage() {
                                 <div>
                                     <div>Upload Profile Photo</div>
                                     <input type="file" onChange={handleFileInput} name="imageUrl"/>
-                                    <br></br>
-                                    <button onClick={handleUpload}>Upload File</button>
                                 </div>
                                 </div>
                     

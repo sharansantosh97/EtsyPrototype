@@ -6,6 +6,7 @@ async function getShopProducts(req, res) {
     let userId = req.params.userId; // verifiying userId in middleware
     let shopId = req.params.shopId;
     try {
+        console.log("INI INI IN");
         var products = await query(`select * from products where shopId = '${shopId}'`)
         var productsSalesCount = await query(`select sum(o.quantity) as salescount, productId from products p where p.shopId='${shopId}' inner join orders o on p._id=o.productId group by o.productId;`)
         var productsSalesCountMap = {};
@@ -21,7 +22,8 @@ async function getShopProducts(req, res) {
             products
         })
     } catch (err) {
-        res.status(400).json({ msg: 'Error in fetching shop products' });
+        console.log("err"+err);
+        res.status(400).json({ msg: 'Error in fetching shop products in getShop' });
     }
 }
 
