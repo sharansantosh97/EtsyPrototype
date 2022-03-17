@@ -9,17 +9,16 @@ const config = JSON.parse(
   )
 );
 
-
-function initdb() {
+async function initdb() {
     return new Promise((resolve, reject) => {
         var connection = mysql.createPool({
             host:config.DB.host,
-            user:config.DB.user,
+            user:config.DB.username,
             password: config.DB.password,
             port: config.DB.port,
             database: config.DB.database 
         });
-        
+
         connection.getConnection((err) =>{
             if(err){
                 reject('Error occoured' + err)
