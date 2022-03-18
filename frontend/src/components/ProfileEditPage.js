@@ -39,6 +39,7 @@ function ProfileEditPage() {
         try{
         console.log("asas"+authState.auth.data.data.userId);
         const response = await axios.get(`${config.baseUrl}/users/${authState.auth.data.data.userId}/profile`,{headers:{'Authorization':localStorage.getItem("token")}});
+        console.log("RES"+JSON.stringify(response.data));
         if(response && response.data){
             setUserDetails({
             username:response.data.username,
@@ -155,7 +156,7 @@ function ProfileEditPage() {
                                 <div className="col">
                                     <div className="form-group">
                                     <label>Date of Birth</label>
-                                    <input className="form-control" type="date" name="dob"  value={userDetails.dob.slice(0,10)} onChange={handleChange}></input>
+                                    <input className="form-control" type="date" name="dob"  value={userDetails.dob} onChange={handleChange}></input>
                                     </div>
                                 </div>
                                 </div>

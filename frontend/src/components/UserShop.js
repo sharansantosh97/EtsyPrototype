@@ -14,6 +14,7 @@ function UserShop() {
 
   const navigate = useNavigate();
   const [selectedFile, setSelectedFile] = useState(null);
+  const [userProfileImage, setUserProfileImage] = useState("");
   const [categories, setCategories] = useState([])
   const [selectedFileProduct, setSelectedFileProduct] = useState(null);
   const [editShopImage, setEditShopImage] = useState(false);
@@ -44,6 +45,15 @@ function UserShop() {
     }
   }
 
+  const getUserProfileImage = async ()=>
+  {
+    const response = await axios.get(`${config.baseUrl}/users/${authState.auth.data.data.userId}/profile`,{headers:{'Authorization':localStorage.getItem("token")}});
+    if(response && response.data)
+    {
+      setUserProfileImage(response.data.imageUrl);
+    }
+  }
+
   const getShopProducts = async ()=>
   {
     try
@@ -55,7 +65,9 @@ function UserShop() {
         priceRange: [],
         categoryIds: [],
         shopIds: [],
-        excludeOutOfStock: false
+        excludeOutOfStock: false,
+        search:"",
+        excludeShopIds:[]
       }
       bodyFormData.shopIds.push(shopDetails._id);
       const response = await axios.post(`${config.baseUrl}/users/${authState.auth.data.data.userId}/products`,bodyFormData,{headers:{'Authorization':localStorage.getItem("token")}});
@@ -84,12 +96,17 @@ function UserShop() {
         navigate("/login", {replace:true});
     }else{
       getShopDetails();
+      getUserProfileImage();
     }
   },[]);
 
   useEffect(() => {
     getShopProducts();
   },[shopDetails]);
+
+  useEffect(() => {
+    
+  },[shopProducts]);
 
   const handleFileInput = (e) => {
     setSelectedFile(e.target.files[0]);
@@ -147,11 +164,6 @@ function UserShop() {
         setEditShopImage(false);
     }
 
-
-
-
-
-
     const handleAddItemInputChange = (e) => {
       setAddItemData({
         ...addItemData,
@@ -170,7 +182,7 @@ function UserShop() {
       bodyFormData.append('myImage',selectedFileProduct);
       const response = await axios.post(`${config.baseUrl}/upload`,bodyFormData,{headers:{'Authorization':localStorage.getItem("token")}});
       const iUrl = response.data.imageUrl;
-    //console.log(iUrl);
+      console.log(iUrl);
       setAddItemData({
           ...addItemData,
           imageUrl: iUrl,
@@ -179,6 +191,7 @@ function UserShop() {
   }
     const postProdData = async ()=>{
      
+      console.log("form data"+JSON.stringify(addItemData));
       try{
         const response = await axios.post(`${config.baseUrl}/users/${authState.auth.data.data.userId}/shops/${shopDetails._id}/products`,addItemData,{headers:{'Authorization':localStorage.getItem("token"),'Content-Type':"application/json"}});
         console.log(JSON.stringify(response));
@@ -195,6 +208,8 @@ function UserShop() {
               quantity: "",
               categoryId: "",
             })
+            getShopProducts();
+            setAddProdBtn(false);
         }else{
             console.log("error posting data to API");
         }
@@ -243,7 +258,7 @@ function UserShop() {
                       <div className="row">
                         <div className="col-lg-6 col-md-6">
                         <h6 className="small lead text-black-50 text-center">SHOP OWNER</h6>
-                          <div className="profile-image float-md-right rounded-circle"> <img className='rounded-circle' src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="" width="100px" height="100px"/> </div>
+                          <div className="profile-image float-md-right rounded-circle"> <img className='' src={userProfileImage} alt="" width="100px" height="100px"/> </div>
                               <br />
                               <p className="mt-1 m-b-0 text-center">{authState.auth.data.data.username}</p>
                               <br /> <br />
@@ -328,7 +343,7 @@ function UserShop() {
                                 <div className="col">
                                     <div className="form-group">
                                     <label>Description</label>
-                                    <input className="form-control" type="text" name="name" onChange={handleAddItemInputChange}></input>
+                                    <input className="form-control" type="text" name="description" onChange={handleAddItemInputChange}></input>
                                     </div>
                                 </div>
                                 </div>

@@ -84,7 +84,7 @@ const FavoritesPage = () => {
         if(!token){
             navigate("/login", {replace:true});
         }else{
-			   console.log("USER ID"+JSON.stringify(authState.auth.data.data.userId));
+			   console.log("USER ID ID ID ID"+JSON.stringify(authState.auth.data.data.userId));
          getFavorites();
          getUserDetails();
         }
@@ -242,7 +242,7 @@ const FavoritesPage = () => {
                                 <div className="col">
                                     <div className="form-group">
                                     <label>Date of Birth</label>
-                                    <p>{userDetails.dob.slice(0,10)}</p>
+                                    <p>{userDetails.dob}</p>
                                     </div>
                                 </div>
                                 </div>
