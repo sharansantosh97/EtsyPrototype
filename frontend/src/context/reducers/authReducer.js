@@ -4,7 +4,7 @@ import {
   REGISTER_SUCCESS,
   LOGIN_LOADING,
   LOGIN_ERROR,
-  LOGIN_SUCCESS
+  LOGIN_SUCCESS,
 } from "../actions/actionTypes"
 
 const authReducer = (state, action) => {

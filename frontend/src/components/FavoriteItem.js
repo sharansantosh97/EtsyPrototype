@@ -10,6 +10,9 @@ function FavoriteItem({key,item}) {
         }
     }
 
+ 
+
+
   return (
     <>
     <div class="col-4">
@@ -33,7 +36,10 @@ function FavoriteItem({key,item}) {
             </div>
             <h4 className="product-description">{item.product.description}</h4>
             <div className="product-btns">
-                <button className="add-to-wishlist"><i className="fa fa-heart-o" style={{color:"red"}}></i><span className="tooltipp">add to wishlist</span></button>
+                <button className="add-to-wishlist" >{/* onClick={() => handleDeleteFav(item.product._id)}*/}
+                    <i className="fa fa-heart-o" style={{color:"red"}}></i>
+                    <span className="tooltipp">add to wishlist</span>
+                </button>
                 <button className="add-to-compare"><i className="fa fa-exchange"></i><span className="tooltipp">add to compare</span></button>
                 <button className="quick-view"><i className="fa fa-eye"></i><span className="tooltipp">quick view</span></button>
             </div>

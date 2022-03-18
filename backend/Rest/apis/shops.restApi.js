@@ -1,4 +1,5 @@
 import { uuid } from 'uuidv4';
+import _ from 'lodash';
 
 function checkShopNameAvailability(req, res) {
     let shopname = req.query.shopname;
@@ -87,6 +88,22 @@ async function getShopById(req, res) {
     }
 }
 
+async function updateShopById(req, res) {
+    try {
+        let body = req.body;
+        let shopId = req.params.shopId;
+        let shopImageUrl = body.imageUrl; 
+        let results = await query("UPDATE shops SET imageUrl=?  where _id = ?", [shopImageUrl, shopId]);
+        let shopDetails = await query("Select * from shops where _id = ?", [shopId]);
+        shopDetails = shopDetails[0]
+        res.status(200).json(shopDetails);
+    } catch (err) {
+        console.log("err ===>", err);
+        res.status(400).json({ msg: "Error in updating cart data" });
+        return;
+    }
+}
+
 let endpoints = {
     '/users/:userId/shop/checkavailability': [{
         method: 'GET',
@@ -105,6 +122,10 @@ let endpoints = {
         {
             method: 'GET',
             callbacks: [getShopById]
+        },
+        {
+            method: 'PUT',
+            callbacks: [updateShopById]
         }
     ]
 }

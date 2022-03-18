@@ -1,5 +1,8 @@
 import React from 'react';
 import { useLocation , useNavigate, useParams, Link} from 'react-router-dom';
+import "../css/style.css";
+import "../css/font-awesome.min.css"
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function ProductPage() {
 

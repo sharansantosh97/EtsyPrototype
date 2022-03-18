@@ -100,7 +100,7 @@ const EMAIL_REGEX = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
             <div className="col-12 col-md-8 col-lg-6 col-xl-5">
               <div className="card bg-dark text-white" style={{borderRadius: "1rem"}}>
                 <div className="card-body p-5 text-center">
-                  <div className="mb-md-5 mt-md-4 pb-5">
+                  <div className="mb-md-5 mt-md-3 pb-1">
                     <h2 className="fw-bold mb-2 text-uppercase" style={{color:"white"}}>Login</h2>
                     <p className="text-white-50 mb-5" style={{color:"white"}}>Please enter your login and password!</p>
 
@@ -111,13 +111,15 @@ const EMAIL_REGEX = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
                     ) : null}
 
                     <div className="form-outline form-white mb-4">
+                      <label className="form-label" for="typeEmailX" style={{float: "left"}}>Email</label>
                       <input type="email" id="typeEmailX" className="form-control form-control-lg" name="email" value={form.email} onChange={handleChange}/>
-                      <label className="form-label" for="typeEmailX">Email</label>
+                      
                     </div>
 
                     <div className="form-outline form-white mb-4">
+                      <label className="form-label" for="typePasswordX" style={{float: "left"}}>Password</label>
                       <input type="password" id="typePasswordX" className="form-control form-control-lg" name="password" value={form.password} onChange={handleChange}/>
-                      <label className="form-label" for="typePasswordX">Password</label>
+                      
                     </div>
 
                     <button className="login-btn" type="submit" onClick={submitHandler}>Login</button>
@@ -126,7 +128,7 @@ const EMAIL_REGEX = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
                   <div>
                    {loading ? <p>Loading..</p> : null}
-                    <p className="mb-0">Don't have an account? <NavLink to="/signup"> <p className="text-white-50 fw-bold">Sign Up</p></NavLink></p>
+                    <p className="mb-0">Don't have an account? <NavLink to="/signup" style={{textDecoration:"none"}}> <p className="text-white-50 fw-bold">Sign Up</p></NavLink></p>
                   </div>
 
                 </div>

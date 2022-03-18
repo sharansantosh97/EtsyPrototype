@@ -31,7 +31,7 @@ async function login(req, res) {
                     role: userObj.restFlg,
                     shopId: userShopDetails._id
                 }
-            }, 'my-secret-key-0001xx01212032432', { expiresIn: '12h' });
+            }, 'my-secret-key-0001xx01212032432', { expiresIn: '24h' });
             res.status(200).json({
                 token: token,
                 msg: 'LoggedIn successfully',

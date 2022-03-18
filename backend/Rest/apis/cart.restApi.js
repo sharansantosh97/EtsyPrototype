@@ -1,12 +1,9 @@
 import { uuid } from "uuidv4";
 import _ from 'lodash';
 
-const getCart = async(req, res) => {
+const getCart = async (req, res) => {
     try {
-        let cartData = await query(
-            "SELECT * FROM cart WHERE createdBy = ?",
-            req.params.userId
-        );
+        let cartData = await query("SELECT * FROM cart WHERE createdBy = ?", req.params.userId );
         let productData = [];
         for (const cartItem of cartData) {
             productData = await query("SELECT * FROM products WHERE _id = ?", cartItem.productId);
@@ -19,27 +16,43 @@ const getCart = async(req, res) => {
     }
 };
 
-const createCart = async(req, res) => {
+const createOrUpdateCart = async(req, res) => {
+    let { productId, quantity} = req.body;
+    quantity=quantity || 1;
+    let userId = req.params.userId;
     try {
-        const cartId = `c-${uuid()}`;
-        const insertQuery = `INSERT INTO cart (_id, createdBy, productId, quantity) VALUES ('${cartId}', '${req.params.userId}', '${req.body.productId}', '${req.body.quantity}')`;
-        let results = await query(insertQuery);
-        res.status(200).json({
-            _id: cartId,
-            createdBy: req.params.userId,
-            productId: req.body.productId,
-            quantity: req.body.quantity,
-        });
+        let userCartItem = await query(`select * from cart where productId='${productId}' AND createdBy='${userId}'`);
+        userCartItem = _.get(userCartItem, '0')
+        if(userCartItem) {
+            let cartId = userCartItem._id;
+            let updateCartP = await query(`UPDATE cart SET quantity= quantity+${quantity} where  _id= '${cartId}'`);
+            return res.status(200).json({
+                _id: cartId,
+                productId,
+                createdBy: userId,
+                msg: 'successfully added product to cart'
+            })
+        } else {
+            const cartId = `c-${uuid()}`;
+            const insertQuery = `INSERT INTO cart (_id, createdBy, productId, quantity) VALUES ('${cartId}', '${req.params.userId}', '${req.body.productId}', '${quantity}')`;
+            let results = await query(insertQuery);
+            res.status(200).json({
+                _id: cartId,
+                createdBy: req.params.userId,
+                productId: req.body.productId,
+                quantity: quantity,
+            });
+        }
     } catch (err) {
         res.status(400).json({ msg: "Error in creating cart data" });
         return;
     }
 };
 
-const updateCart = (req, res) => {
+const updateCart = async (req, res) => {
     try {
         let cartData = [req.body.quantity, req.params.cartId];
-        let results = query("UPDATE cart SET quantity= ? where _id = ?", cartData);
+        let results = await query("UPDATE cart SET quantity= ? where _id = ?", cartData);
         res.status(200).json({
             _id: req.params.cartId,
             createdBy: req.params.userId,
@@ -55,7 +68,7 @@ const updateCart = (req, res) => {
 
 const deleteCart = async(req, res) => {
     try {
-        let results = query(`DELETE FROM cart WHERE _id= ${req.params.cartId};`);
+        let results = await query(`DELETE FROM cart WHERE _id= '${req.params.cartId}';`);
         res.status(200).json({
             msg: "Deleted Successfully",
         });
@@ -130,8 +143,8 @@ let endpoints = {
             callbacks: [getCart],
         },
         {
-            method: "POST",
-            callbacks: [createCart],
+            method: "PUT",
+            callbacks: [createOrUpdateCart],
         },
     ],
     "/users/:userId/cart/:cartId": [{

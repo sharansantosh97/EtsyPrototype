@@ -2,69 +2,121 @@ import React from 'react'
 
 const Footer = () => {
   return (
-         
-    <footer className="footer" style={{backgroundColor: "#1e1e27"}}>
-    <div className="container footerContainer">
-        <div className="row">
-            <div className="col-lg-12">
-            <div className="footer_nav_container">
-                <div className="cr"></div>
-            </div>
-            </div>
-              </div>
-              <div className="top_nav">
-            <div className="container">
-                <div className="row">
-                    <div className="col-md-6">
-                        <div className="top_nav_right">
-                            <ul className="top_nav_menu">
-                                
-                                <li className="language">
-                                    <a href="/">
-                                        United States
-                                        {/* <i className="fa fa-angle-down"></i> */}
-                                    </a>
-                                    {/* <ul className="language_selection">
-                                        <li><a href="/">French</a></li>
-                                        <li><a href="/">Italian</a></li>
-                                        <li><a href="/">German</a></li>
-                                        <li><a href="/">Spanish</a></li>
-                                    </ul> */}
-                                </li>
-                                <li className="currency">
-                                    <a href="/">
-                                        usd
-                                        {/* <i className="fa fa-angle-down"></i> */}
-                                    </a>
-                                    {/* <ul className="currency_selection">
-                                        <li><a href="/">cad</a></li>
-                                        <li><a href="/">aud</a></li>
-                                        <li><a href="/">eur</a></li>
-                                        <li><a href="/">gbp</a></li>
-                                    </ul> */}
-                                </li>
-                                <li className="account">
-                                    <a href="/">
-                                        My Account
-                                        <i className="fa fa-angle-down"></i>
-                                    </a>
-                                    {/* <ul className="account_selection">
-                                        <li><a href="/"><i className="fa fa-sign-in" aria-hidden="true"></i>Sign In</a></li>
-                                        <li><a href=""><i className="fa fa-user-plus" aria-hidden="true"></i>Register</a></li>
-                                    </ul> */}
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div className="col-md-6 text-right">
-                        <div className="top_nav_left">©2022 All Rights Reserverd. Made with <i className="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://krishnasai.me/">Krishna Sai</a></div>
-                    </div>
-                </div>
-            </div>
-            </div>
-              
-    </div>
-  </footer>
+         <>
+            {/* NEWSLETTER */}
+		<div id="newsletter" class="section">
+			{/* container */}
+			<div class="container">
+				{/* row */}
+				<div class="row">
+					<div class="col-md-12">
+						<div class="newsletter">
+							<p>Sign Up for the <strong>NEWSLETTER</strong></p>
+							<form>
+								<input class="input" type="email" placeholder="Enter Your Email"></input>
+								<button class="newsletter-btn"><i class="fa fa-envelope"></i> Subscribe</button>
+							</form>
+							<ul class="newsletter-follow">
+								<li>
+									<a href="#"><i class="fa fa-facebook"></i></a>
+								</li>
+								<li>
+									<a href="#"><i class="fa fa-twitter"></i></a>
+								</li>
+								<li>
+									<a href="#"><i class="fa fa-instagram"></i></a>
+								</li>
+								<li>
+									<a href="#"><i class="fa fa-pinterest"></i></a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				{/* /row */}
+			</div>
+			{/* /container */}
+		</div>
+		{/* /NEWSLETTER */}
+
+		{/* FOOTER */}
+		<footer id="footer">
+			{/* top footer */}
+			<div class="section">
+				{/* container */}
+				<div class="container">
+					{/* row */}
+					<div class="row">
+						<div class="col-md-3 col-xs-6">
+							<div class="footer">
+								<h3 class="footer-title">About Us</h3>
+								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut.</p>
+								<ul class="footer-links">
+									<li><a href="#"><i class="fa fa-map-marker"></i>1734 Stonecoal Road</a></li>
+									<li><a href="#"><i class="fa fa-phone"></i>+021-95-51-84</a></li>
+									<li><a href="#"><i class="fa fa-envelope-o"></i>email@email.com</a></li>
+								</ul>
+							</div>
+						</div>
+
+						<div class="col-md-3 col-xs-6">
+							<div class="footer">
+								<h3 class="footer-title">Categories</h3>
+								<ul class="footer-links">
+									<li><a href="#">Hot deals</a></li>
+									<li><a href="#">Laptops</a></li>
+									<li><a href="#">Smartphones</a></li>
+									<li><a href="#">Cameras</a></li>
+									<li><a href="#">Accessories</a></li>
+								</ul>
+							</div>
+						</div>
+
+						<div class="clearfix visible-xs"></div>
+
+						<div class="col-md-3 col-xs-6">
+							<div class="footer">
+								<h3 class="footer-title">Information</h3>
+								<ul class="footer-links">
+									<li><a href="#">About Us</a></li>
+									<li><a href="#">Contact Us</a></li>
+									<li><a href="#">Privacy Policy</a></li>
+									<li><a href="#">Orders and Returns</a></li>
+									<li><a href="#">Terms & Conditions</a></li>
+								</ul>
+							</div>
+						</div>
+
+						<div class="col-md-3 col-xs-6">
+							<div class="footer">
+								<h3 class="footer-title">Service</h3>
+								<ul class="footer-links">
+									<li><a href="#">My Account</a></li>
+									<li><a href="#">View Cart</a></li>
+									<li><a href="#">Wishlist</a></li>
+									<li><a href="#">Track My Order</a></li>
+									<li><a href="#">Help</a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					{/* /row */}
+				</div>
+				{/* /container */}
+			</div>
+			{/* /top footer */}
+
+			{/* bottom footer */}
+			<div id="bottom-footer" class="section">
+				<div class="container">
+					
+				</div>
+				{/* /container */}
+			</div>
+			{/* /bottom footer */}
+		</footer>
+		{/* /FOOTER */}
+         </>
   )
 }
 

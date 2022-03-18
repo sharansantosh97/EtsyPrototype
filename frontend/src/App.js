@@ -13,6 +13,7 @@ import Footer from './components/Footer';
 import NewShop from './components/NewShop';
 import UserShop from './components/UserShop';
 import Sample from './components/Sample';
+import Cart from './components/Cart';
 function App() {
   return (
     <Router>
@@ -27,6 +28,7 @@ function App() {
           <Route exact path="/usershop" element={<UserShop/>}/>
           <Route exact path="/" element={<Home/>}/>
           <Route exact path="/sample" element={<Sample/>}/>
+          <Route exact path="/cart" element={<Cart/>}/>
         </Routes>
     </Router>
   );

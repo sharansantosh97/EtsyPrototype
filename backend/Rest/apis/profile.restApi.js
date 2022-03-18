@@ -1,4 +1,5 @@
 const log = console.log;
+import _ from 'lodash';
 
 async function updateProfile(req, res) {
     try {
@@ -15,7 +16,7 @@ async function updateProfile(req, res) {
         ];
 
         let results = await query(
-            `update users set username='${req.body.username}', imageUrl='${req.body.imageUrl}', dob='${req.body.dob}', gender= '${req.body.gender}', address='${req.body.address}', city= '${req.body.city}', state='${req.body.state}', country='${req.body.country}', about= '${req.body.about}' where _id='${req.params.userId}'`,
+            `update users set username=?, imageUrl=?, dob=?, gender=?, address=?, city= ?, state=?, country=?, about= ? where _id='${req.params.userId}'`,
             profileData
         );
         res.status(200).json(results);
@@ -30,7 +31,12 @@ async function getProfile(req, res) {
     let userId = req.params.userId;
     try {
         let user = await query(`select * from users where _id='${userId}'`);
-        user = user[0];
+        user = _.get(user, '0');
+        if(!user) {
+            return res.status(400).json({
+                msg: 'User not exists'
+            })
+        }
         delete user.password;
         res.status(200).json(user)
     } catch(err) {

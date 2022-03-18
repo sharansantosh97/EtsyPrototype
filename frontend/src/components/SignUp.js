@@ -86,18 +86,21 @@ function SignUp() {
                   ) : null}
                   
                   <div class="form-outline form-white mb-4">
+                    <label class="form-label" for="typeNameX" style={{float: "left"}}>Username</label>
                     <input type="name" id="typeNameX" class="form-control form-control-lg" value={form.username} onChange={handleChange} name='username'/>
-                    <label class="form-label" for="typeNameX">Username</label>
+                    
                   </div>
 
                   <div class="form-outline form-white mb-4">
+                    <label class="form-label" for="typeEmailX" style={{float: "left"}}>Email</label>
                     <input type="email" id="typeEmailX" class="form-control form-control-lg" value={form.email} onChange={handleChange} name='email'/>
-                    <label class="form-label" for="typeEmailX">Email</label>
+                    
                   </div>
 
                   <div class="form-outline form-white mb-4">
+                    <label class="form-label" for="typePasswordX" style={{float: "left"}}>Password</label>
                     <input type="password" id="typePasswordX" class="form-control form-control-lg" value={form.password} onChange={handleChange} name='password'/>
-                    <label class="form-label" for="typePasswordX">Password</label>
+            
                   </div>
 
                   <button class="login-btn" type="Sign Up" onClick={submitHandler}>Sign Up</button>
@@ -105,7 +108,7 @@ function SignUp() {
                 </div>
 
                 <div>
-                <p class="mb-0">Already Have an account? <NavLink to="/login"> <p class="text-white-50 fw-bold" >Login</p></NavLink></p>
+                <p class="mb-0">Already Have an account? <NavLink to="/login" style={{textDecoration:"none"}}> <p class="text-white-50 fw-bold" >Login</p></NavLink></p>
                 </div>
 
               </div>

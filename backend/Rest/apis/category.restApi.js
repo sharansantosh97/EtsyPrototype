@@ -45,11 +45,11 @@ let endpoints = {
     '/users/:userId/shops/:shopId/categories': [
         {
             method: 'GET',
-            callbacks: [getShopCategories] 
+            callbacks: [getShopCategories]
         },
         {
             method: 'POST',
-            callbacks: [createNewFavoriteItem] 
+            callbacks: [createNewFavoriteItem]
         }
     ]
 }

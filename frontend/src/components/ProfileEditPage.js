@@ -77,6 +77,7 @@ function ProfileEditPage() {
         if(response && response.data)
         {
             console.log("update profile successfull");
+            
             navigate("/profile", {replace:true});
         }else{
             console.log("error posting data to API");
@@ -108,7 +109,7 @@ function ProfileEditPage() {
         bodyFormData.append('myImage',selectedFile);
         const response = await axios.post(`${config.baseUrl}/upload`,bodyFormData,{headers:{'Authorization':localStorage.getItem("token")}});
         const iUrl = response.data.imageUrl;
-
+        console.log(iUrl);
         setUserDetails({
             ...userDetails,
             imageUrl: iUrl,
@@ -191,7 +192,7 @@ function ProfileEditPage() {
                                 <div className="col">
                                     <div className="form-group">
                                     <label>Phone Number</label>
-                                    <input className="form-control" type="tel" placeholder="123-456-7890" name="phoneNo" value={userDetails.phoneNo} /*pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"*/ onChange={handleChange}></input>
+                                    <input className="form-control" type="text" placeholder="123-456-7890" name="phoneNo" value={userDetails.phoneNo} /*pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"*/ onChange={handleChange}></input>
                                     </div>
                                 </div>
                                 </div>

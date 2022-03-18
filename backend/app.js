@@ -13,7 +13,7 @@ const __filename = fileURLToPath(
     import.meta.url);
 const __dirname = path.dirname(__filename);
 
-var workers = 1 || process.env.WORKERS || os.cpus().length;
+var workers = 2|| process.env.WORKERS || os.cpus().length;
 
 var whitelist = ['http://localhost:3001', 'https://8026-2600-1700-65aa-d910-74a0-45c6-f332-f7b8.ngrok.io', 'http://example2.com']
 var corsOptions = {

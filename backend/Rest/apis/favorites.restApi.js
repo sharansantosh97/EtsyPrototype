@@ -26,6 +26,7 @@ async function getAllFavorites(req, res) {
         }
         let products = await query(selectQuery);
         let productIdsMap = _.keyBy(products, '_id')
+        favoriteItems = _.filter(favoriteItems, (item) => productIdsMap[item.productId]);
         res.json({
             favorites: _.map(favoriteItems, (item) => {
                 item.product = productIdsMap[item.productId]
@@ -39,11 +40,11 @@ async function getAllFavorites(req, res) {
     }
 }
 
-function removeFavorite(req, res) {
+async function removeFavorite(req, res) {
     let userId = req.params.userId;
     let favoriteId = req.params.favoriteId;
     try {
-        let result = query(`DELETE FROM favorites WHERE _id ='${favoriteId}' AND createdBy = '${userId}';`);
+        let result = await query(`DELETE FROM favorites WHERE _id ='${favoriteId}' AND createdBy = '${userId}';`);
         res.status(200).json(result);
     } catch (err) {
         console.log(err)

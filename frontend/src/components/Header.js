@@ -1,18 +1,36 @@
-import React, {useContext,useEffect} from 'react'
+import React, {useContext,useEffect,useState} from 'react'
 import { GlobalContext } from "../context/Provider";
 import {NavLink} from "react-router-dom";
 import axiosInstance from "../utils/axios";
 import {useNavigate} from "react-router-dom";
 import config from "../utils/config.js";
 import axios from "axios";
+import { productsAction } from "../context/actions/productsAction";
+
 function Header() {
 
-
+	
 
 	const navigate = useNavigate();
 	const { authState, authDispatch } = useContext(GlobalContext);
     
-
+	const {
+		authState: { auth: data },
+		globalDispatch,
+		globalState: { user },
+	  } = useContext(GlobalContext);
+	
+	  const userId = user?.userId;
+	
+	  console.log("user from globalState | Header", user);
+	
+	  const [query, setQuery] = useState("");
+	  useEffect(() => {
+		console.log("Search Items are", query);
+	
+		console.log("products Search action dispatch");
+		productsAction(userId, query)(globalDispatch);
+	  }, [query]);
 
 	const shopView = async (e)=>
 	{
@@ -51,16 +69,6 @@ function Header() {
 
 
 
-
-
-
-
-	
-
-
-
-
-
   return (
     <header>
 			{/*<!-- MAIN HEADER -->*/}
@@ -72,9 +80,9 @@ function Header() {
 						{/*<!-- LOGO -->*/}
 						<div className="col-md-2">
 							<div className="header-logo">
-								<a href="#" className="logo">
-								<NavLink to="/"><h1 style={{ color: "white", fontSize:"50px" }}>Etsy</h1></NavLink>
-								</a>
+								
+							<NavLink to="/" style={{textDecoration:"none"}}><h1 style={{color: "white", fontSize:"50px" }}>ETSY</h1> </NavLink>
+								
 							</div>
 						</div>
 						{/*<!-- /LOGO -->*/}
@@ -82,9 +90,9 @@ function Header() {
 						{/*<!-- SEARCH BAR -->*/}
 						<div className="col-md-4">
 							<div className="header-search">
-								<form>
+								<form onSubmit={(e)=>{e.preventDefault()}}>
 									<input className="input" placeholder="Search here"></input>
-									<button className="search-btn">Search</button>
+									<button className="search-btn" onChange={(e) => setQuery(e.target.value)}>Search</button>
 								</form>
 							</div>
 						</div>
@@ -95,7 +103,7 @@ function Header() {
 							<div className="header-ctn">
 								{/*<!-- Wishlist -->*/}
 								<div className="dropdown">
-									<a className="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+									<a className="dropdown-toggle" data-toggle="dropdown" aria-expanded="true" style={{textDecoration:"none"}}>
 										<i className="fa fa-heart-o" aria-hidden="true"></i>
 										<span>Your Wishlist</span>
 									</a>
@@ -103,7 +111,7 @@ function Header() {
 										<div className="cart-list">
 											<div className="product-widget">
 												<div className="product-body">
-													<h3 className="product-name"><NavLink to="/profile"><p>View your Profile</p></NavLink></h3>
+													<h3 className="product-name"><NavLink to="/profile" ><p>View your Profile</p></NavLink></h3>
 												</div>
 											</div>
 										</div>
@@ -113,7 +121,7 @@ function Header() {
 
 								{/*<!-- Cart -->*/}
 								<div className="dropdown">
-									<a className="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+									<a className="dropdown-toggle" data-toggle="dropdown" aria-expanded="true" style={{textDecoration:"none"}}>
 										<i className="fa fa-shopping-cart"></i>
 										<span>Your Cart</span>
 										<div className="qty">3</div>
@@ -156,7 +164,7 @@ function Header() {
 								{/*<!-- /Cart -->*/}
 
 								<div className="dropdown">
-									<a className="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+									<a className="dropdown-toggle" data-toggle="dropdown" aria-expanded="true" style={{textDecoration:"none"}}>
 										<i className="fa fa-user-circle" aria-hidden="true"></i>
 										<span>Profile</span>
 									</a>
@@ -172,7 +180,7 @@ function Header() {
 								</div>
 
 								<div className="dropdown">
-									<a className="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+									<a className="dropdown-toggle" data-toggle="dropdown" aria-expanded="true" style={{textDecoration:"none"}}>
 									<i className="fa fa-shopping-bag" aria-hidden="true"></i>
 										<span>Shop</span>
 									</a>
