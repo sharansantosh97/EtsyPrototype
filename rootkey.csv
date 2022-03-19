@@ -1,0 +1,57 @@
+AWSAccessKeyId=AKIAZP3IZBQZ63RPKHHD
+AWSSecretKey=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
+
+
+onClick={/*() => uploadFile(selectedFile)*/}
+
+
+onChange={/*handleFileInput*/}
+
+
+{
+    "DB":{
+        "host" : "etsydb.cw2vtx36a6pa.us-east-1.rds.amazonaws.com",
+        "username" : "Sharan1997",
+        "password" : "Sharan1997",
+        "port" : "3306",
+        "database" : "EtsyDB"
+    }
+}
+
+
+SHOP,
+Products,
+Wishlist
+Main products
+Context API
+
+
+Product overview page
+Cart,
+Purchase
+Logout
+
+
+Docs
+
+
+
+http://localhost:3001/users/u-9f63453c-4dd9-41e5-8f7e-c023e1e43f6b/products
+
+Error Code: 1175. You are using safe update mode and you tried to update a table without a WHERE that uses a KEY column.  To disable safe mode, toggle the option in Preferences -> SQL Editor and reconnect.
+
+
+
+Favorites Axios is different
+
+u-9f63453c-4dd9-41e5-8f7e-c023e1e43f6b
+ft-44
+pt-44
+
+
+insert into favorites values("ft-44","u-9f63453c-4dd9-41e5-8f7e-c023e1e43f6b","pt-44",null);
+
+
+Congo'
+Axios
+Back end upload image

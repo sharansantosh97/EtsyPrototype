@@ -37,7 +37,6 @@ function ProfileEditPage() {
     const getUserDetails = async () =>
     {
         try{
-        console.log("asas"+authState.auth.data.data.userId);
         const response = await axios.get(`${config.baseUrl}/users/${authState.auth.data.data.userId}/profile`,{headers:{'Authorization':localStorage.getItem("token")}});
         console.log("RES"+JSON.stringify(response.data));
         if(response && response.data){

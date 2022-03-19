@@ -30,8 +30,6 @@ function ProductPage() {
 			navigate("/login", {replace:true});
 		}else
 		{
-
-		
 		setLoading(true)
 		console.log("product page")
 		window.scrollTo(0, 0)

@@ -1,0 +1,129 @@
+
+
+
+http://localhost:3001/users/u-9428105e-ecd7-412c-8153-41d18b35fbd1/shop/checkavailability?shopname="AkhilStore”
+
+
+'shp-1', 'AkhilStore', NULL, 'u-9428105e-ecd7-412c-8153-41d18b35fbd1', NULL
+
+
+http://localhost:3001/users/u-9428105e-ecd7-412c-8153-41d18b35fbd1/shop/checkavailability?s
+
+
+https://7600-2607-f380-828-fb00-00-d903.ngrok.io/users/u-9428105e-ecd7-412c-8153-41d18b35fbd1/shop/checkavailability?shopname="AkhilStore”
+
+/users/:userId/shops
+
+
+http://localhost:3001/users/u-3a14ad83-147b-4ea6-a1ff-d18bf3260b07/shops
+
+
+http://localhost:3001/users/123/shops
+
+http://localhost:3001/users/u-c1224129-7405-46c9-a8b7-bdfb9bc7a25d/shop/sh-5f04ba95-3a33-4bf1-abe1-4470b3c49bb5/products
+
+
+http://localhost:3001/users/u-c1224129-7405-46c9-a8b7-bdfb9bc7a25d/shop/sh-5f04ba95-3a33-4bf1-abe1-4470b3c49bb5/products
+
+http://localhost:3001/users/u-c1224129-7405-46c9-a8b7-bdfb9bc7a25d/shops/sh-5f04ba95-3a33-4bf1-abe1-4470b3c49bb5/products
+
+http://localhost:3001/users/12/shops/12/products
+
+
+sharan.santosh.ss@gmail.com
+Sharan@1997
+
+
+
+<div class="row">          
+        {shopProducts && shopProducts.map((eachFavoriteItem)=>{
+           return <ShopProducts key={eachFavoriteItem._id} item={eachFavoriteItem}/>
+         })}
+          
+        </div>
+
+
+u-c1224129-7405-46c9-a8b7-bdfb9bc7a25d
+
+
+
+Error Code: 1451. Cannot delete or update a parent row: a foreign key constraint fails (`EtsyDB`.`favorites`, CONSTRAINT `favorites_ibfk_1` FOREIGN KEY (`createdBy`) REFERENCES `users` (`_id`))
+
+
+
+http://localhost:3001/users/u-c1224129-7405-46c9-a8b7-bdfb9bc7a25d/shops/products
+
+http://localhost:3001/users/u-c1224129-7405-46c9-a8b7-bdfb9bc7a25d/shops/sh-5f04ba95-3a33-4bf1-abe1-4470b3c49bb5/products
+
+
+
+
+u-c1224129-7405-46c9-a8b7-bdfb9bc7a25d
+
+
+
+
+u-9f63453c-4dd9-41e5-8f7e-c023e1e43f6b -  -  sharan rocks
+
+
+insert into favorites values("ft-11","u-9f63453c-4dd9-41e5-8f7e-c023e1e43f6b","pt-12");
+insert into favorites values("ft-22","u-9f63453c-4dd9-41e5-8f7e-c023e1e43f6b","pt-22");
+insert into favorites values("ft-33","u-9f63453c-4dd9-41e5-8f7e-c023e1e43f6b","pt-33");
+
+
+u-9f63453c-4dd9-41e5-8f7e-c023e1e43f6bError Code: 1452. Cannot add or update a child row: a foreign key constraint fails (`EtsyDB`.`favorites`, CONSTRAINT `favorites_ibfk_2` FOREIGN KEY (`productId`) REFERENCES `products` (`_id`))
+
+
+
+
+
+insert into favorites values("ft-1","u-c1224129-7405-46c9-a8b7-bdfb9bc7a25d","pt-12",null);
+insert into favorites values("ft-2","u-c1224129-7405-46c9-a8b7-bdfb9bc7a25d","pt-22",null);
+insert into favorites values("ft-3","u-c1224129-7405-46c9-a8b7-bdfb9bc7a25d","pt-33",null);
+
+
+Current policy
+
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "AllowPublicRead",
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": "*"
+            },
+            "Action": "s3:GetObject",
+            "Resource": "arn:aws:s3:::etsyprorotype/*"
+        }
+    ]
+}
+
+
+
+New policy
+etsyprorotype
+
+
+
+
+animate
+font-awesome.min
+main_styles
+nouislider.min
+owl.carousel
+owl.theme.default
+responsive
+slick-theme
+slick
+
+
+import "../css/style.css";
+import "../css/font-awesome.min.css"
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+
+
+import "../css/style.css";
+import "../css/font-awesome.min.css"
+import 'bootstrap/dist/css/bootstrap.min.css';

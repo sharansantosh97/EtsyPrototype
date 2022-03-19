@@ -14,6 +14,8 @@ import NewShop from './components/NewShop';
 import UserShop from './components/UserShop';
 import Sample from './components/Sample';
 import Cart from './components/Cart';
+import PurchasesPage from './components/PurchasesPage';
+import Shop from './components/Shop';
 function App() {
   return (
     <Router>
@@ -26,9 +28,11 @@ function App() {
           <Route exact path="/product/:id" element={<ProductPage/>}/>
           <Route exact path="/newshop" element={<NewShop/>}/>
           <Route exact path="/usershop" element={<UserShop/>}/>
+          <Route exact path="/shop/:id" element={<Shop/>}/>
           <Route exact path="/" element={<Home/>}/>
           <Route exact path="/sample" element={<Sample/>}/>
           <Route exact path="/cart" element={<Cart/>}/>
+          <Route exact path="/purchases" element={<PurchasesPage/>}/>
         </Routes>
     </Router>
   );

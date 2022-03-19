@@ -11,17 +11,18 @@ import { productsAction } from "../context/actions/productsAction";
 
 function Header() {
 
+	const {
+		authState: { auth: data },
+		globalDispatch,
+		globalState
+	  } = useContext(GlobalContext);
 	
-
+	const { user, cart } = globalState;
+	const cartItems = cart?.data ? cart.data.cartItems : [];
 	const navigate = useNavigate();
 	//const history = useHistory()
 	const { authState, authDispatch } = useContext(GlobalContext);
     
-	const {
-		authState: { auth: data },
-		globalDispatch,
-		globalState: { user },
-	  } = useContext(GlobalContext);
 	
 	  const userId = user?.userId;
 	
@@ -140,7 +141,7 @@ function Header() {
 									<a className="dropdown-toggle" data-toggle="dropdown" aria-expanded="true" style={{textDecoration:"none"}}>
 										<i className="fa fa-shopping-cart"></i>
 										<span>Your Cart</span>
-										<div className="qty">3</div>
+										{cartItems!=0 && <div className="qty">{cartItems?.quantity}</div>}
 									</a>
 									<div className="cart-dropdown">
 										<div className="cart-list">

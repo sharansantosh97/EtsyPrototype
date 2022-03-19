@@ -1,16 +1,27 @@
 import { useContext, useEffect, useState, useCallback } from "react";
 import { GlobalContext } from "../context/Provider";
 import { cartAction, deleteCartAction } from "../context/actions/cartAction";
-import { NavLink } from "react-router-dom";
-
+import { NavLink,useNavigate } from "react-router-dom";
+import axiosInstance from "../helpers/axiosInstance"
+import {UPDATE_CART_ITEM_SUCCESS} from "../context/actions/actionTypes";
 const Cart = () => {
+
+  const navigate = useNavigate();
   const { globalDispatch, globalState } = useContext(GlobalContext);
   const { authState, authDispatch } = useContext(GlobalContext);
   const { user, cart } = globalState;
   const userId = user?.userId;
-
+  const [msg,setMsg] = useState(false);
+  
   useEffect(() => {
-    cartAction(userId)(globalDispatch);
+    const token = localStorage.getItem("token");
+    if(!token)
+    {
+      navigate("/login");
+    }else{
+      cartAction(authState.auth.data.data?.userId)(globalDispatch);
+    }
+
   }, []);
 
   const [cartCount, setCartCount] = useState(0);
@@ -34,15 +45,34 @@ const Cart = () => {
         0
       )
     );
-  }, [cartItems]);
+  }, [cartItems,msg]);
 
   const deleteCartItem = useCallback((cartId) => {
     console.log("I'm delete cart");
-    deleteCartAction(userId, cartId)(globalDispatch);
+    deleteCartAction(authState.auth.data.data?.userId, cartId)(globalDispatch);
     // cartAction(userId)(globalDispatch);
   }, []);
 
-  console.log("CART COMPONENT has", cartItems);
+  const checkOutCartItems = async ()=>
+  {
+    console.log(cartItems);
+
+    
+    axiosInstance()
+		  .post(`/users/${authState.auth.data.data.userId}/cart/checkout`)
+		  .then((response) => {
+			console.log("response.data", response.data)
+      setMsg(true);
+      globalDispatch({ type: UPDATE_CART_ITEM_SUCCESS, payload:[] })
+      navigate("/purchase");
+			//setProduct(response.data)
+			//setLoading(false)
+		  })
+		  .catch((err) => {
+			//setLoading(false)
+			console.log(err)
+		  })
+  }
 
   let cartsDiv = cartItems.map((cartItem) => {
     return (
@@ -126,7 +156,7 @@ const Cart = () => {
             fontWeight: "700",
             border: "none"
           
-        }}>Checkout</button>
+        }} onClick={checkOutCartItems}>Checkout</button>
         </div> }
         <div className="col-sm-6 mb-3 mb-m-1 order-md-1 text-md-left">
         <NavLink to="/"><button style={{
@@ -140,6 +170,11 @@ const Cart = () => {
       }}>Continue Shopping</button></NavLink>
         </div>
       </div>
+      {msg &&
+        <div class='alert alert-success' role='alert'>
+           Order Placed Successfully !
+        </div>
+      }     
     </div>
   );
 };
