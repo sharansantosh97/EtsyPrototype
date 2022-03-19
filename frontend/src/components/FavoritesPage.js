@@ -76,6 +76,7 @@ const FavoritesPage = () => {
 }
 	const navigate = useNavigate();
 	useEffect(() => {
+        
         const token = localStorage.getItem("token");
         if(!token){
             navigate("/login", {replace:true});
@@ -88,6 +89,10 @@ const FavoritesPage = () => {
 
     useEffect(async() => 
     {
+      const token = localStorage.getItem("token");
+        if(!token){
+            navigate("/login", {replace:true});
+        }else{
       const response = await axios.get(`${config.baseUrl}/users/${authState.auth.data.data.userId}/favorites?search=${query}`,{headers:{'Authorization':localStorage.getItem("token")}});
       if(response && response.data)
       {
@@ -96,6 +101,7 @@ const FavoritesPage = () => {
       {
         console.log("Search Failed");
       }
+    }
 
     }, [query]);
 
@@ -159,7 +165,7 @@ const FavoritesPage = () => {
                 <div className="product-btns">
                     <button className="add-to-wishlist" onClick={() => handleDeleteFav(item.product._id)}>  {/* */}
                         <i className="fa fa-heart-o" style={{color:"red"}}></i>
-                        <span className="tooltipp">add to wishlist</span>
+                        <span className="tooltipp">Remove from wishlist</span>
                     </button>
                     <button className="add-to-compare"><i className="fa fa-exchange"></i><span className="tooltipp">add to compare</span></button>
                     <button className="quick-view"><i className="fa fa-eye"></i><span className="tooltipp">quick view</span></button>
@@ -247,7 +253,7 @@ const FavoritesPage = () => {
                                 <div className="col">
                                     <div className="form-group">
                                     <label>Date of Birth</label>
-                                    <p>{userDetails.dob}</p>
+                                    <p>{userDetails?.dob.slice(0,10)}</p>
                                     </div>
                                 </div>
                                 </div>
@@ -255,7 +261,7 @@ const FavoritesPage = () => {
                                 <div className="col">
                                     <div className="form-group">
                                         <label>Gender</label>
-                                        <p>{userDetails.gender}</p>
+                                        <p>{userDetails?.gender}</p>
                                     </div>
                                 </div>
                                 </div>
@@ -263,13 +269,13 @@ const FavoritesPage = () => {
                                 <div className="col">
                                     <div className="form-group">
                                     <label>Email</label>
-                                    <p>{userDetails.email}</p>
+                                    <p>{userDetails?.email}</p>
                                     </div>
                                 </div>
                                 <div className="col">
                                     <div className="form-group">
                                     <label>Phone Number</label>
-                                    <p>{userDetails.phoneNo}</p>
+                                    <p>{userDetails?.phoneNo}</p>
                                     </div>
                                 </div>
                                 </div>
@@ -277,7 +283,7 @@ const FavoritesPage = () => {
                                 <div className="col mb-3">
                                     <div className="form-group">
                                     <label>About</label>
-                                    <p>{userDetails.about}</p>
+                                    <p>{userDetails?.about}</p>
                                     </div>
                                 </div>
                                 </div>
@@ -285,7 +291,7 @@ const FavoritesPage = () => {
                                 <div className="col">
                                     <div className="form-group">
                                     <label>Address</label>
-                                    <p>{userDetails.address}</p>
+                                    <p>{userDetails?.address}</p>
                                     </div>
                                 </div>
 
@@ -294,13 +300,13 @@ const FavoritesPage = () => {
                                 <div className="col">
                                     <div className="form-group">
                                     <label>City</label>
-                                    <p>{userDetails.city}</p>
+                                    <p>{userDetails?.city}</p>
                                     </div>
                                 </div>
                                 <div className="col">
                                     <div className="form-group">
                                     <label>State</label>
-                                    <p>{userDetails.state}</p>
+                                    <p>{userDetails?.state}</p>
                                     </div>
                                 </div>
                                 </div>
@@ -308,7 +314,7 @@ const FavoritesPage = () => {
                                 <div className="col">
                                     <div className="form-group">
                                     <label>Country</label>
-                                    <p>{userDetails.country}</p>
+                                    <p>{userDetails?.country}</p>
                                     </div>
                                 </div>
                                 </div>

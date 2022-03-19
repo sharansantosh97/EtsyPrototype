@@ -150,13 +150,13 @@ function ProfileEditPage() {
                                 <div className="col">
                                     <div className="form-group">
                                     <label>Full Name</label>
-                                    <input className="form-control" type="text" name="username" value={userDetails.username} onChange={handleChange}></input>
+                                    <input className="form-control" type="text" name="username" value={userDetails?.username} onChange={handleChange}></input>
                                     </div>
                                 </div>
                                 <div className="col">
                                     <div className="form-group">
                                     <label>Date of Birth</label>
-                                    <input className="form-control" type="date" name="dob"  value={userDetails.dob} onChange={handleChange}></input>
+                                    <input className="form-control" type="date" name="dob"  value={userDetails?.dob.slice(0,10)} onChange={handleChange}></input>
                                     </div>
                                 </div>
                                 </div>
@@ -174,11 +174,11 @@ function ProfileEditPage() {
                                         <label class="form-check-label" for="flexRadioDefault2"> Female </label>
                                         </div>*/}
                                         <div onChange={handleRadio}>
-                                            <input type="radio" value="Male" name="gender" /> Male
+                                            <input type="radio" value="Male" name="gender" checked={userDetails.gender==='Male'}/> Male
                                             <br></br>
-                                            <input type="radio" value="Female" name="gender" /> Female
+                                            <input type="radio" value="Female" name="gender" checked={userDetails.gender==='Female'}/> Female
                                             <br></br>
-                                            <input type="radio" value="Other" name="gender" /> Other
+                                            <input type="radio" value="Other" name="gender" checked={userDetails.gender==='Other'}/> Other
                                        </div>
                                     </div>
                                 </div>
@@ -257,8 +257,8 @@ function ProfileEditPage() {
                             </div>
                             <div className="row">
                             <div className="col d-flex justify-content-end">
-                                <NavLink to="/profile"><button className="saveChanges-btn" >Cancel</button></NavLink>
-                                <button className="saveChanges-btn" onClick={postuserData}>Save Changes</button>
+                                <NavLink to="/profile"><button className="saveChanges-btn" style={{margin:"5px"}}>Cancel</button></NavLink>
+                                <button className="saveChanges-btn" onClick={postuserData} style={{margin:"5px"}}>Save Changes</button>
                             </div>
                             
                             </div>

@@ -15,7 +15,7 @@ const __dirname = path.dirname(__filename);
 
 var workers = 2|| process.env.WORKERS || os.cpus().length;
 
-var whitelist = ['http://localhost:3001', 'https://385b-2600-1700-65aa-d910-5759-c888-9b26-60ca.ngrok.io', 'http://example2.com']
+var whitelist = ['http://localhost:3001', 'https://f204-2600-1700-65aa-d910-72fe-e6c-a33-e08f.ngrok.io', 'http://example2.com']
 var corsOptions = {
   origin: function (origin, callback) {
     // if (whitelist.indexOf(origin) !== -1) {

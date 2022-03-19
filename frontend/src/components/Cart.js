@@ -1,9 +1,11 @@
 import { useContext, useEffect, useState, useCallback } from "react";
 import { GlobalContext } from "../context/Provider";
 import { cartAction, deleteCartAction } from "../context/actions/cartAction";
+import { NavLink } from "react-router-dom";
 
 const Cart = () => {
   const { globalDispatch, globalState } = useContext(GlobalContext);
+  const { authState, authDispatch } = useContext(GlobalContext);
   const { user, cart } = globalState;
   const userId = user?.userId;
 
@@ -94,7 +96,7 @@ const Cart = () => {
             <i className="text-info font-weight-bold"> {cartCount}</i> items in
             your cart
           </p>
-          <table
+          { cartItems.length!=0 && <table
             id="shoppingCart"
             className="table table-condensed table-responsive"
           >
@@ -107,26 +109,35 @@ const Cart = () => {
               </tr>
             </thead>
             <tbody>{cartsDiv}</tbody>
-          </table>
-          <div className="float-right text-right">
+          </table> }
+          { cartItems.length!=0 && <div className="float-right text-right">
             <h4>Subtotal:</h4>
             <h4>${cartTotal}</h4>
-          </div>
+          </div> }
         </div>
       </div>
-      <div className="row mt-4 d-flex align-items-center">
-        <div className="col-sm-6 order-md-2 text-right">
-          <a
-            href="catalog.html"
-            className="btn btn-primary mb-4 btn-lg pl-5 pr-5"
-          >
-            Checkout
-          </a>
-        </div>
+      <div className="row mt-2 d-flex align-items-center">
+        { cartItems.length!=0 &&<div className="col-sm-6 order-md-2 text-right">
+        <button style={{
+            height: "40px",
+            width: "100px",
+            background: "#D10024",
+            color: "#FFF",
+            fontWeight: "700",
+            border: "none"
+          
+        }}>Checkout</button>
+        </div> }
         <div className="col-sm-6 mb-3 mb-m-1 order-md-1 text-md-left">
-          <a href="/">
-            <i className="fa fa-arrow-left mr-2"></i> Continue Shopping
-          </a>
+        <NavLink to="/"><button style={{
+          height: "40px",
+          width: "100px",
+          background: "#D10024",
+          color: "#FFF",
+          fontWeight: "700",
+          border: "none",
+          width:"150px"
+      }}>Continue Shopping</button></NavLink>
         </div>
       </div>
     </div>

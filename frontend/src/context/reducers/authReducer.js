@@ -5,8 +5,9 @@ import {
   LOGIN_LOADING,
   LOGIN_ERROR,
   LOGIN_SUCCESS,
+  LOGOUT_USER,
 } from "../actions/actionTypes"
-
+import authInitialState from "../initialState/authInitialState"
 const authReducer = (state, action) => {
   switch (action.type) {
     case REGISTER_LOADING:
@@ -40,6 +41,12 @@ const authReducer = (state, action) => {
           loading: false,
           error: action.payload,
         },
+      }
+
+    case LOGOUT_USER:
+      return {
+        ...state,
+        ...authInitialState,
       }
 
     default:

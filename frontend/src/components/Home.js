@@ -23,7 +23,7 @@ function Home() {
 //   } = useContext(GlobalContext)
   
 
-//   //const user = data.data?.data
+//   const user = data.data?.data
 //   console.log("USER"+JSON.stringify(user))
 //   useEffect(() => {
 //     if (user) {
@@ -41,10 +41,6 @@ function Home() {
 //       })
 //     }
 //   }, [data])
-
-
-
-
 
   const {
     user,
@@ -75,7 +71,7 @@ function Home() {
     //   console.log("global state after postFavoritesAction", globalState);
     // }
 	const token = localStorage.getItem("token");
- 	if(!token){        
+ 	if(token){        
 	const response = await axios.post(`${config.baseUrl}/users/${authState.auth.data.data.userId}/favorites`,{ productId },{headers:{'Authorization':localStorage.getItem("token")}});
 	if(response && response.data)
 	{
@@ -87,10 +83,12 @@ function Home() {
   };
 
   const addToCart = (productId) => {
-    if (userId) {
+	const token = localStorage.getItem("token");
+    if (token) {
       console.log(productId);
-      putCartAction(userId, productId)(globalDispatch);
-      console.log("HI put cart action dispatch");
+	  console.log(authState.auth.data.data.userId);
+      putCartAction(authState.auth.data.data.userId, productId)(globalDispatch);
+      //console.log("HI put cart action dispatch");
     }
   };
   
@@ -136,7 +134,7 @@ function Home() {
 				</div>
 			</div>
 			<div className="add-to-cart">
-				<button className="add-to-cart-btn" onClick={() => addToCart(item.product._id)}><i className="fa fa-shopping-cart"></i> add to cart</button>
+				<button className="add-to-cart-btn" onClick={() => addToCart(item._id)}><i className="fa fa-shopping-cart"></i> add to cart</button>
 			</div>
 			</div>
 			</div>
