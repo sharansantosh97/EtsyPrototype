@@ -74,21 +74,30 @@ const FavoritesPage = () => {
         console.log(e);
     }
 }
-
-
-
-
 	const navigate = useNavigate();
 	useEffect(() => {
         const token = localStorage.getItem("token");
         if(!token){
             navigate("/login", {replace:true});
         }else{
-			   console.log("USER ID ID ID ID"+JSON.stringify(authState.auth.data.data.userId));
+			   console.log("USER ID"+JSON.stringify(authState.auth.data.data.userId));
          getFavorites();
          getUserDetails();
         }
     },[]);
+
+    useEffect(async() => 
+    {
+      const response = await axios.get(`${config.baseUrl}/users/${authState.auth.data.data.userId}/favorites?search=${query}`,{headers:{'Authorization':localStorage.getItem("token")}});
+      if(response && response.data)
+      {
+        setFavoriteItemsList(response.data.favorites);
+      }else
+      {
+        console.log("Search Failed");
+      }
+
+    }, [query]);
 
   //   useEffect(() => {
   //     const token = localStorage.getItem("token");
@@ -101,9 +110,11 @@ const FavoritesPage = () => {
   //     }
   // },[favoriteItemsList]);
 
+    
 
+    const handleDeleteFav = async (id) => 
+    {
 
-    const handleDeleteFav = async (id) => {
       let favId = "";
       for(let i=0;i<favoriteItemsList.length;i++)
       { 
@@ -112,8 +123,6 @@ const FavoritesPage = () => {
           favId = favoriteItemsList[i]._id;
         }
       }
-      //deleteFavoritesAction(authState.auth.data.data.userId, id)(globalDispatch);
-
       const response = await axios.delete(`${config.baseUrl}/users/${authState.auth.data.data.userId}/favorites/${favId}`,{headers:{'Authorization':localStorage.getItem("token")}});
       if(response && response.data)
       {
@@ -121,20 +130,16 @@ const FavoritesPage = () => {
         getFavorites();
       }
     };
-
-
-
-
     const productsDiv = favoriteItemsList.map((item, index) => {
       let pageLink = `/product/${item.product._id}`;
       let favProductId = item.product._id;
       return (
         
         <>
-        <div class="col-4">
+        <div class="col-4" style={{width:"250px",height:"500px"}}>
         <div className="product">
             <div className="product-img">
-                <img src={item.product.imageUrl} alt=""></img>
+                <img src={item.product.imageUrl} style={{width:"150px",height:"150px"}} alt=""></img>
                 <div className="product-label">
                     <span className="sale">-30%</span>
                     <span className="new">NEW</span>
@@ -324,34 +329,28 @@ const FavoritesPage = () => {
         </div>
         </div>
 
-
-
-
-
-
-
-
-
-
-
-
-        <div class='col-xl-6 col-lg-6 col-md-6'>
-          <h4 class='m-t-0 m-b-0'>Favourites</h4>
-        </div>
-        <div class='col-xl-6 col-lg-6 col-md-6'>
-          <div class='input-group rounded'>
-            <Input
-              icon={{ name: "search", link: true }}
-              placeholder='Search...'
-              style={{ width: "370px" }}
-            />
-            {/* <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" /> */}
-            {/* <span class="input-group-text border-0" id="search-addon">
-                            <i class="fa fa-search fa-2x"></i>
-                        </span> */}
-          </div>
-        </div>
       </div>
+
+  <div class="container">
+    <br/>
+    <div class="row justify-content-center">
+   <div class="col-12 col-md-10 col-lg-8">
+      <form class="card card-sm" onSubmit={(e)=>e.preventDefault()}>
+         <div class="card-body row no-gutters align-items-center">
+            <div class="col-auto">
+            </div>
+            <div class="col">
+               <input onChange={(e) => setQuery(e.target.value)} class="form-control form-control-lg form-control-borderless" type="search" placeholder="Search in favorites"></input>
+            </div>
+            <div class="col-auto">
+               <button class="btn btn-lg btn-success" class="search-btn">Search</button>
+            </div>
+         </div>
+      </form>
+   </div>
+</div>
+
+</div>
 
     {/*<div class="container">
       <div class="row">          

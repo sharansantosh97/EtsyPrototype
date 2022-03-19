@@ -91,8 +91,8 @@ function Header() {
 						<div className="col-md-4">
 							<div className="header-search">
 								<form onSubmit={(e)=>{e.preventDefault()}}>
-									<input className="input" placeholder="Search here"></input>
-									<button className="search-btn" onChange={(e) => setQuery(e.target.value)}>Search</button>
+									<input className="input" placeholder="Search here" onChange={(e) => setQuery(e.target.value)}></input>
+									<button className="search-btn">Search</button>
 								</form>
 							</div>
 						</div>

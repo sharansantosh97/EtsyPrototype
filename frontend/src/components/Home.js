@@ -1,15 +1,19 @@
 import React, {useContext,useEffect,useState} from 'react';
 import { GlobalContext } from "../context/Provider";
 import Footer from './Footer';
+import axios from "axios";
 import NavigationBar from './NavigationBar'
 import { productsAction } from "../context/actions/productsAction";
 import { postFavoritesAction } from "../context/actions/favoritesAction";
 import { putCartAction } from "../context/actions/cartAction";
+import config from "../utils/config.js";
+import {useNavigate, NavLink} from "react-router-dom";
+import {createSearchParams} from "react-router-dom";
 
 function Home() {
 
   const [favoriteItemsList, setFavoriteItemsList] = useState([]);
-
+  const navigate = useNavigate();
   const { authState, authDispatch } = useContext(GlobalContext);
   const { globalDispatch, globalState } = useContext(GlobalContext)
 
@@ -52,16 +56,34 @@ function Home() {
   useEffect(() => {
     console.log("products action dispatch");
     productsAction(userId)(globalDispatch);
+	console.log("PROD"+data?.products);
   }, [userId]);
 
-  console.log("Global State from Home", globalState);
+  useEffect(() => {
+    console.log("products action dispatch");
+    productsAction(userId)(globalDispatch);
+  }, []);
 
-  const handleFavProduct = (productId) => {
-    if (userId) {
-      console.log("productId from handleFavProduct", productId);
-      postFavoritesAction(productId, userId)(globalDispatch);
-      console.log("global state after postFavoritesAction", globalState);
-    }
+  
+  console.log("Global State from Home", globalState);
+  
+  const handleFavProduct = async (productId) => 
+  {
+    // if (userId) {
+    //   console.log("productId from handleFavProduct", productId);
+    //   postFavoritesAction(productId, userId)(globalDispatch);
+    //   console.log("global state after postFavoritesAction", globalState);
+    // }
+	const token = localStorage.getItem("token");
+ 	if(!token){        
+	const response = await axios.post(`${config.baseUrl}/users/${authState.auth.data.data.userId}/favorites`,{ productId },{headers:{'Authorization':localStorage.getItem("token")}});
+	if(response && response.data)
+	{
+		console.log("FAVVRES"+JSON.stringify(response.data));
+	}else{
+		console.log("Error adding favorites");
+	}
+}
   };
 
   const addToCart = (productId) => {
@@ -71,23 +93,30 @@ function Home() {
       console.log("HI put cart action dispatch");
     }
   };
-
-
+  
+  const viewItemOverview = (item)=>
+  {
+	const params = { id:item._id};
+	navigate({
+		pathname: '/productpage',
+		search: `?${createSearchParams(params)}`
+	  });
+  }
   const productsDiv = data?.products.map((item, index) => {
     let pageLink = `/product/${item._id}`;
     return (
 		<>
-		<div class="col-4">
+		<div class="col-4" style={{width:"250px",height:"500px"}}>
 		<div className="product">
 			<div className="product-img">
-				<img src={item.imageUrl} alt=""></img>
+				<img src={item.imageUrl} style={{width:"150px",height:"150px"}}alt=""></img>
 				<div className="product-label">
 					<span className="sale">-30%</span>
 					<span className="new">NEW</span>
 				</div>
 			</div>
 			<div className="product-body">
-				<h3 className="product-name"><a href="" > {item.name}</a></h3>{/* onClick={()=>{viewItemOverview(item)}} */}
+				<h3 className="product-name"><NavLink to={pageLink}><a href="" > {item.name}</a></NavLink></h3>{/* onClick={()=>{viewItemOverview(item)}} */}
 				<h4 className="product-price">{item.price}<del className="product-old-price">{item.price-(30/100)*item.price}</del></h4>
 				<div className="product-rating">
 					<i className="fa fa-star"></i>
@@ -117,10 +146,7 @@ function Home() {
 
   return (
   <>
-
-
-
-				{/* SECTION */}
+	{/* SECTION */}
 		<div class="section">
 			{/* container */}
 			<div class="container">

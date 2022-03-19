@@ -10,10 +10,11 @@ export const productsAction =
   (userId, query = "") =>
   (dispatch) => {
     dispatch({ type: PRODUCTS_LOADING });
-
+    console.log("sr"+query);
     axiosInstance()
       .post(`/users/${userId}/products`, { search: query })
       .then((response) => {
+
         console.log("response from productsAction", response.data);
         dispatch({ type: PRODUCTS_SUCCESS, payload: response.data });
       })

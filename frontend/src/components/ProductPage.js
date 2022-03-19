@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { useLocation , useNavigate, useParams, Link} from 'react-router-dom';
 import "../css/style.css";
 import "../css/font-awesome.min.css"
@@ -6,11 +7,14 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 function ProductPage() {
 
-	const search = useLocation();
-	const {id} = new useParams(search);
-	console.log(id);
+	
+	const {id} = useParams();
+
+
   return (
     <>
+	<br></br>
+	
     <div className="container">
 		<div className="card">
 			<div className="container-fliud">
@@ -66,4 +70,4 @@ function ProductPage() {
   )
 }
 
-export default ProductPage
+export default ProductPage;
