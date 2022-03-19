@@ -1,5 +1,5 @@
 import React, { useState,useContext,useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams,NavLink } from 'react-router-dom';
 import { useLocation , useNavigate, useParams, Link} from 'react-router-dom';
 import "../css/style.css";
 import "../css/font-awesome.min.css"
@@ -12,6 +12,7 @@ function ProductPage() {
 
 	
 	const {id} = useParams();
+	const { authState, authDispatch } = useContext(GlobalContext);
 	const navigate = useNavigate();
 	const [product, setProduct] = useState({})
 	const [productQuantity, setProductQuantity] = useState(0)
@@ -34,7 +35,7 @@ function ProductPage() {
 		console.log("product page")
 		window.scrollTo(0, 0)
 		axiosInstance()
-		  .get(`/users/${userId}/products/${id}`)
+		  .get(`/users/${authState.auth.data.data?.userId}/products/${id}`)
 		  .then((response) => {
 			console.log("response.data", response.data)
 			setProduct(response.data)
@@ -59,7 +60,11 @@ function ProductPage() {
 	  let handleQuantityChange = (e) => {
 		setProductQuantity(e.target.value)
 	  }
-
+	  const shopPageOpen = ()=>{
+		  if(product.shopId) {
+			   navigate("/shop/"+product.shopId);
+		  }
+	  }
 	
   return (
     <>
@@ -77,7 +82,7 @@ function ProductPage() {
 					  <div className="wrapper row">
 						  <div className="preview col-md-6">
 							  <div className="preview-pic tab-content">
-								<div className="tab-pane active" id="pic-1"><img src="http://placekitten.com/400/252" /></div>
+								<div className="tab-pane active" id="pic-1"><img src={product.imageUrl} /></div>
 								<div className="tab-pane" id="pic-2"><img src="http://placekitten.com/400/252" ></img></div>
 								<div className="tab-pane" id="pic-3"><img src="http://placekitten.com/400/252"></img></div>
 								<div className="tab-pane" id="pic-4"><img src="http://placekitten.com/400/252" /></div>
@@ -86,6 +91,7 @@ function ProductPage() {
 						  </div>
 						  <div className="details col-md-6">
 							  <h3 className="product-title">{product.name}</h3>
+							  <h4 >Shop Name :<a href="" onClick={shopPageOpen}> {product.shopName} </a></h4>
 							  <div className="rating">
 								  <div className="stars">
 									  <span className="fa fa-star checked"></span>
@@ -97,7 +103,7 @@ function ProductPage() {
 								  <span className="review-no">41 reviews</span>
 							  </div>
 							  <p className="product-description">{product.description}</p>
-							  <h4 className="price">Current Price: <span>{product.name}</span></h4>
+							  <h4 className="price">Current Price: <span>{product.price}</span></h4>
 							  <p className="vote"><strong>91%</strong> of buyers enjoyed this product! <strong>(87 votes)</strong></p>
 							  <div className="action">
 								  <button className="login-btn" type="button">Add to cart</button>

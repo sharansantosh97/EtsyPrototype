@@ -1,26 +1,23 @@
 import { useContext, useEffect, useState } from "react";
 import axiosInstance from "../helpers/axiosInstance";
 import { GlobalContext } from "../context/Provider";
+import {useNavigate} from "react-router-dom";
 function PurchasesPage() {
 
-
+    const [purchaseDeatils, setPurchaseDetails] = useState([]);
+    const navigate = useNavigate();
     const { authState, authDispatch } = useContext(GlobalContext);
     const getAllPurchases = async () =>
     {
         axiosInstance()
-        .get(`/users/${authState.auth.data.data.userId}/cart/checkout`)
+        .get(`/users/${authState.auth.data.data.userId}/orders`)
         .then((response) => {
-          console.log("response.data", response.data)
-            setMsg(true);
-            globalDispatch({ type: UPDATE_CART_ITEM_SUCCESS, payload:[] })
-            navigate("/purchase");
-                //setProduct(response.data)
-                //setLoading(false)
-                })
-                .catch((err) => {
-                //setLoading(false)
-                console.log(err)
-            })
+          console.log("response.data", response.data)  
+          setPurchaseDetails(response.data);  
+        }).catch((err) => {
+            
+            console.log(err)
+         })
 
     }
 
@@ -49,32 +46,28 @@ function PurchasesPage() {
                     <tr>
                     <th scope="col">Date</th>
                     <th scope="col">Product</th>
-                    <th scope="col">Product Image Name</th>
+                    <th scope="col">Product Name</th>
                     <th scope="col">Price</th>
                     <th scope="col">Quantity</th>
-                    <th scope="col">Shares</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                    <th scope="row">1</th>
-                    <td class="w-25">
-                        <img src="https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/sheep-3.jpg" class="img-fluid img-thumbnail" alt="Sheep"></img>
-                    </td>
-                    <td>Bootstrap 4 CDN and Starter Template</td>
-                    <td>Cristina</td>
-                    <td>913</td>
-                    <td>2.846</td>
-                    </tr>
-                    <tr>
-                    <th scope="row">2</th>
-                    <td class="w-25">
-                        <img src="https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/sheep-5.jpg" class="img-fluid img-thumbnail" alt="Sheep"></img>                    </td>
-                    <td>Bootstrap Grid 4 Tutorial and Examples</td>
-                    <td>Cristina</td>
-                    <td>1.434</td>
-                    <td>3.417</td>
-                    </tr>
+                    {
+                        purchaseDeatils.map((singlePurchase)=>{
+
+                            return (
+                                <tr>
+                                    <th scope="row">{singlePurchase.createdOn.slice(0,10)}</th>
+                                    <td class="w-25">
+                                        <img src={singlePurchase.productImage} class="img-fluid img-thumbnail" alt="Sheep"></img>
+                                    </td>
+                                    <td>{singlePurchase.productName}</td>
+                                    <td>{singlePurchase.price}</td>
+                                    <td>{singlePurchase.quantity}</td>
+                                </tr>
+                            );
+                        })
+                    }
                 </tbody>
                 </table>   
             </div>

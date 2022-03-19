@@ -49,6 +49,10 @@ function Header() {
 			navigate("/profile", {replace:true});
 		}
 	  }
+
+	  const handlePurchase = ()=>{
+		navigate("/purchases", {replace:true});
+	  }
 	const shopView = async (e)=>
 	{
 		e.preventDefault();
@@ -161,11 +165,12 @@ function Header() {
 										<i className="fa fa-user-circle" aria-hidden="true"></i>
 										<span>Profile</span>
 									</a>
-									<div className="cart-dropdown">
+									<div className="cart-dropdown" style={{height:"70px",width:"340px"}}>
 										<div className="cart-list">
 											<div className="product-widget">
 												<div className="product-body">
-													<h3 className="product-name"><a onClick={handleProfile}>View your Profile</a></h3>
+													<h3 className="product-name" style={{color:"#0e6efd",textDecoration:"underline"}}><a onClick={handleProfile}>View your Profile</a></h3>
+													<h3 className="product-name" style={{color:"#0e6efd",textDecoration:"underline"}}><a onClick={handlePurchase}>View your Purchases</a></h3>
 												</div>
 											</div>
 										</div>
