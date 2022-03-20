@@ -16,6 +16,7 @@ import Sample from './components/Sample';
 import Cart from './components/Cart';
 import PurchasesPage from './components/PurchasesPage';
 import Shop from './components/Shop';
+import ProductEdit from './components/ProductEdit';
 function App() {
   return (
     <Router>
@@ -33,6 +34,7 @@ function App() {
           <Route exact path="/sample" element={<Sample/>}/>
           <Route exact path="/cart" element={<Cart/>}/>
           <Route exact path="/purchases" element={<PurchasesPage/>}/>
+          <Route exact path="/productedit/:id" element={<ProductEdit/>}/>
         </Routes>
     </Router>
   );

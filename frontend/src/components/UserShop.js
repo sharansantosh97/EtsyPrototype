@@ -137,8 +137,6 @@ function UserShop() {
       
       try
       {
-
-      
       setAddProdBtn(true);
       const response = await axios.get(`${config.baseUrl}/users/${authState.auth.data.data.userId}/shops/${shopDetails._idprofile}/categories`,{headers:{'Authorization':localStorage.getItem("token")}});
       if(response.data && response)
@@ -172,7 +170,7 @@ function UserShop() {
     }
 
     const handleFileInputProd = (e) => {
-      selectedFileProduct(e.target.files[0]);
+      setSelectedFileProduct(e.target.files[0]);
   
   }
   const handleUploadProd = async (file)=>
@@ -232,7 +230,7 @@ function UserShop() {
                               <br />
                               <h4 className="m-t-0 m-b-0">{shopDetails.name}</h4>
                               <span className="job_post">{shopDetails.totalSalesCount} | </span>
-                              <span className="job_post">On Etsy since</span>
+                              <span className="job_post">On Etsy since sin</span>
                               <br /> <br />
                               <div>
                                   <button className="editShop-btn" onClick={handleShowUpload}><i className='fa fa-pencil'></i> Edit Shop Image</button>

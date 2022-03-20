@@ -13,27 +13,20 @@ function Shop() {
 
   const {id} = useParams();
   const navigate = useNavigate();
-  const [userProfileImage, setUserProfileImage] = useState("");
   const [shopDetails,setShopDetails] = useState({});
+  const [userDetails,setUserDetails] = useState({});
   const [shopProducts,setShopProducts] = useState([]);
   const { authState, authDispatch } = useContext(GlobalContext);
-
-
-
-  // const getShopDetails = async () => 
-  // {
-        
-  // }
   
   const getShopDetails = async ()=>
   {
+    console.log("SHOP ID"+id);
     try{
-    const response = await axiosInstance.get(`${config.baseUrl}/users/${authState.auth.data.data.userId}/shops`,{headers:{'Authorization':localStorage.getItem("token")}});
-    if(response.data)
+    const response = await axios.get(`${config.baseUrl}/users/${authState.auth.data.data.userId}/shops/${id}`,{headers:{'Authorization':localStorage.getItem("token")}});
+    if(response && response.data)
     {
-      //setShopDetails(response.data);
-      console.log(JSON.stringify(response.data));
-      
+      setShopDetails(response.data);
+      console.log(response.data);
     }
     else
     {
@@ -45,22 +38,12 @@ function Shop() {
     }
   }
 
-  const getUserProfileImage = async ()=>
-  {
-    const response = await axios.get(`${config.baseUrl}/users/${authState.auth.data.data.userId}/profile`,{headers:{'Authorization':localStorage.getItem("token")}});
-    if(response && response.data)
-    {
-      setUserProfileImage(response.data.imageUrl);
-    }
-  }
-
   const getShopProducts = async ()=>
   {
     try
     {
-      if(shopDetails._id)
+      if(id)
       {
-      console.log("SPD"+JSON.stringify(shopDetails));
       let bodyFormData = {
         priceRange: [],
         categoryIds: [],
@@ -69,7 +52,7 @@ function Shop() {
         search:"",
         excludeShopIds:[]
       }
-      bodyFormData.shopIds.push(shopDetails._id);
+      bodyFormData.shopIds.push(id);
       const response = await axios.post(`${config.baseUrl}/users/${authState.auth.data.data.userId}/products`,bodyFormData,{headers:{'Authorization':localStorage.getItem("token")}});
       console.log(`${config.baseUrl}/users/${authState.auth.data.data.userId}/shops/${shopDetails._id}/products`);
       if(response.data)
@@ -96,68 +79,61 @@ function Shop() {
         navigate("/login", {replace:true});
     }else{
       getShopDetails();
-      //getUserProfileImage();
+      getShopProducts();
     }
   },[]);
 
-  // useEffect(() => {
-  //   getShopProducts();
-  // },[shopDetails]);
-
-  // useEffect(() => {
+  useEffect(() => {
     
-  // },[shopProducts]);
+  },[shopProducts]);
 
   return (
-//     <div className='container'>
-//     <div className="row">
-//         <div className="col-md-8">
-//           <div className="card profile-header">
-//                   <div className="body">
-//                       <div className="row">
-//                           <div className="col-lg-4 col-md-4 col-12">
-//                               <div className="profile-image float-md-right"> <img src="https://i.pinimg.com/736x/22/0c/57/220c57feb2860e0fc131683d16257bf4.jpg" alt=""  width="100px" height="100px"/> </div>
-//                           </div>
-//                           <div className="col-lg-8 col-md-8 col-12">
-//                               <br />
-//                               <h4 className="m-t-0 m-b-0">{shopDetails.name}</h4>
-//                               <span className="job_post">{shopDetails.totalSalesCount} | </span>
-//                               <span className="job_post">On Etsy since</span>
-//                               <br /> <br />
-//                           </div>                
-//                       </div>
-//                   </div>                    
-//           </div>
-//         </div>
-//         <div className="col-md-4">
-//         <div className="card profile-header">
-//                   <div className="body">
-//                       <div className="row">
-//                         <div className="col-lg-6 col-md-6">
-//                         <h6 className="small lead text-black-50 text-center">SHOP OWNER</h6>
-//                           <div className="profile-image float-md-right rounded-circle"> <img className='' src={userProfileImage} alt="" width="100px" height="100px"/> </div>
-//                               <br />
-//                               <p className="mt-1 m-b-0 text-center">{authState.auth.data.data.username}</p>
-//                               <br /> <br />
-//                           </div>                
-//                     </div>
-//                   </div>                    
-//           </div>
-//       </div>
-//     </div>
+    <div className='container'>
+    <div className="row">
+        <div className="col-md-8">
+          <div className="card profile-header">
+                  <div className="body">
+                      <div className="row">
+                          <div className="col-lg-4 col-md-4 col-12">
+                              <div className="profile-image float-md-right"> <img src={shopDetails?.imageUrl} alt=""  width="100px" height="100px"/> </div>
+                          </div>
+                          <div className="col-lg-8 col-md-8 col-12">
+                              <br />
+                              <h4 className="m-t-0 m-b-0">{shopDetails?.name}</h4>
+                              <span className="job_post">Total Sales Count {shopDetails?.totalSalesCount} | </span>
+                              <span className="job_post">On Etsy since - {shopDetails.createdOn?.slice(0,10)}</span>
+                              <br /> <br />
+                          </div>                
+                      </div>
+                  </div>                    
+          </div>
+        </div>
+        <div className="col-md-4">
+        <div className="card profile-header">
+                  <div className="body">
+                      <div className="row">
+                        <div className="col-lg-6 col-md-6">
+                        <h6 className="small lead text-black-50 text-center">SHOP OWNER</h6>
+                          <div className="profile-image float-md-right rounded-circle"> <img className='' src={shopDetails?.ownerDetails.imageUrl} alt="" width="100px" height="100px"/> </div>
+                              <br />
+                              <p className="mt-1 m-b-0 text-center">{shopDetails?.ownerDetails.username}</p>
+                              <br /> <br />
+                          </div>                
+                    </div>
+                  </div>                    
+          </div>
+      </div>
+    </div>
 
-//     <div className="container">
-//       <div className="row">          
-//           {shopProducts && shopProducts.map((eachFavoriteItem)=>{
-//             return <ShopProducts key={eachFavoriteItem._id} item={eachFavoriteItem}/>
-//           })} 
-//       </div>
-//     </div>
+    <div className="container">
+      <div className="row">          
+          {shopProducts && shopProducts.map((eachFavoriteItem)=>{
+            return <ShopProducts key={eachFavoriteItem._id} item={eachFavoriteItem}/>
+          })} 
+      </div>
+    </div>
+ </div>
 
-
-// </div>
-
-<h1>asasas</h1>
 
   )
 }

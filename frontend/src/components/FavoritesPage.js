@@ -8,6 +8,7 @@ import {useNavigate} from "react-router-dom";
 import { GlobalContext } from "../context/Provider";
 import FavoriteItem from "./FavoriteItem";
 import config from "../utils/config.js";
+import { putCartAction } from "../context/actions/cartAction";
 import {
   favoritesAction,
   deleteFavoritesAction,
@@ -136,6 +137,18 @@ const FavoritesPage = () => {
         getFavorites();
       }
     };
+
+    const addToCart = (productId) => {
+      const token = localStorage.getItem("token");
+        if (token) {
+          console.log(productId);
+        console.log(authState.auth.data.data.userId);
+          putCartAction(authState.auth.data.data.userId, productId)(globalDispatch);
+          //console.log("HI put cart action dispatch");
+        }
+      };
+
+
     const productsDiv = favoriteItemsList.map((item, index) => {
       let pageLink = `/product/${item.product._id}`;
       let favProductId = item.product._id;
@@ -152,7 +165,7 @@ const FavoritesPage = () => {
                 </div>
             </div>
             <div className="product-body">
-                <h3 className="product-name"><a href="" > {item.product.name}</a></h3>{/* onClick={()=>{viewItemOverview(item)}} */}
+                <h3 className="product-name"> <NavLink to={pageLink}><a href="" > {item.name}</a></NavLink> </h3>
                 <h4 className="product-price">{item.product.price}<del className="product-old-price">{item.product.price-(30/100)*item.product.price}</del></h4>
                 <div className="product-rating">
                     <i className="fa fa-star"></i>
@@ -172,7 +185,7 @@ const FavoritesPage = () => {
                 </div>
             </div>
             <div className="add-to-cart">
-                <button className="add-to-cart-btn"><i className="fa fa-shopping-cart"></i> add to cart</button>
+                <button className="add-to-cart-btn" onClick={() => addToCart(item._id)}><i className="fa fa-shopping-cart"></i> add to cart</button>
             </div>
             </div>
             </div>

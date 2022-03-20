@@ -1,6 +1,5 @@
 import React, { useState,useContext,useEffect } from 'react';
-import { useSearchParams,NavLink } from 'react-router-dom';
-import { useLocation , useNavigate, useParams, Link} from 'react-router-dom';
+import {useNavigate, useParams, NavLink} from 'react-router-dom';
 import "../css/style.css";
 import "../css/font-awesome.min.css"
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -15,6 +14,7 @@ function ProductPage() {
 	const { authState, authDispatch } = useContext(GlobalContext);
 	const navigate = useNavigate();
 	const [product, setProduct] = useState({})
+	const [pagelink, setPagelink] = useState("/shop/")
 	const [productQuantity, setProductQuantity] = useState(0)
 	const [loading, setLoading] = useState(false)
 	const { globalDispatch, globalState } = useContext(GlobalContext)
@@ -32,14 +32,15 @@ function ProductPage() {
 		}else
 		{
 		setLoading(true)
-		console.log("product page")
-		window.scrollTo(0, 0)
+		console.log("product page");
+		console.log(authState.auth.data.data.userId);
 		axiosInstance()
 		  .get(`/users/${authState.auth.data.data?.userId}/products/${id}`)
 		  .then((response) => {
 			console.log("response.data", response.data)
 			setProduct(response.data)
 			setLoading(false)
+			setPagelink(pagelink+response.data.shopId);
 		  })
 		  .catch((err) => {
 			setLoading(false)
@@ -83,15 +84,12 @@ function ProductPage() {
 						  <div className="preview col-md-6">
 							  <div className="preview-pic tab-content">
 								<div className="tab-pane active" id="pic-1"><img src={product.imageUrl} /></div>
-								<div className="tab-pane" id="pic-2"><img src="http://placekitten.com/400/252" ></img></div>
-								<div className="tab-pane" id="pic-3"><img src="http://placekitten.com/400/252"></img></div>
-								<div className="tab-pane" id="pic-4"><img src="http://placekitten.com/400/252" /></div>
-								<div className="tab-pane" id="pic-5"><img src="http://placekitten.com/400/252" /></div>
+								
 							  </div>
 						  </div>
 						  <div className="details col-md-6">
 							  <h3 className="product-title">{product.name}</h3>
-							  <h4 >Shop Name :<a href="" onClick={shopPageOpen}> {product.shopName} </a></h4>
+							  <h4 >Shop Name :<NavLink to={pagelink}><a href=""> {product.shopName} </a></NavLink></h4>
 							  <div className="rating">
 								  <div className="stars">
 									  <span className="fa fa-star checked"></span>

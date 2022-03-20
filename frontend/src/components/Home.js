@@ -92,14 +92,6 @@ function Home() {
     }
   };
   
-  const viewItemOverview = (item)=>
-  {
-	const params = { id:item._id};
-	navigate({
-		pathname: '/productpage',
-		search: `?${createSearchParams(params)}`
-	  });
-  }
   const productsDiv = data?.products.map((item, index) => {
     let pageLink = `/product/${item._id}`;
     return (
@@ -114,7 +106,7 @@ function Home() {
 				</div>
 			</div>
 			<div className="product-body">
-				<h3 className="product-name"><NavLink to={pageLink}><a href="" > {item.name}</a></NavLink></h3>{/* onClick={()=>{viewItemOverview(item)}} */}
+				<h3 className="product-name"><NavLink to={pageLink}><a href="" > {item.name}</a></NavLink></h3>
 				<h4 className="product-price">{item.price}<del className="product-old-price">{item.price-(30/100)*item.price}</del></h4>
 				<div className="product-rating">
 					<i className="fa fa-star"></i>
