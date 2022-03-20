@@ -90,7 +90,7 @@ function ProductEdit() {
     {
         try{
 
-            const response = await axios.put(`${config.baseUrl}/users/${authState.auth.data.data.userId}/shops/${product.shopId}/products`,product,{headers:{'Authorization':localStorage.getItem("token"),'Content-Type':"application/json"}});
+            const response = await axios.put(`${config.baseUrl}/users/${authState.auth.data.data.userId}/products/${id}`,product,{headers:{'Authorization':localStorage.getItem("token"),'Content-Type':"application/json"}});
             if(response && response.data)
             {
                 console.log("product updated successfully");

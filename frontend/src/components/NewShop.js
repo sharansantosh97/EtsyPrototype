@@ -7,7 +7,7 @@ import {useNavigate} from "react-router-dom";
 function NewShop() {
 
   const [shopName, setShopName] = useState("");
-  const [shopAvailable, setShopAvailable] = useState();
+  const [shopAvailable, setShopAvailable] = useState("3");
   const navigate = useNavigate();
   const { authState, authDispatch } = useContext(GlobalContext);
   const createShop = async ()=>
@@ -16,7 +16,7 @@ function NewShop() {
     {
       const reqBody = {};
       reqBody.name = shopName;
-      const response = await axiosInstance.post(`${config.baseUrl}/users/${authState.auth.data.data.userId}/shops`,reqBody);
+      const response = await axiosInstance.post(`${config.baseUrl}/users/${authState.auth.data.data.userId}/shops`,reqBody,{headers:{'Authorization':localStorage.getItem("token")}});
       if(response)
       {
         navigate("/usershop");
@@ -32,15 +32,15 @@ function NewShop() {
   {
     if(shopName)
     {
-      const response = await axiosInstance.get(`${config.baseUrl}/users/${authState.auth.data.data.userId}/shop/checkavailability?shopname=${shopName}`);
+      const response = await axiosInstance.get(`${config.baseUrl}/users/${authState.auth.data.data.userId}/shop/checkavailability?shopname=${shopName}`,{headers:{'Authorization':localStorage.getItem("token")}});
       if(response && response.data)
       {
         if(response.data.available==true)
         {
-          setShopAvailable(true);
+          setShopAvailable("1");
         }else
         {
-          setShopAvailable(false);
+          setShopAvailable("2");
         }
       }else{
           console.log("Error Response from Shop API");
@@ -64,13 +64,13 @@ function NewShop() {
                     <button className='checkAvail-btn' onClick={checkAvailability}>Check Availability</button>
                 </div>
             </div>
-            {shopAvailable &&
+            {shopAvailable == "1" &&
             <div className="create-shop-avl">
               <div className="shopcreate-success">Available!</div>
               <div><button className="createShop-btn" onClick={createShop} variant="outline-secondary" id="button-addon2">Create Shop</button></div>
             </div>
             }
-            {!shopAvailable &&
+            {!shopAvailable == "2" &&
               <div className="create-shop-notavl">
                 <div className="shopcreate-error">Shop Name Already taken! Please choose a different name to continue</div>
               </div>

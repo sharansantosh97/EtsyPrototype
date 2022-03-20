@@ -14,6 +14,7 @@ function UserShop() {
 
   const navigate = useNavigate();
   const [selectedFile, setSelectedFile] = useState(null);
+  const [imageSuccess, setImageSuccess] = useState(false);
   const [userProfileImage, setUserProfileImage] = useState("");
   const [categories, setCategories] = useState([])
   const [selectedFileProduct, setSelectedFileProduct] = useState(null);
@@ -25,7 +26,7 @@ function UserShop() {
   const { authState, authDispatch } = useContext(GlobalContext);
   const [addItemData, setAddItemData] = useState({
   });
-  
+
   const getShopDetails = async ()=>
   {
     try{
@@ -108,24 +109,34 @@ function UserShop() {
     
   },[shopProducts]);
 
+  useEffect(() => {
+    
+  },[imageSuccess]);
+
   const handleFileInput = (e) => {
     setSelectedFile(e.target.files[0]);
 
   }
-
-
   const handleFileUpload = async (file)=>
     {
        
-        // var bodyFormData = new FormData();
-        // bodyFormData.append('myImage',selectedFile);
-        // const response = await axios.post(`${config.baseUrl}/upload`,bodyFormData,{headers:{'Authorization':localStorage.getItem("token")}});
-        // const iUrl = response.data.imageUrl;
+        var bodyFormData = new FormData();
+        bodyFormData.append('myImage',selectedFile);
+        const response = await axios.post(`${config.baseUrl}/upload`,bodyFormData,{headers:{'Authorization':localStorage.getItem("token")}});
+        const iUrl = response.data.imageUrl;
+        const bd= {
+          "imageUrl":iUrl
+        }
 
-        // // setUserDetails({
-        // //     ...userDetails,
-        // //     imageUrl: iUrl,
-        // //   })
+      const res = await axios.put(`${config.baseUrl}/users/${authState.auth.data.data.userId}/shops/${shopDetails._id}`,bd,{headers:{'Authorization':localStorage.getItem("token")}});
+      if(res && res.data)
+      {
+        setImageSuccess(true);
+        getShopDetails();
+        handleHideUpload();
+      }else{
+        console.log("Error Uploading Image");
+      }
 
     }
 
@@ -224,7 +235,7 @@ function UserShop() {
                   <div className="body">
                       <div className="row">
                           <div className="col-lg-4 col-md-4 col-12">
-                              <div className="profile-image float-md-right"> <img src="https://i.pinimg.com/736x/22/0c/57/220c57feb2860e0fc131683d16257bf4.jpg" alt=""  width="100px" height="100px"/> </div>
+                              <div className="profile-image float-md-right"> <img src={shopDetails.imageUrl} alt=""  width="100px" height="100px"/> </div>
                           </div>
                           <div className="col-lg-8 col-md-8 col-12">
                               <br />
@@ -236,10 +247,10 @@ function UserShop() {
                                   <button className="editShop-btn" onClick={handleShowUpload}><i className='fa fa-pencil'></i> Edit Shop Image</button>
                                   <br/>
                                   {editShopImage && <div>
-                                    <div>Upload Profile Photo</div>
+                                    <div>Upload Shop Image</div>
                                     <input type="file" onChange={handleFileInput} style={{margin:"5px"}} name="imageUrl"/>
                                     
-                                    <button style={{margin:"5px"}}>Upload Shop Image</button>
+                                    <button style={{margin:"5px"}} onClick={handleFileUpload}>Upload Shop Image</button>
                                     <button onClick={handleHideUpload}>Cancel</button>
                                  </div>}
                                   <br/>

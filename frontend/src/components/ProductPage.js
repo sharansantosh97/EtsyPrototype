@@ -6,6 +6,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { GlobalContext } from "../context/Provider"
 import axiosInstance from "../helpers/axiosInstance"
 import { Dimmer, Loader } from "semantic-ui-react"
+import config from "../utils/config.js";
+import axios from "axios";
+import { putCartAction } from "../context/actions/cartAction";
 
 function ProductPage() {
 
@@ -18,6 +21,8 @@ function ProductPage() {
 	const [productQuantity, setProductQuantity] = useState(0)
 	const [loading, setLoading] = useState(false)
 	const { globalDispatch, globalState } = useContext(GlobalContext)
+	const [msg,setMsg] = useState(false);
+	const [msg2,setMsg2] = useState(false);
 	const {
 		user,
 		products: { data },
@@ -66,6 +71,42 @@ function ProductPage() {
 			   navigate("/shop/"+product.shopId);
 		  }
 	  }
+
+
+	  const addToCart = (productId) => {
+		const token = localStorage.getItem("token");
+		if (token) {
+		  console.log(productId);
+		  console.log(authState.auth.data.data.userId);
+		  putCartAction(authState.auth.data.data.userId, productId)(globalDispatch);
+		  //console.log("HI put cart action dispatch");
+		  setMsg2(true);
+			setTimeout(() => {setMsg2(false)}, 2000);
+		}
+	  };
+
+	  const handleFavProduct = async (productId) => 
+	{
+		// if (userId) {
+		//   console.log("productId from handleFavProduct", productId);
+		//   postFavoritesAction(productId, userId)(globalDispatch);
+		//   console.log("global state after postFavoritesAction", globalState);
+		// }
+		const token = localStorage.getItem("token");
+		if(token){        
+		const response = await axios.post(`${config.baseUrl}/users/${authState.auth.data.data.userId}/favorites`,{ productId },{headers:{'Authorization':localStorage.getItem("token")}});
+		if(response && response.data)
+		{
+			console.log("Item Added To Favorites Successfully");
+			setMsg(true);
+			setTimeout(() => {setMsg(false)}, 2000);
+		}else{
+			console.log("Error adding favorites");
+		}
+	}
+	};
+
+
 	
   return (
     <>
@@ -88,7 +129,7 @@ function ProductPage() {
 							  </div>
 						  </div>
 						  <div className="details col-md-6">
-							  <h3 className="product-title">{product.name}</h3>
+							  <h1 className="product-title">{product.name}</h1>
 							  <h4 >Shop Name :<NavLink to={pagelink}><a href=""> {product.shopName} </a></NavLink></h4>
 							  <div className="rating">
 								  <div className="stars">
@@ -102,15 +143,24 @@ function ProductPage() {
 							  </div>
 							  <p className="product-description">{product.description}</p>
 							  <h4 className="price">Current Price: <span>{product.price}</span></h4>
-							  <p className="vote"><strong>91%</strong> of buyers enjoyed this product! <strong>(87 votes)</strong></p>
 							  <div className="action">
-								  <button className="login-btn" type="button">Add to cart</button>
-								  <button className="login-btn" type="button" style={{width:"150px", margin:"10px"}}>Add to Favorites</button>
+								  <button className="login-btn" type="button" onClick={() => addToCart(id)}>Add to cart</button>
+								  <button className="login-btn" type="button" style={{width:"150px", margin:"10px"}} onClick={() => handleFavProduct(id)} >Add to Favorites</button>
 							  </div>
 						  </div>
 					  </div>
 				  </div>
 			  </div>
+			  {msg &&
+				<div class='alert alert-success' role='alert'>
+				Item added to Favorites Successfully!
+				</div>
+      		  } 
+			{msg2 &&
+				<div class='alert alert-success' role='alert'>
+				Item added to cart Successfully!
+				</div>
+      		  } 
 		  </div>
 		  )
 	  }

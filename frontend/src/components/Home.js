@@ -1,12 +1,12 @@
 import React, {useContext,useEffect,useState} from 'react';
 import { GlobalContext } from "../context/Provider";
 import Footer from './Footer';
-import axios from "axios";
 import NavigationBar from './NavigationBar'
 import { productsAction } from "../context/actions/productsAction";
 import { postFavoritesAction } from "../context/actions/favoritesAction";
 import { putCartAction } from "../context/actions/cartAction";
 import config from "../utils/config.js";
+import axios from "axios";
 import {useNavigate, NavLink} from "react-router-dom";
 import {createSearchParams} from "react-router-dom";
 
@@ -116,6 +116,7 @@ function Home() {
 					<i className="fa fa-star"></i>
 				</div>
 				<h4 className="product-description">{item.description}</h4>
+				{item.quantity==0 && <h4 className="product-description">OUT OF STOCK!</h4>}
 				<div className="product-btns">
 					<button className="add-to-wishlist" onClick={() => handleFavProduct(item._id)}>
 						<i className="fa fa-heart-o" style={{color:"red"}}></i>
