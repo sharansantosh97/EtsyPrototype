@@ -20,6 +20,7 @@ function NewShop() {
       if(response)
       {
         navigate("/usershop");
+        
       }else
       {
         console.log("SHOP creation unsuccessfull");
