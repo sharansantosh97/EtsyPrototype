@@ -95,13 +95,13 @@ function Shop() {
                   <div className="body">
                       <div className="row">
                           <div className="col-lg-4 col-md-4 col-12">
-                              <div className="profile-image float-md-right"> <img src={shopDetails?.imageUrl} alt=""  width="100px" height="100px"/> </div>
+                              <div className="profile-image float-md-right"> <img src={shopDetails?.imageUrl?shopDetails?.imageUrl:"https://washingtoniowa.gov/wp-content/plugins/yith-woocommerce-multi-vendor-premium/assets/images/shop-placeholder.jpg"} alt=""  width="100px" height="100px"/> </div>
                           </div>
                           <div className="col-lg-8 col-md-8 col-12">
                               <br />
                               <h4 className="m-t-0 m-b-0">{shopDetails?.name}</h4>
                               <span className="job_post">Total Sales Count {shopDetails?.totalSalesCount} | </span>
-                              <span className="job_post">On Etsy since - {shopDetails.createdOn?.slice(0,10)}</span>
+                              <span className="job_post">On Etsy since - {shopDetails?.createdOn?.slice(0,10)}</span>
                               <br /> <br />
                           </div>                
                       </div>
@@ -114,7 +114,7 @@ function Shop() {
                       <div className="row">
                         <div className="col-lg-6 col-md-6">
                         <h6 className="small lead text-black-50 text-center">SHOP OWNER</h6>
-                          <div className="profile-image float-md-right rounded-circle"> <img className='' src={shopDetails?.ownerDetails?.imageUrl} alt="" width="100px" height="100px"/> </div>
+                          <div className="profile-image float-md-right rounded-circle"> <img className='' src={shopDetails?.ownerDetails?.imageUrl?shopDetails?.ownerDetails?.imageUrl:"https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png"} alt="" width="100px" height="100px"/> </div>
                               <br />
                               <p className="mt-1 m-b-0 text-center">{shopDetails?.ownerDetails?.username}</p>
                               <br /> <br />

@@ -158,7 +158,7 @@ const FavoritesPage = () => {
         <div class="col-4" style={{width:"250px",height:"500px"}}>
         <div className="product">
             <div className="product-img">
-                <img src={item.product.imageUrl} style={{width:"240px",height:"200px"}} alt=""></img>
+                <img src={item.product.imageUrl}  style={{width:"240px",height:"200px"}} alt=""></img>
                 <div className="product-label">
                     <span className="sale">-30%</span>
                     <span className="new">NEW</span>
@@ -209,7 +209,7 @@ const FavoritesPage = () => {
                   <div class='profile-image float-md-right'>
                     {" "}
                     <img
-                      src={userDetails?.imageUrl}
+                      src={userDetails?.imageUrl?userDetails?.imageUrl:"https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png"}
                       alt='Profile Image Not Available'
                       width = "100px"
                       height = "100px"

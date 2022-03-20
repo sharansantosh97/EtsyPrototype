@@ -270,7 +270,7 @@ function UserShop() {
                   <div className="body">
                       <div className="row">
                           <div className="col-lg-4 col-md-4 col-12">
-                              <div className="profile-image float-md-right"> <img src={shopDetails.imageUrl} alt=""  width="100px" height="100px"/> </div>
+                              <div className="profile-image float-md-right"> <img src={shopDetails?.imageUrl?shopDetails?.imageUrl:"https://washingtoniowa.gov/wp-content/plugins/yith-woocommerce-multi-vendor-premium/assets/images/shop-placeholder.jpg"} alt=""  width="100px" height="100px"/> </div>
                           </div>
                           <div className="col-lg-8 col-md-8 col-12">
                               <br />
@@ -302,7 +302,7 @@ function UserShop() {
                       <div className="row">
                         <div className="col-lg-6 col-md-6">
                         <h6 className="small lead text-black-50 text-center">SHOP OWNER</h6>
-                          <div className="profile-image float-md-right rounded-circle"> <img className='' src={userProfileImage} alt="" width="100px" height="100px"/> </div>
+                          <div className="profile-image float-md-right rounded-circle"> <img className='' src={userProfileImage?userProfileImage:"https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png"} alt="" width="100px" height="100px"/> </div>
                               <br />
                               <p className="mt-1 m-b-0 text-center">{authState.auth.data.data.username}</p>
                               <br /> <br />

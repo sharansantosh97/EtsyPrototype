@@ -9,16 +9,20 @@ async function getUserShopDetails(userId) {
 }
 
 async function login(req, res) {
+    
     const email = req.body.email;
     let password = req.body.password;
+    console.log(email+" "+password);
     try {
         let user = await query(`select * from users where email = '${email}'`);
         if (user && user.length > 0) {
+            console.log("IN IN ");
             let userObj = user[0];
             var userId = userObj._id;
             var userShopDetails = await getUserShopDetails(userId);
             let isValidPassword = bcrypt.compareSync(password, userObj.password); // true
             if (isValidPassword == false) {
+                console.log("IN IN ");
                 res.status(401).json({ msg: 'Login failed' });
                 return;
             }
