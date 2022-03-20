@@ -26,7 +26,8 @@ function UserShop() {
   const { authState, authDispatch } = useContext(GlobalContext);
   const [addItemData, setAddItemData] = useState({
   });
-
+  const [newCatShow,setNewCatShow] = useState(false);
+  const [newCatValue,setNewCatValue] = useState("");
   const getShopDetails = async ()=>
   {
     try{
@@ -109,9 +110,8 @@ function UserShop() {
     
   },[shopProducts]);
 
-  useEffect(() => {
-    
-  },[imageSuccess]);
+
+
 
   const handleFileInput = (e) => {
     setSelectedFile(e.target.files[0]);
@@ -149,7 +149,7 @@ function UserShop() {
       try
       {
       setAddProdBtn(true);
-      const response = await axios.get(`${config.baseUrl}/users/${authState.auth.data.data.userId}/shops/${shopDetails._idprofile}/categories`,{headers:{'Authorization':localStorage.getItem("token")}});
+      const response = await axios.get(`${config.baseUrl}/users/${authState.auth.data.data.userId}/shops/${shopDetails._id}/categories`,{headers:{'Authorization':localStorage.getItem("token")}});
       if(response.data && response)
       {
         setCategories(response.data.categories);
@@ -225,6 +225,41 @@ function UserShop() {
       }catch(e)
       {
         console.log("Error posting product data"+e);
+      }
+    }
+
+    const showNewCatInput = ()=>
+    {
+      setNewCatShow(true);
+    }
+
+    const hideNewCatInput = ()=>
+    {
+      setNewCatShow(false);
+    }
+
+    const handleNewCat = (e)=>
+    {
+        setNewCatValue(e.target.value);
+    }
+    const newCat = {
+      "name":newCatValue
+    }
+    const postNewCatData = async()=>
+    {
+      const response = await axios.post(`${config.baseUrl}/users/${authState.auth.data.data.userId}/shops/${shopDetails._id}/categories`,newCat, {headers:{'Authorization':localStorage.getItem("token")}});
+      if(response && response.data)
+      {
+        const response = await axios.get(`${config.baseUrl}/users/${authState.auth.data.data.userId}/shops/${shopDetails._id}/categories`,{headers:{'Authorization':localStorage.getItem("token")}});
+        if(response.data && response)
+        {
+          setCategories(response.data.categories);
+        }else{
+          console.log("Error adding new categories");
+        }
+        hideNewCatInput();
+      }else{
+        console.log("Error Adding New Category");
       }
     }
   return (
@@ -310,28 +345,49 @@ function UserShop() {
                                 </div>
                                 <div className="col">
                                     <div className="form-group">
-                                    <label>Category</label>
-                                        <select
-                                    id='category'
-                                    class='form-control'
-                                    name='categoryId'
-                                    onChange={handleAddItemInputChange}
-                                  >
-                                    <option disabled selected>
-                                      Choose Category
-                                    </option>
-                                    {categories &&
-                                      categories.map((category) => {
-                                        return (
-                                          <option value={category._id}>
-                                            {category.name}
-                                          </option>
-                                        )
-                                      })}
-                                  </select>
+                                    <label>Description</label>
+                                    <input className="form-control" type="text" name="description" onChange={handleAddItemInputChange}></input>
                                     </div>
                                 </div>
                                 </div>
+                                
+                                <div className="row">
+                                    <div className="col">
+                                        <div className="form-group">
+                                        <label>Category</label>
+                                            <select
+                                        id='category'
+                                        class='form-control'
+                                        name='categoryId'
+                                        onChange={handleAddItemInputChange}
+                                      >
+                                        <option disabled selected>
+                                          Choose Category
+                                        </option>
+                                        {categories &&
+                                          categories.map((category) => {
+                                            return (
+                                              <option value={category._id}>
+                                                {category.name}
+                                              </option>
+                                            )
+                                          })}
+                                      </select>
+                                        </div>
+                                        <button onClick={showNewCatInput}>Create New Category</button>
+                                        <br></br>
+                                        <br></br>
+                                        {newCatShow && <input placeholder="Enter New Category" className="form-control" type="text" name="newcat" value={newCatValue} onChange={handleNewCat}></input>}
+                                    </div>
+                                    <div className="col">
+                                      <br></br>
+                                      <br></br>
+                                      {newCatShow &&
+                                      <button onClick={postNewCatData}>Save</button> }
+                                      {newCatShow && <button onClick={hideNewCatInput}>Cancel</button> }
+                                    </div>
+                                </div>
+
 
                                 <div className="row">
                                 <div className="col">
@@ -347,16 +403,6 @@ function UserShop() {
                                     </div>
                                 </div>
                                 </div>
-                                
-                                <div className="row">
-                                <div className="col">
-                                    <div className="form-group">
-                                    <label>Description</label>
-                                    <input className="form-control" type="text" name="description" onChange={handleAddItemInputChange}></input>
-                                    </div>
-                                </div>
-                                </div>
-
                                 <div className="row">
                                 <div className="col">
                                 <div>
@@ -368,9 +414,6 @@ function UserShop() {
                                  </div>
                                 </div>
                                 </div>
-
-
-                            
                             </div>
                             </div>
                             <div className="row">
