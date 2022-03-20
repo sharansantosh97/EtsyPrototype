@@ -36,20 +36,20 @@ function PurchasesPage() {
 
     <div>
         <br></br>
-        <div class="container">
-        <h1 >My Purchases</h1>
+       {purchaseDeatils.length !=0 &&<div class="container">
+        <h1 style={{color:"black"}} >My Orders</h1>
         <br></br>
         <div class="row">
             <div class="col-12">
                 <table class="table table-image">
                 <thead>
                     <tr>
-                    <th scope="col">Date</th>
-                    <th scope="col">Product</th>
-                    <th scope="col">Product Name</th>
-                    <th scope="col">Price</th>
-                    <th scope="col">Quantity</th>
-                    <th scope="col">Order ID</th>
+                    <th scope="col" style={{color:"red"}}>Date</th>
+                    <th scope="col" style={{color:"red"}}>Product</th>
+                    <th scope="col" style={{color:"red"}}>Product Name</th>
+                    <th scope="col" style={{color:"red"}}>Price</th>
+                    <th scope="col" style={{color:"red"}}>Quantity</th>
+                    <th scope="col" style={{color:"red"}}>Order ID</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -73,8 +73,13 @@ function PurchasesPage() {
                 </tbody>
                 </table>   
             </div>
-        </div>
-        </div>
+        </div> 
+        </div> }
+        {purchaseDeatils.length ==0 &&
+            <div class="container">
+                <h1 style={{color:"red"}}>You have not made any purchases yet!</h1>
+            </div>
+        }
     </div>
   )
 }

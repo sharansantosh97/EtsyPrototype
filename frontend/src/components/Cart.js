@@ -123,9 +123,10 @@ const Cart = () => {
     <div className="container px-2 px-lg-2 my-5">
       <div className="row w-100">
         <div className="col-lg-12 col-md-12 col-12">
-          <h3 className="display-5 mb-2 text-center">Shopping Cart</h3>
-          <p className="mb-5 text-center">
-            <i className="text-info font-weight-bold"> {cartCount}</i> items in
+          <h3 className="display-5 mb-2 text-left" style={{color:"red"}}>Shopping Cart</h3>
+          <br></br>
+          <p className="mb-5 text-left" style={{color:"red"}}>
+             {cartCount}  items in
             your cart
           </p>
           { cartItems.length!=0 && <table

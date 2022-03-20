@@ -146,8 +146,8 @@ function ProductPage() {
 								  <span className="review-no">41 reviews</span>
 							  </div>
 							  <p className="product-description">{product.description}</p>
-							  <h4 className="price">Current Price: <span>{product.price}</span></h4>
-							  {product.quantity==0 && <h5 className="price">Current Price: <span>{product.price}</span></h5>}
+							  <h2 className="price" style={{color:"red"}}>Current Price: $ {product.price}</h2>
+							  {product.quantity==0 && <h3 className="price" style={{color:"red"}}>( OUT OF STOCK! )</h3>}
 							  <div className="action">
 								  <button className="login-btn" type="button" onClick={() => addToCart(id)}>Add to cart</button>
 								  <button className="login-btn" type="button" style={{width:"150px", margin:"10px"}} onClick={() => handleFavProduct(id)} >Add to Favorites</button>

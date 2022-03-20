@@ -166,7 +166,7 @@ const FavoritesPage = () => {
             </div>
             <div className="product-body">
                 <h3 className="product-name"> <NavLink to={pageLink}><a href="" > {item.product.name}</a></NavLink> </h3>
-                <h4 className="product-price">{item.product.price}<del className="product-old-price">{item.product.price-(30/100)*item.product.price}</del></h4>
+                <h4 className="product-price">$ {item.product.price}<del className="product-old-price">{item.product.price-(30/100)*item.product.price}</del></h4>
                 <div className="product-rating">
                     <i className="fa fa-star"></i>
                     <i className="fa fa-star"></i>
@@ -202,7 +202,7 @@ const FavoritesPage = () => {
        <>
     <div class='row' >
         <div class='col-xl-6 col-lg-7 col-md-12' >
-          <div class='card profile-header' >
+          <div class='card profile-header' style={{marginTop:"30px", marginLeft:"330px"}}>
             <div class='body'>
               <div class='row'>
                 <div class='col-lg-4 col-md-4 col-12'>

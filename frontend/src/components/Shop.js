@@ -91,7 +91,7 @@ function Shop() {
     <div className='container'>
     <div className="row">
         <div className="col-md-8">
-          <div className="card profile-header">
+          <div className="card profile-header" style={{marginTop:"30px"}}>
                   <div className="body">
                       <div className="row">
                           <div className="col-lg-4 col-md-4 col-12">
@@ -99,7 +99,7 @@ function Shop() {
                           </div>
                           <div className="col-lg-8 col-md-8 col-12">
                               <br />
-                              <h4 className="m-t-0 m-b-0">{shopDetails?.name}</h4>
+                              <h2 className="m-t-0 m-b-0">{shopDetails?.name}</h2>
                               <span className="job_post">Total Sales Count {shopDetails?.totalSalesCount} | </span>
                               <span className="job_post">On Etsy since - {shopDetails?.createdOn?.slice(0,10)}</span>
                               <br /> <br />
@@ -109,12 +109,12 @@ function Shop() {
           </div>
         </div>
         <div className="col-md-4">
-        <div className="card profile-header">
+        <div className="card profile-header" style={{marginTop:"30px",height:"230px"}}>
                   <div className="body">
                       <div className="row">
-                        <div className="col-lg-6 col-md-6">
+                        <div className="col-lg-12 col-md-12">
                         <h6 className="small lead text-black-50 text-center">SHOP OWNER</h6>
-                          <div className="profile-image float-md-right rounded-circle"> <img className='' src={shopDetails?.ownerDetails?.imageUrl?shopDetails?.ownerDetails?.imageUrl:"https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png"} alt="" width="100px" height="100px"/> </div>
+                          <div className="profile-image float-md-right rounded-circle" style={{margin: "0px 110px"}}> <img className='' src={shopDetails?.ownerDetails?.imageUrl?shopDetails?.ownerDetails?.imageUrl:"https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png"} alt="" width="100px" height="100px"/> </div>
                               <br />
                               <p className="mt-1 m-b-0 text-center">{shopDetails?.ownerDetails?.username}</p>
                               <br /> <br />

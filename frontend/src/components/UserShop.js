@@ -266,7 +266,7 @@ function UserShop() {
     <div className='container'>
     <div className="row">
         <div className="col-md-8">
-          <div className="card profile-header">
+          <div className="card profile-header" style={{marginTop:"30px"}}>
                   <div className="body">
                       <div className="row">
                           <div className="col-lg-4 col-md-4 col-12">
@@ -274,7 +274,7 @@ function UserShop() {
                           </div>
                           <div className="col-lg-8 col-md-8 col-12">
                               <br />
-                              <h4 className="m-t-0 m-b-0">{shopDetails.name}</h4>
+                              <h2 className="m-t-0 m-b-0">{shopDetails.name}</h2>
                               <span className="job_post">{shopDetails.totalSalesCount} | </span>
                               <span className="job_post">On Etsy since - {shopDetails.createdOn?.slice(0,10)}</span>
                               <br /> <br />
@@ -297,7 +297,7 @@ function UserShop() {
           </div>
         </div>
         <div className="col-md-4">
-        <div className="card profile-header">
+        <div className="card profile-header" style={{marginTop:"30px",height:"230px"}}>
                   <div className="body">
                       <div className="row">
                         <div className="col-lg-12 col-md-12">
@@ -317,7 +317,7 @@ function UserShop() {
 
 
     {addProdBtn &&     <div>
-        <div className="container">
+        <div className="container" style={{marginLeft:"0px"}}>
         <div className="row flex-lg-nowrap">
         <div className="col-12 col-lg-auto mb-3" style={{width: "200px"}}>
         </div>

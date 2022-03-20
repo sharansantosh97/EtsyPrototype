@@ -107,7 +107,7 @@ function Home() {
 			</div>
 			<div className="product-body">
 				<h3 className="product-name"><NavLink to={pageLink}><a href="" > {item.name}</a></NavLink></h3>
-				<h4 className="product-price">{item.price}<del className="product-old-price">{item.price-(30/100)*item.price}</del></h4>
+				<h4 className="product-price">$ {item.price}<del className="product-old-price">{item.price-(30/100)*item.price}</del></h4>
 				<div className="product-rating">
 					<i className="fa fa-star"></i>
 					<i className="fa fa-star"></i>
