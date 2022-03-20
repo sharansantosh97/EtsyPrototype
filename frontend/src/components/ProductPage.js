@@ -118,24 +118,21 @@ function ProductPage() {
 			  </Dimmer>
 			</div>
 		  ) :(
-			  product && <div className="container">
+			  product && <div className="container" style={{marginTop:"70px"}}>
 			  <div className="card">
 				  <div className="container-fliud">
 					  <div className="wrapper row">
-						  <div className="preview col-md-6">
-						  <div className="preview-pic tab-content">
-						  <div className="tab-pane active" id="pic-1"><img src="http://placekitten.com/400/252" /></div>
-						  <div className="tab-pane" id="pic-2"><img src="http://placekitten.com/400/252" ></img></div>
-						  <div className="tab-pane" id="pic-3"><img src="http://placekitten.com/400/252"></img></div>
-						  <div className="tab-pane" id="pic-4"><img src="http://placekitten.com/400/252" /></div>
-						  <div className="tab-pane" id="pic-5"><img src="http://placekitten.com/400/252" /></div>
+						  <div className="preview col-md-6" >
+						  <div className="preview-pic tab-content" style={{justifyContent:"center", alignItems: "center", alignContent:"center", padding:"30px"}}>
+						  <div className="tab-pane active" id="pic-1"><img src={product.imageUrl} style={{width:"300px", height:"300px"}} /></div>
+	
 						</div>
 							  {/* <div className="preview-pic tab-content">
 								<div className="tab-pane active" id="pic-1"></div>
 								<img src={product.imageUrl}></img>
 							   </div> */}
 						  </div>
-						  <div className="details col-md-6">
+						  <div className="details col-md-6" style={{padding: "30px"}}>
 							  <h1 className="product-title">{product.name}</h1>
 							  <h4 >Shop Name :<NavLink to={pagelink}><a href=""> {product.shopName} </a></NavLink></h4>
 							  <div className="rating">

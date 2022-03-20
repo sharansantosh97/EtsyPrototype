@@ -127,8 +127,8 @@ function ProfileEditPage() {
     <>
         <div className="container">
         <div className="row flex-lg-nowrap">
-        <div className="col-12 col-lg-auto mb-3" style={{width: "200px"}}>
-        </div>
+        {/* <div className="col-12 col-lg-auto mb-3" style={{width: "200px"}}>
+        </div> */}
 
         <div className="col">
             <div className="row">

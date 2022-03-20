@@ -300,9 +300,9 @@ function UserShop() {
         <div className="card profile-header">
                   <div className="body">
                       <div className="row">
-                        <div className="col-lg-6 col-md-6">
+                        <div className="col-lg-12 col-md-12">
                         <h6 className="small lead text-black-50 text-center">SHOP OWNER</h6>
-                          <div className="profile-image float-md-right rounded-circle"> <img className='' src={userProfileImage?userProfileImage:"https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png"} alt="" width="100px" height="100px"/> </div>
+                          <div className="profile-image rounded-circle" style={{margin: "0px 110px"}}> <img className='' src={userProfileImage?userProfileImage:"https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png"} alt="" width="100px" height="100px"/> </div>
                               <br />
                               <p className="mt-1 m-b-0 text-center">{authState.auth.data.data.username}</p>
                               <br /> <br />
@@ -377,14 +377,20 @@ function UserShop() {
                                         <button onClick={showNewCatInput}>Create New Category</button>
                                         <br></br>
                                         <br></br>
-                                        {newCatShow && <input placeholder="Enter New Category" className="form-control" type="text" name="newcat" value={newCatValue} onChange={handleNewCat}></input>}
+                                        {/* {newCatShow && <input placeholder="Enter New Category" className="form-control" type="text" name="newcat" value={newCatValue} onChange={handleNewCat}></input>} */}
                                     </div>
+                                    <div className='row'>
+<div className='col'>
+  {newCatShow && <input placeholder="Enter New Category" className="form-control" type="text" name="newcat" value={newCatValue} onChange={handleNewCat}></input>}
+</div>
+                                   
                                     <div className="col">
-                                      <br></br>
-                                      <br></br>
+                                      {/* <br></br>
+                                      <br></br> */}
                                       {newCatShow &&
                                       <button onClick={postNewCatData}>Save</button> }
                                       {newCatShow && <button onClick={hideNewCatInput}>Cancel</button> }
+                                    </div>
                                     </div>
                                 </div>
 
