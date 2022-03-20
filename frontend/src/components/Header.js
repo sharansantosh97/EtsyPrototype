@@ -145,7 +145,7 @@ function Header() {
 									<a className="dropdown-toggle" data-toggle="dropdown" aria-expanded="true" style={{textDecoration:"none"}}>
 										<i className="fa fa-shopping-cart"></i>
 										<span>Your Cart</span>
-										{cartItems!=0 && <div className="qty">{cartItems?.quantity}</div>}
+										{cartItems!=0 && <div className="qty">{cartItems?.length}</div>}
 									</a>
 									<div className="cart-dropdown">
 										<div className="cart-list">
@@ -186,7 +186,7 @@ function Header() {
 										<div className="cart-list">
 											<div className="product-widget">
 												<div className="product-body">
-													<h3 className="product-name"><a href="" onClick={(e)=>{shopView(e)}}> View Shop</a></h3>
+													<h3 className="product-name"><a href="" onClick={(e)=>{shopView(e)}}> View My Shop</a></h3>
 												</div>
 											</div>
 										</div>

@@ -155,7 +155,7 @@ function ProfileEditPage() {
                                 <div className="col">
                                     <div className="form-group">
                                     <label>Date of Birth</label>
-                                    <input className="form-control" type="date" name="dob"  value={userDetails?.dob.slice(0,10)} onChange={handleChange}></input>
+                                    <input className="form-control" type="date" name="dob"  value={userDetails?.dob?.slice(0,10)} onChange={handleChange}></input>
                                     </div>
                                 </div>
                                 </div>
@@ -173,11 +173,11 @@ function ProfileEditPage() {
                                         <label class="form-check-label" for="flexRadioDefault2"> Female </label>
                                         </div>*/}
                                         <div onChange={handleRadio}>
-                                            <input type="radio" value="Male" name="gender" checked={userDetails.gender==='Male'}/> Male
+                                            <input type="radio" value="Male" name="gender" checked={userDetails?.gender==='Male'}/> Male
                                             <br></br>
-                                            <input type="radio" value="Female" name="gender" checked={userDetails.gender==='Female'}/> Female
+                                            <input type="radio" value="Female" name="gender" checked={userDetails?.gender==='Female'}/> Female
                                             <br></br>
-                                            <input type="radio" value="Other" name="gender" checked={userDetails.gender==='Other'}/> Other
+                                            <input type="radio" value="Other" name="gender" checked={userDetails?.gender==='Other'}/> Other
                                        </div>
                                     </div>
                                 </div>
@@ -186,13 +186,13 @@ function ProfileEditPage() {
                                 <div className="col">
                                     <div className="form-group">
                                     <label>Email</label>
-                                    <input className="form-control" type="text" placeholder="user@example.com" name="email" value={userDetails.email} onChange={handleChange}></input>
+                                    <input className="form-control" type="text" placeholder="user@example.com" name="email" value={userDetails?.email} onChange={handleChange}></input>
                                     </div>
                                 </div>
                                 <div className="col">
                                     <div className="form-group">
                                     <label>Phone Number</label>
-                                    <input className="form-control" type="text" placeholder="123-456-7890" name="phoneNo" value={userDetails.phoneNo} /*pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"*/ onChange={handleChange}></input>
+                                    <input className="form-control" type="text" placeholder="123-456-7890" name="phoneNo" value={userDetails?.phoneNo} /*pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"*/ onChange={handleChange}></input>
                                     </div>
                                 </div>
                                 </div>
@@ -200,7 +200,7 @@ function ProfileEditPage() {
                                 <div className="col mb-3">
                                     <div className="form-group">
                                     <label>About</label>
-                                    <textarea className="form-control" rows="5" placeholder="My Bio"  name="about" value={userDetails.about} onChange={handleChange}></textarea>
+                                    <textarea className="form-control" rows="5" placeholder="My Bio"  name="about" value={userDetails?.about} onChange={handleChange}></textarea>
                                     </div>
                                 </div>
                                 </div>
@@ -208,7 +208,7 @@ function ProfileEditPage() {
                                 <div className="col">
                                     <div className="form-group">
                                     <label>Address</label>
-                                    <input className="form-control" type="text"  name="address" onChange={handleChange} value={userDetails.address}></input>
+                                    <input className="form-control" type="text"  name="address" onChange={handleChange} value={userDetails?.address}></input>
                                     </div>
                                 </div>
                         
@@ -217,13 +217,13 @@ function ProfileEditPage() {
                                 <div className="col">
                                     <div className="form-group">
                                     <label>City</label>
-                                    <input className="form-control" type="text"  name="city" onChange={handleChange} value={userDetails.city}></input>
+                                    <input className="form-control" type="text"  name="city" onChange={handleChange} value={userDetails?.city}></input>
                                     </div>
                                 </div>
                                 <div className="col">
                                     <div className="form-group">
                                     <label>State</label>
-                                    <input className="form-control" type="text"  name="state" onChange={handleChange} value={userDetails.state}></input>
+                                    <input className="form-control" type="text"  name="state" onChange={handleChange} value={userDetails?.state}></input>
                                     </div>
                                 </div>
                                 </div>
@@ -231,9 +231,9 @@ function ProfileEditPage() {
                                 <div className="col">
                                     <div className="form-group">
                                     <label>Country</label>
-                                    <select className="form-control"  name="country" onChange={handleChange} value={userDetails.country}>
+                                    <select className="form-control"  name="country" onChange={handleChange} value={userDetails?.country}>
                                      <option value="Select the country">Select the country</option>
-                                     {countries.map((country) => <option key={country.name} value={country.name}>{country.name}</option>)}
+                                     {countries.map((country) => <option key={country?.name} value={country?.name}>{country?.name}</option>)}
                                     </select>
                                     </div>
                                 </div>

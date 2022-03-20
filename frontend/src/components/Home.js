@@ -99,7 +99,7 @@ function Home() {
 		<div class="col-4" style={{width:"250px",height:"500px"}}>
 		<div className="product">
 			<div className="product-img">
-				<img src={item.imageUrl} style={{width:"150px",height:"150px"}}alt=""></img>
+				<img src={item.imageUrl} style={{width:"240px",height:"200px"}}alt=""></img>
 				<div className="product-label">
 					<span className="sale">-30%</span>
 					<span className="new">NEW</span>
@@ -116,7 +116,7 @@ function Home() {
 					<i className="fa fa-star"></i>
 				</div>
 				<h4 className="product-description">{item.description}</h4>
-				{item.quantity==0 && <h4 className="product-description">OUT OF STOCK!</h4>}
+				{item.quantity==0 && <h4 className="product-description" style={{color:"red"}}>OUT OF STOCK!</h4>}
 				<div className="product-btns">
 					<button className="add-to-wishlist" onClick={() => handleFavProduct(item._id)}>
 						<i className="fa fa-heart-o" style={{color:"red"}}></i>

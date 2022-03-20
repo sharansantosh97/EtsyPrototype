@@ -158,7 +158,7 @@ const FavoritesPage = () => {
         <div class="col-4" style={{width:"250px",height:"500px"}}>
         <div className="product">
             <div className="product-img">
-                <img src={item.product.imageUrl} style={{width:"150px",height:"150px"}} alt=""></img>
+                <img src={item.product.imageUrl} style={{width:"240px",height:"200px"}} alt=""></img>
                 <div className="product-label">
                     <span className="sale">-30%</span>
                     <span className="new">NEW</span>
@@ -175,6 +175,7 @@ const FavoritesPage = () => {
                     <i className="fa fa-star"></i>
                 </div>
                 <h4 className="product-description">{item.description}</h4>
+                {item.product.quantity==0 && <h4 className="product-description" style={{color:"red"}}>OUT OF STOCK!</h4>}
                 <div className="product-btns">
                     <button className="add-to-wishlist" onClick={() => handleDeleteFav(item.product._id)}>  {/* */}
                         <i className="fa fa-heart-o" style={{color:"red"}}></i>
@@ -208,7 +209,7 @@ const FavoritesPage = () => {
                   <div class='profile-image float-md-right'>
                     {" "}
                     <img
-                      src={userDetails.imageUrl}
+                      src={userDetails?.imageUrl}
                       alt='Profile Image Not Available'
                       width = "100px"
                       height = "100px"
@@ -217,7 +218,7 @@ const FavoritesPage = () => {
                 </div>
                 <div class='col-lg-8 col-md-8 col-12'>
                   <br />
-                  <h4 class='m-t-0 m-b-0'>{authState.auth.data.data.username}</h4>
+                  <h4 class='m-t-0 m-b-0'>{authState.auth.data.data?.username}</h4>
                   <br />
                   <div>
                     <NavLink to="/profileEdit"><button class="editProfile-btn">
@@ -260,13 +261,13 @@ const FavoritesPage = () => {
                                 <div className="col">
                                     <div className="form-group">
                                     <label>Full Name</label>
-                                    <p>{userDetails.username}</p>
+                                    <p>{userDetails?.username}</p>
                                     </div>
                                 </div>
                                 <div className="col">
                                     <div className="form-group">
                                     <label>Date of Birth</label>
-                                    <p>{userDetails?.dob.slice(0,10)}</p>
+                                    <p>{userDetails?.dob?.slice(0,10)}</p>
                                     </div>
                                 </div>
                                 </div>

@@ -241,7 +241,7 @@ function UserShop() {
                               <br />
                               <h4 className="m-t-0 m-b-0">{shopDetails.name}</h4>
                               <span className="job_post">{shopDetails.totalSalesCount} | </span>
-                              <span className="job_post">On Etsy since sin</span>
+                              <span className="job_post">On Etsy since - {shopDetails.createdOn?.slice(0,10)}</span>
                               <br /> <br />
                               <div>
                                   <button className="editShop-btn" onClick={handleShowUpload}><i className='fa fa-pencil'></i> Edit Shop Image</button>

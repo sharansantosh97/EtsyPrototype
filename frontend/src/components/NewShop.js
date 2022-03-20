@@ -20,7 +20,7 @@ function NewShop() {
       if(response)
       {
         navigate("/usershop");
-        
+
       }else
       {
         console.log("SHOP creation unsuccessfull");
@@ -71,7 +71,7 @@ function NewShop() {
               <div><button className="createShop-btn" onClick={createShop} variant="outline-secondary" id="button-addon2">Create Shop</button></div>
             </div>
             }
-            {!shopAvailable == "2" &&
+            {shopAvailable == "2" &&
               <div className="create-shop-notavl">
                 <div className="shopcreate-error">Shop Name Already taken! Please choose a different name to continue</div>
               </div>

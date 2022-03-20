@@ -123,10 +123,17 @@ function ProductPage() {
 				  <div className="container-fliud">
 					  <div className="wrapper row">
 						  <div className="preview col-md-6">
-							  <div className="preview-pic tab-content">
-								<div className="tab-pane active" id="pic-1"><img src={product.imageUrl} /></div>
-								
-							  </div>
+						  <div className="preview-pic tab-content">
+						  <div className="tab-pane active" id="pic-1"><img src="http://placekitten.com/400/252" /></div>
+						  <div className="tab-pane" id="pic-2"><img src="http://placekitten.com/400/252" ></img></div>
+						  <div className="tab-pane" id="pic-3"><img src="http://placekitten.com/400/252"></img></div>
+						  <div className="tab-pane" id="pic-4"><img src="http://placekitten.com/400/252" /></div>
+						  <div className="tab-pane" id="pic-5"><img src="http://placekitten.com/400/252" /></div>
+						</div>
+							  {/* <div className="preview-pic tab-content">
+								<div className="tab-pane active" id="pic-1"></div>
+								<img src={product.imageUrl}></img>
+							   </div> */}
 						  </div>
 						  <div className="details col-md-6">
 							  <h1 className="product-title">{product.name}</h1>

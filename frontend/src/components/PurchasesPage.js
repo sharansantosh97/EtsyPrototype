@@ -49,6 +49,7 @@ function PurchasesPage() {
                     <th scope="col">Product Name</th>
                     <th scope="col">Price</th>
                     <th scope="col">Quantity</th>
+                    <th scope="col">Order ID</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -64,6 +65,7 @@ function PurchasesPage() {
                                     <td>{singlePurchase.productName}</td>
                                     <td>{singlePurchase.price}</td>
                                     <td>{singlePurchase.quantity}</td>
+                                    <td>{singlePurchase._id}</td>
                                 </tr>
                             );
                         })

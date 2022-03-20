@@ -3,20 +3,20 @@ import { useNavigate } from 'react-router';
 import { NavLink } from 'react-router-dom';
 import axiosInstance from "../helpers/axiosInstance"
 
-function ShopProducts({item,handleEdit}) {
+function ShopProducts({item,handleEdit,shopOwner,loggedUser}) {
     const navigate = useNavigate();
     let pageLink = `/product/${item._id}`;
     let pageLinkEdit = `/productedit/${item._id}`;
-
+    
 
 
 
   return (
     <>
- <div className="col-4">
+ <div className="col-4" style={{width:"250px",height:"500px"}}>
     <div className="product">
         <div className="product-img">
-            <img src={item.imageUrl} alt=""></img>
+            <img src={item.imageUrl} style={{width:"240px",height:"200px"}} alt=""></img>
             <div className="product-label">
                 <span className="sale">-30%</span>
                 <span className="new">NEW</span>
@@ -33,9 +33,10 @@ function ShopProducts({item,handleEdit}) {
                 <i className="fa fa-star"></i>
             </div>
             <h4 className="product-description">{item.description}</h4>
+            {item.quantity==0 && <h4 className="product-description" style={{color:"red"}}>OUT OF STOCK!</h4>}
             <div className="product-btns">
                 {/* <button className="add-to-wishlist"><i className="fa fa-heart-o" style={{color:"red"}}></i><span className="tooltipp">add to wishlist</span></button> */}
-                <NavLink to={pageLinkEdit}> <button className="add-to-compare"><i className="fa fa-pencil"></i><span className="tooltipp">Edit Product</span></button></NavLink>
+                {shopOwner == loggedUser && <NavLink to={pageLinkEdit}> <button className="add-to-compare"><i className="fa fa-pencil"></i><span className="tooltipp">Edit Product</span></button></NavLink>}
                 {/* <button className="quick-view"><i className="fa fa-eye"></i><span className="tooltipp">quick view</span></button> */}
             </div>
         </div>

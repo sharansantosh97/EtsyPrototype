@@ -114,9 +114,9 @@ function Shop() {
                       <div className="row">
                         <div className="col-lg-6 col-md-6">
                         <h6 className="small lead text-black-50 text-center">SHOP OWNER</h6>
-                          <div className="profile-image float-md-right rounded-circle"> <img className='' src={shopDetails?.ownerDetails.imageUrl} alt="" width="100px" height="100px"/> </div>
+                          <div className="profile-image float-md-right rounded-circle"> <img className='' src={shopDetails?.ownerDetails?.imageUrl} alt="" width="100px" height="100px"/> </div>
                               <br />
-                              <p className="mt-1 m-b-0 text-center">{shopDetails?.ownerDetails.username}</p>
+                              <p className="mt-1 m-b-0 text-center">{shopDetails?.ownerDetails?.username}</p>
                               <br /> <br />
                           </div>                
                     </div>
@@ -128,7 +128,7 @@ function Shop() {
     <div className="container">
       <div className="row">          
           {shopProducts && shopProducts.map((eachFavoriteItem)=>{
-            return <ShopProducts key={eachFavoriteItem._id} item={eachFavoriteItem}/>
+            return <ShopProducts key={eachFavoriteItem._id} item={eachFavoriteItem} shopOwner={shopDetails?.ownerDetails?._id} loggedUser={authState?.auth?.data?.data?.userId}/>
           })} 
       </div>
     </div>

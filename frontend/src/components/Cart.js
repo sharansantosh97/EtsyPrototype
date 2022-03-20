@@ -63,8 +63,10 @@ const Cart = () => {
 		  .then((response) => {
 			console.log("response.data", response.data)
       setMsg(true);
+      setTimeout(() => {setMsg(false) 
+        navigate("/purchases")}, 2000);
       globalDispatch({ type: UPDATE_CART_ITEM_SUCCESS, payload:[] })
-      navigate("/purchase");
+      //navigate("/purchases");
 			//setProduct(response.data)
 			//setLoading(false)
 		  })
