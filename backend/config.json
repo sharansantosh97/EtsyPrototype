@@ -1,10 +1,10 @@
 {
     "DB":{
-        "host" : "etsydb.ciubgzni56ko.us-east-1.rds.amazonaws.com",
-        "username" : "admin",
-        "password" : "admin123",
+        "host" : "etsydb.cw2vtx36a6pa.us-east-1.rds.amazonaws.com",
+        "username" : "Sharan1997",
+        "password" : "Sharan1997",
         "port" : "3306",
-        "database" : "etsydb"
+        "database" : "EtsyDB"
     },
     "enableConnectPool": false,
     "connectionLimit": 10

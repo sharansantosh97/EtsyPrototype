@@ -31,7 +31,8 @@ const EditForm = ({
     console.log(formData)
     axios({
       method: "post",
-      url: "https://sharansantosh-etsyprototype.herokuapp.com/upload",
+      //url: "https://sharansantosh-etsyprototype.herokuapp.com/upload",
+      url: "http://localhost:3001",
       data: formData,
       headers: {
         "Content-Type":

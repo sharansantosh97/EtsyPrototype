@@ -1,6 +1,6 @@
 const config = {
-    baseUrl:'https://sharansantosh-etsyprototype.herokuapp.com'
     //baseUrl:'https://sharansantosh-etsyprototype.herokuapp.com'
+    baseUrl:'http://localhost:3001'
     
 };
 

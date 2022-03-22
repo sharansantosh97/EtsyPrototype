@@ -1,6 +1,0 @@
-krishna - 
-With connection pooling(10 connections) - 100 users
-charan - 
-connection pooling(connectionLimit 10) with 100 users
-akhil -
-100 users with connection pooling(10 connections)

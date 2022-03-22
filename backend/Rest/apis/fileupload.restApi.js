@@ -5,7 +5,8 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(
     import.meta.url);
 const __dirname = path.dirname(__filename);
-var baseUrl = "https://sharansantosh-etsyprototype.herokuapp.com"
+//var baseUrl = "https://sharansantosh-etsyprototype.herokuapp.com"
+var baseUrl = "http://localhost:3001";
 let fileName;
 const storage = multer.diskStorage({
     destination: __dirname + "/../../public/uploads/",

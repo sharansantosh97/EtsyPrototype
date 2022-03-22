@@ -10,14 +10,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/saicharancherry/Etsy.git"
+    "url": "git+https://github.com/sharansantosh97/EtsyPrototype.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/saicharancherry/Etsy/issues"
+    "url": "https://github.com/sharansantosh97/EtsyPrototype/issues"
   },
-  "homepage": "https://github.com/saicharancherry/Etsy#readme",
+  "homepage": "https://github.com/sharansantosh97/EtsyPrototype#readme",
   "type": "module",
   "dependencies": {
     "bcrypt": "^5.0.1",
@@ -29,5 +29,9 @@
     "multer": "^1.4.4",
     "mysql": "^2.18.1",
     "uuidv4": "^6.2.12"
+  },
+  "devDependencies": {
+    "eslint": "^8.12.0",
+    "eslint-plugin-react": "^7.29.4"
   }
 }
