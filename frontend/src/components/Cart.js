@@ -4,8 +4,6 @@ import { cartAction, deleteCartAction } from "../context/actions/cartAction";
 import { NavLink,useNavigate } from "react-router-dom";
 import axiosInstance from "../helpers/axiosInstance"
 import {UPDATE_CART_ITEM_SUCCESS} from "../context/actions/actionTypes";
-import axios from "axios";
-import config from "../utils/config.js";
 const Cart = () => {
 
   const navigate = useNavigate();
@@ -14,8 +12,6 @@ const Cart = () => {
   const { user, cart } = globalState;
   const userId = user?.userId;
   const [msg,setMsg] = useState(false);
-  const [msgAdd,setMsgAdd] = useState(false);
-  const [userAdd,setUserAdd] = useState("");
   
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -56,34 +52,12 @@ const Cart = () => {
     deleteCartAction(authState.auth.data.data?.userId, cartId)(globalDispatch);
     // cartAction(userId)(globalDispatch);
   }, []);
-  const getUserDetails = async () =>
-  {
-    try{
-    
-      const response = await axios.get(`${config.baseUrl}/users/${authState.auth.data.data.userId}/profile`,{headers:{'Authorization':localStorage.getItem("token")}});
-      if(response && response.data){
-        if(response.data.address == "" || response.data.address == null)
-        {
-          setMsgAdd(true);
-        }else
-        {
-          setMsgAdd(false);
-        }
-      }else{
-        console.log("Error Getting Response from Favorite API");
-      }
 
-    }catch(e)
-    {
-      console.log("Error Getting Response from Favorite API"+e);
-    }
-  }
   const checkOutCartItems = async ()=>
   {
     console.log(cartItems);
-    getUserDetails();
-    if(userAdd == false)
-    {
+
+    
     axiosInstance()
 		  .post(`/users/${authState.auth.data.data.userId}/cart/checkout`)
 		  .then((response) => {
@@ -100,9 +74,6 @@ const Cart = () => {
 			//setLoading(false)
 			console.log(err)
 		  })
-    }else{
-      console.log("User address not found");
-    }
   }
 
   let cartsDiv = cartItems.map((cartItem) => {
@@ -205,11 +176,6 @@ const Cart = () => {
       {msg &&
         <div class='alert alert-success' role='alert'>
            Order Placed Successfully !
-        </div>
-      }  
-      {msgAdd &&
-        <div class='alert alert-danger' role='alert'>
-           Please update address before checkout
         </div>
       }     
     </div>
