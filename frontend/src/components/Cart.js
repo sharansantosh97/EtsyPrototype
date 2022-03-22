@@ -56,34 +56,15 @@ const Cart = () => {
     deleteCartAction(authState.auth.data.data?.userId, cartId)(globalDispatch);
     // cartAction(userId)(globalDispatch);
   }, []);
-  const getUserDetails = async () =>
-  {
-    try{
-    
-      const response = await axios.get(`${config.baseUrl}/users/${authState.auth.data.data.userId}/profile`,{headers:{'Authorization':localStorage.getItem("token")}});
-      if(response && response.data){
-        if(response.data.address == "" || response.data.address == null)
-        {
-          setMsgAdd(true);
-        }else
-        {
-          setMsgAdd(false);
-        }
-      }else{
-        console.log("Error Getting Response from Favorite API");
-      }
-
-    }catch(e)
-    {
-      console.log("Error Getting Response from Favorite API"+e);
-    }
-  }
+  
   const checkOutCartItems = async ()=>
   {
-    console.log(cartItems);
-    getUserDetails();
-    if(userAdd == false)
+    const response = await axios.get(`${config.baseUrl}/users/${authState.auth.data.data.userId}/profile`,{headers:{'Authorization':localStorage.getItem("token")}});
+    if(response.data.address == "" || response.data.address == null)
     {
+      setUserAdd(true);
+    }
+    else{ 
     axiosInstance()
 		  .post(`/users/${authState.auth.data.data.userId}/cart/checkout`)
 		  .then((response) => {
@@ -100,8 +81,7 @@ const Cart = () => {
 			//setLoading(false)
 			console.log(err)
 		  })
-    }else{
-      console.log("User address not found");
+      setUserAdd(false);
     }
   }
 
