@@ -6,6 +6,6 @@
         "port" : "3306",
         "database" : "etsydb"
     },
-    "enableConnectPool": true,
+    "enableConnectPool": false,
     "connectionLimit": 10
 }
