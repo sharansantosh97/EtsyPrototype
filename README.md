@@ -2,7 +2,7 @@
 
 STEPS TO RUN BACKEND
 1) run npm install in backend folder to install all the required dependencies
-2) run npm app.js in backend folder to run the server
+2) run node app.js in backend folder to run the server
 
 STEPS TO RUN FRONTEND
 1) run npm install in frontend folder to install all the required dependencies
