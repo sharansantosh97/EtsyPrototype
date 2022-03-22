@@ -62,7 +62,7 @@ const Cart = () => {
     const response = await axios.get(`${config.baseUrl}/users/${authState.auth.data.data.userId}/profile`,{headers:{'Authorization':localStorage.getItem("token")}});
     if(response.data.address == "" || response.data.address == null)
     {
-      setUserAdd(true);
+      setMsgAdd(true);
     }
     else{ 
     axiosInstance()
@@ -81,7 +81,7 @@ const Cart = () => {
 			//setLoading(false)
 			console.log(err)
 		  })
-      setUserAdd(false);
+      setMsgAdd(false);
     }
   }
 
