@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export default (history = null) => {
-  const baseURL = "hhttps://sharansantosh-etsyprototype.herokuapp.com"
+  const baseURL = "https://sharansantosh-etsyprototype.herokuapp.com"
   // const baseURL =
   //   "https://sharansantosh-etsyprototype.herokuapp.com";
   // // const baseURL = "https://sharansantosh-etsyprototype.herokuapp.com"
