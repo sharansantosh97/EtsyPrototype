@@ -45,19 +45,25 @@ async function createNewProduct(req, res) {
 async function getAllProducts(req, res) {
     let { userId } = req.params; // verifiying userId in middleware
     let body = req.body;
-    let categoryIds = body.categoryIds;
-    let shopIds = body.shopIds;
-    let searchStr = body.search;
+    let {categoryIds, shopIds, excludeShopIds, search} = body;
     let selectQuery, whereConditions = [];
     try {
-        if(searchStr) {
-            whereConditions.push(`name REGEXP '${searchStr}'`)
+        // let currentUserShopDetails = await query(`select * from shops where createdBy='${userId}'`);
+        // currentUserShopDetails = _.get(currentUserShopDetails, '0')
+        // if(currentUserShopDetails && currentUserShopDetails._id) {
+        //     body.excludeShopIds = [currentUserShopDetails._id]
+        // }
+        if(search) {
+            whereConditions.push(`name REGEXP '${search}'`)
         }
         if (categoryIds && categoryIds.length > 0) {
             whereConditions.push(`categoryId IN("${categoryIds.join('", "')}")`)
         }
         if (body.shopIds && body.shopIds.length) {
             whereConditions.push(`shopId IN("${shopIds.join('", "')}")`)
+        }
+        if (body.excludeShopIds && body.excludeShopIds.length) {
+            whereConditions.push(`shopId NOT IN("${body.excludeShopIds.join('", "')}")`)
         }
         if (body.priceRange && body.priceRange.length == 2) {
             let lowPrice = body.priceRange[0];

@@ -8,7 +8,7 @@ function createNewFavarite(req, res) {
     let newFavoriteId = `fav-${uuid()}`
     let favoriteDetails = [newFavoriteId, userId, productId, new Date()];
     connection.query('INSERT INTO favorites VALUES (?,?,?,?)', favoriteDetails, (err, results, fields) => {
-        !err ? res.json(results) : res.json(err);
+        !err ? res.status(200).json(results) : res.status(400).json(err);
     })
 }
 

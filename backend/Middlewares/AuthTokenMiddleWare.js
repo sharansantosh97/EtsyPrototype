@@ -30,7 +30,7 @@ function verifyToken(req, res, next) {
 
 const headers = (req, res, next) => {
     const origin = req.headers.origin;
-    res.setHeader('Access-Control-Allow-Origin', origin)
+    res.setHeader('Access-Control-Allow-Origin', '*')
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE')
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type')
     res.setHeader('Access-Control-Allow-Credentials', true)
@@ -39,8 +39,8 @@ const headers = (req, res, next) => {
 
 function AuthTokenMiddleWare(app) {
     let callback = app.use.bind(app);
-    // callback('/login', headers)
-    // callback('/users/:userId', headers)
+    callback('/login', headers)
+    callback('/users/:userId', headers)
     callback('/users/:userId', verifyToken); // middleware for all apis with prefix '/users' 
 }
 

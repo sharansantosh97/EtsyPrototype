@@ -1,0 +1,103 @@
+var products = {
+    "products": [
+      {
+        "_id": "p-02de81c8-627e-4df7-96c6-696e90bceb5c",
+        "name": "Mac Book Air",
+        "imageUrl": "https://etsy-project.herokuapp.com/file/IMAGE-1647858279783.jpg",
+        "categoryId": "ct-1234",
+        "description": "Latest m1 macbook air",
+        "price": 1265,
+        "quantity": 22,
+        "shopId": "sh-8201cc96-9f62-4a7f-9005-9308bfe4196e",
+        "createdBy": "u-7f31c1ac-2758-455b-9ad1-22dcf99523c1",
+        "createdOn": "2022-03-21T00:00:00.000Z",
+        "salesCount": 0,
+        "shopName": "user1Shop"
+      },
+      {
+        "_id": "p-3d345da5-6041-41ef-b88d-0cd12ba1c507",
+        "name": "Drugs made from plants",
+        "imageUrl": "https://etsy-project.herokuapp.com/file/IMAGE-1647859083391.png",
+        "categoryId": "ct-1234",
+        "description": "Plants give life to earth and beings",
+        "price": 122,
+        "quantity": 3452,
+        "shopId": "sh-7135a8be-b80e-4b5e-9744-555c3cb85b7a",
+        "createdBy": "u-186ca6c6-38dd-4e19-a967-78e7c139d540",
+        "createdOn": "2022-03-21T00:00:00.000Z",
+        "salesCount": 0,
+        "shopName": "user2Shop"
+      },
+      {
+        "_id": "p-484af28d-c1d2-4c94-9cc7-e6eee78e8664",
+        "name": "X",
+        "imageUrl": "https://etsy-project.herokuapp.com/file/IMAGE-1647858738163.jpg",
+        "categoryId": "ct-1234",
+        "description": "Initial setup Product X",
+        "price": 12,
+        "quantity": 0,
+        "shopId": "sh-7135a8be-b80e-4b5e-9744-555c3cb85b7a",
+        "createdBy": "u-186ca6c6-38dd-4e19-a967-78e7c139d540",
+        "createdOn": "2022-03-21T00:00:00.000Z",
+        "salesCount": 1,
+        "shopName": "user2Shop"
+      },
+      {
+        "_id": "p-959eb4ad-89de-41f3-9898-ff3aecc06cac",
+        "name": "Road Bike - Bianchi",
+        "imageUrl": "https://etsy-project.herokuapp.com/file/IMAGE-1647858543323.jpg",
+        "categoryId": "ct-c9323046-25dd-4e63-b7e0-59f25f3e40a4",
+        "description": "carbon bike",
+        "price": 679,
+        "quantity": 7678,
+        "shopId": "sh-7135a8be-b80e-4b5e-9744-555c3cb85b7a",
+        "createdBy": "u-186ca6c6-38dd-4e19-a967-78e7c139d540",
+        "createdOn": "2022-03-21T00:00:00.000Z",
+        "salesCount": 0,
+        "shopName": "user2Shop"
+      },
+      {
+        "_id": "p-9a003172-a0af-48ac-8e2d-33c1530f0b15",
+        "name": "Glass photo frame",
+        "imageUrl": "https://etsy-project.herokuapp.com/file/IMAGE-1647859444144.png",
+        "categoryId": "ct-c34b3b29-7bc1-41fa-980e-f35b60a4aba6",
+        "description": "Party glass",
+        "price": 10.99,
+        "quantity": 0,
+        "shopId": "sh-2839f850-0f21-4228-a5c4-4727df841758",
+        "createdBy": "u-174045bc-26db-4454-90d6-c8ae2606e053",
+        "createdOn": "2022-03-21T00:00:00.000Z",
+        "salesCount": 1,
+        "shopName": "BobsShop"
+      },
+      {
+        "_id": "p-e1b55a30-1bd4-441d-b347-02eb9be0001f",
+        "name": "Mac Book Pro 16\" M1 16GB",
+        "imageUrl": "https://etsy-project.herokuapp.com/file/IMAGE-1647858400978.jpeg",
+        "categoryId": "ct-1234",
+        "description": "Fastest personal computer chip on earth",
+        "price": 2599,
+        "quantity": 2345,
+        "shopId": "sh-8201cc96-9f62-4a7f-9005-9308bfe4196e",
+        "createdBy": "u-7f31c1ac-2758-455b-9ad1-22dcf99523c1",
+        "createdOn": "2022-03-21T00:00:00.000Z",
+        "salesCount": 0,
+        "shopName": "user1Shop"
+      },
+      {
+        "_id": "p-fb0f3638-3bb2-4a94-8156-fe501dfef86b",
+        "name": "Table Cloth",
+        "imageUrl": "https://etsy-project.herokuapp.com/file/IMAGE-1647859393147.jpg",
+        "categoryId": "ct-12346",
+        "description": "table cloth",
+        "price": 5.99,
+        "quantity": 2,
+        "shopId": "sh-2839f850-0f21-4228-a5c4-4727df841758",
+        "createdBy": "u-174045bc-26db-4454-90d6-c8ae2606e053",
+        "createdOn": "2022-03-21T00:00:00.000Z",
+        "salesCount": 0,
+        "shopName": "BobsShop"
+      }
+    ],
+    "salesCount": 2
+  }

@@ -49,8 +49,8 @@ function NewShop() {
     }
   }
   return (
-    <div className="container">
-            <div className="row">
+    <div className="container" style={{marginTop:"70px", marginLeft:"200px"}}>
+            <div className="row" style={{marginLeft:"15px"}}>
                 <div className="col-xl-12 col-lg-12 col-md-12">
                     <h4 className="m-t-0 m-b-0">Name your Shop</h4>
                 </div>
@@ -68,7 +68,7 @@ function NewShop() {
             {shopAvailable == "1" &&
             <div className="create-shop-avl">
               <div className="shopcreate-success">Available!</div>
-              <div><button className="createShop-btn" onClick={createShop} variant="outline-secondary" id="button-addon2">Create Shop</button></div>
+              <button className="createShop-btn" onClick={createShop} variant="outline-secondary" id="button-addon2">Create Shop</button>
             </div>
             }
             {shopAvailable == "2" &&

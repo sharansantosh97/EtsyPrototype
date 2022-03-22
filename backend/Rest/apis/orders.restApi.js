@@ -2,9 +2,9 @@ import _ from "lodash";
 
 async function getOrders(req, res) {
   try {
-    let orderData = await query("SELECT * FROM orders WHERE createdBy = ?", req.params.userId);
+    let orderData = await query("SELECT * FROM orders WHERE createdBy = ? ORDER BY createdOn DESC;", req.params.userId);
     let productIds = _.map(orderData, 'productId');
-    let productData = await query(`SELECT * FROM products WHERE  _id IN ("${productIds.join('", "')}")`);
+    let productData = await query(`SELECT * FROM products WHERE  _id IN ("${productIds.join('", "')}") ORDER BY createdOn DESC`);
     let productIdsMap = _.keyBy(productData, '_id');
     orderData = _.map(orderData, (orderItem) => {
       let productId = orderItem.productId;

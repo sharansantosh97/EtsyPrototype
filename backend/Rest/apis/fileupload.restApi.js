@@ -5,7 +5,7 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(
     import.meta.url);
 const __dirname = path.dirname(__filename);
-var baseUrl = 'https://f204-2600-1700-65aa-d910-72fe-e6c-a33-e08f.ngrok.io';
+var baseUrl = "https://sharansantosh-etsyprototype.herokuapp.com"
 let fileName;
 const storage = multer.diskStorage({
     destination: __dirname + "/../../public/uploads/",
@@ -17,7 +17,7 @@ const storage = multer.diskStorage({
 
 const uploadFile = multer({
     storage: storage,
-    limits: { fileSize: 1000000 },
+    limits: { fileSize: 10000000 },
 }).single("myImage");
 
 function upload(req, res) {

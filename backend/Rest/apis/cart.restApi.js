@@ -118,13 +118,12 @@ const checkoutCart = async(req, res) => {
                 cartRecord.productId,
                 cartRecord.product.price * cartRecord.quantity,
                 cartRecord.quantity,
-                new Date(),
                 cartRecord.product.shopId,
                 cartRecord.product.imageUrl,
                 cartRecord.product.name,
                 purchaseId,
             ];
-            orderQuery = await query(`INSERT INTO orders VALUES (?,?,?,?,?,?,?,?,?,?)`, orderData);
+            orderQuery = await query(`INSERT INTO orders VALUES (?,?,?,?,?,now(),?,?,?,?)`, orderData);
             let updateSalesCount = await query(`UPDATE products SET salesCount = salesCount + ${cartRecord.quantity}, quantity = quantity - ${cartRecord.quantity}   where _id = '${cartRecord.productId}'`)
 
         }

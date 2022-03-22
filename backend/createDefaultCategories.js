@@ -11,7 +11,7 @@ var connection = mysql.createPool({
 var categories = [
     ["ct-1234", "mobiles", null, null, true],
     ["ct-1235", "tops", null, null, true],
-    ["ct-12346", "innerwear", null, null, true]
+    ["ct-12346", "Home Decore", null, null, true]
 ] 
 connection.getConnection((err) => {
   if (err) {

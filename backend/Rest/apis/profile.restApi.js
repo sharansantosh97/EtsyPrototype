@@ -13,10 +13,11 @@ async function updateProfile(req, res) {
             req.body.state ? req.body.state : null,
             req.body.country ? req.body.country : null,
             req.body.about ? req.body.about : null,
+            req.body.phoneNo?req.body.phoneNo:null 
         ];
 
         let results = await query(
-            `update users set username=?, imageUrl=?, dob=?, gender=?, address=?, city= ?, state=?, country=?, about= ? where _id='${req.params.userId}'`,
+            `update users set username=?, imageUrl=?, dob=?, gender=?, address=?, city= ?, state=?, country=?, about= ?, phoneNo=? where _id='${req.params.userId}'`,
             profileData
         );
         res.status(200).json(results);

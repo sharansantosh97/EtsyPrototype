@@ -1,5 +1,5 @@
 import { uuid } from 'uuidv4';
-import bcrypt from 'bcrypt';
+import * as bcrypt from 'bcrypt';
 var saltRounds = 10;
 
 function signUp(req, res) {

@@ -4,8 +4,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "SET NODE_ENV=dev && node server.js",
-    "test": "mocha --timeout 10000"
+    "start": "cd Backend && node app.js",
+    "heroku-postbuild": "cd frontend && npm install && npm run build",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
@@ -19,11 +20,8 @@
   "homepage": "https://github.com/saicharancherry/Etsy#readme",
   "type": "module",
   "dependencies": {
-    "axios": "^0.26.1",
     "bcrypt": "^5.0.1",
     "bluebird": "^3.7.2",
-    "chai": "^4.3.6",
-    "chai-http": "^4.3.0",
     "cors": "^2.8.5",
     "express": "^4.17.3",
     "jsonwebtoken": "^8.5.1",
