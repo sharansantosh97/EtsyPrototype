@@ -11,35 +11,35 @@ import { productsAction } from "../context/actions/productsAction";
 
 function Header() {
 
-	const {
-		authState: { auth: data },
-		globalDispatch,
-		globalState
-	  } = useContext(GlobalContext);
+	// const {
+	// 	authState: { auth: data },
+	// 	globalDispatch,
+	// 	globalState
+	//   } = useContext(GlobalContext);
 	
-	const { user, cart } = globalState;
-	const cartItems = cart?.data ? cart.data.cartItems : [];
-	const navigate = useNavigate();
-	//const history = useHistory()
-	const { authState, authDispatch } = useContext(GlobalContext);
+	// const { user, cart } = globalState;
+	// const cartItems = cart?.data ? cart.data.cartItems : [];
+	 const navigate = useNavigate();
+	// //const history = useHistory()
+	// const { authState, authDispatch } = useContext(GlobalContext);
     
 	
-	  const userId = user?.userId;
+	 // const userId = user?.userId;
 	
-	  console.log("user from globalState | Header", user);
+	//   console.log("user from globalState | Header", user);
 	
-	  const [query, setQuery] = useState("");
-	  useEffect(() => {
-		console.log("Search Items are", query);
+	   const [query, setQuery] = useState("");
+	//   useEffect(() => {
+	// 	console.log("Search Items are", query);
 	
-		console.log("products Search action dispatch");
-		productsAction(userId, query)(globalDispatch);
-	  }, [query]);
+	// 	console.log("products Search action dispatch");
+	// 	productsAction(userId, query)(globalDispatch);
+	//   }, [query]);
 
-	  const handleLogout = () => {
-		logout()(globalDispatch)
-		logout()(authDispatch)
-	  }
+	//   const handleLogout = () => {
+	// 	logout()(globalDispatch)
+	// 	logout()(authDispatch)
+	//   }
 	  const handleProfile = ()=>{
 		const token = localStorage.getItem("token");
         if(!token){
@@ -53,7 +53,7 @@ function Header() {
 	  const handlePurchase = ()=>{
 		navigate("/purchases", {replace:true});
 	  }
-	const shopView = async (e)=>
+	/*const shopView = async (e)=>
 	{
 		e.preventDefault();
 		const token = localStorage.getItem("token");
@@ -87,7 +87,7 @@ function Header() {
 			}
 		}
 	}
-
+   */
 
 
   return (
@@ -145,7 +145,7 @@ function Header() {
 									<a className="dropdown-toggle" data-toggle="dropdown" aria-expanded="true" style={{textDecoration:"none"}}>
 										<i className="fa fa-shopping-cart"></i>
 										<span>Your Cart</span>
-										{cartItems!=0 && <div className="qty">{cartItems?.length}</div>}
+										{/* {cartItems!=0 && <div className="qty">{cartItems?.length}</div>} */}
 									</a>
 									<div className="cart-dropdown">
 										<div className="cart-list">
@@ -186,7 +186,9 @@ function Header() {
 										<div className="cart-list">
 											<div className="product-widget">
 												<div className="product-body">
-													<h3 className="product-name"><a href="" onClick={(e)=>{shopView(e)}}> View My Shop</a></h3>
+													<h3 className="product-name"><a href="" onClick={(e)=>{
+														// shopView(e)
+														}}> View My Shop</a></h3>
 												</div>
 											</div>
 										</div>
@@ -198,7 +200,9 @@ function Header() {
 								</div> }
 								{ localStorage.getItem("token") &&
 								<div className="loginbutton">
-								<NavLink to="/"><button className="login-btn" onClick={handleLogout}>Logout</button></NavLink>
+								<NavLink to="/"><button className="login-btn" onClick={
+									{/*handleLogout*/}
+									}>Logout</button></NavLink>
 								</div>
 								}								
 

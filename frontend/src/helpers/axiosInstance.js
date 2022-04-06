@@ -3,9 +3,6 @@ import axios from "axios";
 export default (history = null) => {
   //const baseURL = "https://sharansantosh-etsyprototype.herokuapp.com"
   const baseURL = "http://localhost:3001";
-  // const baseURL =
-  //   "https://sharansantosh-etsyprototype.herokuapp.com";
-  // // const baseURL = "https://sharansantosh-etsyprototype.herokuapp.com"
   let headers = {};
 
   if (localStorage.token) {

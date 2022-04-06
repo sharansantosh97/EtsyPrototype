@@ -42,26 +42,26 @@ function Home() {
 //     }
 //   }, [data])
 
-  const {
-    user,
-    products: { data },
-  } = globalState;
-  console.log("user from globalState", user?.userId);
-  const userId = user?.userId;
+//   const {
+//     user,
+//     products: { data },
+//   } = globalState;
+  //console.log("user from globalState", user?.userId);
+  //const userId = user?.userId;
 
-  useEffect(() => {
-    console.log("products action dispatch");
-    productsAction(userId)(globalDispatch);
-	console.log("PROD"+data?.products);
-  }, [userId]);
+//   useEffect(() => {
+//     console.log("products action dispatch");
+//     productsAction(userId)(globalDispatch);
+// 	console.log("PROD"+data?.products);
+//   }, [userId]);
 
-  useEffect(() => {
-    console.log("products action dispatch");
-    productsAction(userId)(globalDispatch);
-  }, []);
+//   useEffect(() => {
+//     console.log("products action dispatch");
+//     productsAction(userId)(globalDispatch);
+//   }, []);
 
   
-  console.log("Global State from Home", globalState);
+//   console.log("Global State from Home", globalState);
   
   const handleFavProduct = async (productId) => 
   {
@@ -92,48 +92,48 @@ function Home() {
     }
   };
   
-  const productsDiv = data?.products.map((item, index) => {
-    let pageLink = `/product/${item._id}`;
-    return (
-		<>
-		<div class="col-4" style={{width:"250px",height:"500px"}}>
-		<div className="product">
-			<div className="product-img">
-				<img src={item.imageUrl} style={{width:"240px",height:"200px"}}alt=""></img>
-				<div className="product-label">
-					<span className="sale">-30%</span>
-					<span className="new">NEW</span>
-				</div>
-			</div>
-			<div className="product-body">
-				<h3 className="product-name"><NavLink to={pageLink}><a href="" > {item.name}</a></NavLink></h3>
-				<h4 className="product-price">$ {item.price}<del className="product-old-price">{item.price-(30/100)*item.price}</del></h4>
-				<div className="product-rating">
-					<i className="fa fa-star"></i>
-					<i className="fa fa-star"></i>
-					<i className="fa fa-star"></i>
-					<i className="fa fa-star"></i>
-					<i className="fa fa-star"></i>
-				</div>
-				<h4 className="product-description">{item.description}</h4>
-				{item.quantity==0 && <h4 className="product-description" style={{color:"red"}}>OUT OF STOCK!</h4>}
-				<div className="product-btns">
-					<button className="add-to-wishlist" onClick={() => handleFavProduct(item._id)}>
-						<i className="fa fa-heart-o" style={{color:"red"}}></i>
-						<span className="tooltipp">add to wishlist</span>
-					</button>
-					<button className="add-to-compare"><i className="fa fa-exchange"></i><span className="tooltipp">add to compare</span></button>
-					<button className="quick-view"><i className="fa fa-eye"></i><span className="tooltipp">quick view</span></button>
-				</div>
-			</div>
-			<div className="add-to-cart">
-				<button className="add-to-cart-btn" onClick={() => addToCart(item._id)}><i className="fa fa-shopping-cart"></i> add to cart</button>
-			</div>
-			</div>
-			</div>
-		</>
-    );
-  });
+//   const productsDiv = data?.products.map((item, index) => {
+//     let pageLink = `/product/${item._id}`;
+//     return (
+// 		<>
+// 		<div class="col-4" style={{width:"250px",height:"500px"}}>
+// 		<div className="product">
+// 			<div className="product-img">
+// 				<img src={item.imageUrl} style={{width:"240px",height:"200px"}}alt=""></img>
+// 				<div className="product-label">
+// 					<span className="sale">-30%</span>
+// 					<span className="new">NEW</span>
+// 				</div>
+// 			</div>
+// 			<div className="product-body">
+// 				<h3 className="product-name"><NavLink to={pageLink}><a href="" > {item.name}</a></NavLink></h3>
+// 				<h4 className="product-price">$ {item.price}<del className="product-old-price">{item.price-(30/100)*item.price}</del></h4>
+// 				<div className="product-rating">
+// 					<i className="fa fa-star"></i>
+// 					<i className="fa fa-star"></i>
+// 					<i className="fa fa-star"></i>
+// 					<i className="fa fa-star"></i>
+// 					<i className="fa fa-star"></i>
+// 				</div>
+// 				<h4 className="product-description">{item.description}</h4>
+// 				{item.quantity==0 && <h4 className="product-description" style={{color:"red"}}>OUT OF STOCK!</h4>}
+// 				<div className="product-btns">
+// 					<button className="add-to-wishlist" onClick={() => handleFavProduct(item._id)}>
+// 						<i className="fa fa-heart-o" style={{color:"red"}}></i>
+// 						<span className="tooltipp">add to wishlist</span>
+// 					</button>
+// 					<button className="add-to-compare"><i className="fa fa-exchange"></i><span className="tooltipp">add to compare</span></button>
+// 					<button className="quick-view"><i className="fa fa-eye"></i><span className="tooltipp">quick view</span></button>
+// 				</div>
+// 			</div>
+// 			<div className="add-to-cart">
+// 				<button className="add-to-cart-btn" onClick={() => addToCart(item._id)}><i className="fa fa-shopping-cart"></i> add to cart</button>
+// 			</div>
+// 			</div>
+// 			</div>
+// 		</>
+//     );
+//   });
 
   return (
   <>
@@ -237,7 +237,7 @@ function Home() {
 		  {/* /container */}
 		</div>
 
-		<div className="row">{productsDiv}</div>
+		{/* <div className="row">{productsDiv}</div> */}
 		<Footer/>
   </>
   )

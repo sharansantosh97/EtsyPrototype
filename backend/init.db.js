@@ -1,5 +1,6 @@
 import mysql from 'mysql';
 import util from 'util';
+import mongoose  from 'mongoose';
 
 import { readFileSync } from 'fs';
 const config = JSON.parse(
@@ -57,4 +58,17 @@ async function initdb() {
     })
 }
 
-export { initdb }
+async function initmongodb() 
+{
+
+    mongoose.connect('mongodb://127.0.0.1:27017/Etsy', (err, res) => {
+        if (err) {
+            console.log(err);
+            console.log(`MongoDB Connection Failed`);
+        } else {
+            console.log(`MongoDB Connected`);
+        }
+    });
+
+}
+export { initdb, initmongodb }

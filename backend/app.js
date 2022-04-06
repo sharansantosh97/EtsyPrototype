@@ -3,6 +3,7 @@ import cors from 'cors';
 import cluster from 'cluster';
 import { initRestApis } from './Rest/index.js'
 import { initdb } from './init.db.js'
+import { initmongodb } from './init.db.js'
 import os from 'os';
 import { AuthTokenMiddleWare } from './Middlewares/AuthTokenMiddleWare.js'
 
@@ -27,7 +28,8 @@ async function createServer() {
     app.use(express.json());
     app.use(express.urlencoded({ extended: false }));
     app.use(cors())
-    await initdb()
+    //await initdb() --mySQL
+    await initmongodb()
     await AuthTokenMiddleWare(app)
     await initRestApis(app)
     app.listen(PORT, function() {

@@ -62,9 +62,6 @@ function SignUp() {
   }
   }
 
-
-
-
   return (
     <>
     <section class="vh-100 gradient-custom">
