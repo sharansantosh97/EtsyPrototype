@@ -44,6 +44,46 @@ export default class UserClass
         }
     }
 
+    static getUserProfile = async (userId)=>
+    {   
+        try{
+            const result = await UserModel.findById(userId);
+            const userObj = {};
+            if(result){
+                userObj.userFound = true;
+                userObj.user = result;
+            }else{
+                userObj.userFound = false; 
+            }
+            return userObj;
+        }catch(err){
+            console.log(err);
+            throw new Error("Some unexpected error occurred checking exists");
+        }
+    }
+
+    static editUser = async (profileData,userId)=>{
+        try{
+            const findCondition = {
+                _id:mongoose.Types.ObjectId(userId)
+            };
+            const updateValues = {$set: profileData}
+            console.log(JSON.stringify(updateValues));
+            const result = await UserModel.updateOne(findCondition,updateValues);
+            console.log(JSON.stringify(result));
+            const userObj = {};
+            if(result.acknowledged == true){
+                userObj.userEdited = true;
+            }else{
+                userObj.userEdited = false; 
+            }
+            return userObj;
+        }catch(err){
+            console.log(err);
+            throw new Error("Some unexpected error occurred while editing user");
+        }
+    }
+
 }
 
 //module.exports.User = User;

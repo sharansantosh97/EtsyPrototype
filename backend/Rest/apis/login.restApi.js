@@ -1,13 +1,17 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import  UserClass from '../../services/user.js';
+import  ShopClass from '../../services/shop.js';
 
 
 async function getUserShopDetails(userId) {
-    let userShopDetails = await query(`select * from shops where createdBy='${userId}'`);
-    if(userShopDetails && userShopDetails.length) {
-        return userShopDetails[0];
-    } return {}
+    const exists = await ShopClass.getUserShopDetails(userId);
+    if(exists && exists.userFound==true)
+    {
+        return exists.user;
+    }
+
+    return {}
 }
 
 async function login(req, res) {
@@ -19,8 +23,8 @@ async function login(req, res) {
         if(exists && exists.userFound==true) 
         {
             let userObj = exists.user;
-            var userId = userObj._id;
-            //var userShopDetails = await getUserShopDetails(userId);
+            var userId = userObj._id.toString();
+            var userShopDetails = await getUserShopDetails(userId);
             let isValidPassword = bcrypt.compareSync(password, userObj.password); // true
             if (isValidPassword == false) {
                 res.status(401).json({ msg: 'Login failed' });
@@ -31,9 +35,9 @@ async function login(req, res) {
                     userId: userId,
                     username: userObj.username,
                     email: userObj.email,
-                    //mobileNumber: userObj.mobileNumber,
-                    //role: userObj.restFlg,
-                    //shopId: userShopDetails._id
+                    mobileNumber: userObj.mobileNumber,
+                    role: userObj.restFlg,
+                    shopId: userShopDetails._id
                 }
             }, 'my-secret-key-0001xx01212032432', { expiresIn: '24h' });
             res.status(200).json({
@@ -42,7 +46,7 @@ async function login(req, res) {
                 data: {
                     username: userObj.username,
                     userId: userObj._id,
-                    //shopId: userShopDetails._id
+                    shopId: userShopDetails._id
                 }
             })
         } else {
