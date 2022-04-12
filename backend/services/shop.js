@@ -70,4 +70,44 @@ export default class ShopClass
             throw new Error("error occurred checking shopname");
         }
     }
+
+    static getShopDetailsById = async (shopId)=>
+    {   
+        try{
+            const result = await ShopModel.findById(shopId);
+            const shopObj = {};
+            if(result){
+                shopObj.shopFound = true;
+                shopObj.shop = result;
+            }else{
+                shopObj.shopFound = false; 
+            }
+            return shopObj;
+        }catch(err){
+            console.log(err);
+            throw new Error("error occurred getting shop details");
+        }
+    }
+
+    static editShop = async (shopId,shopImageUrl)=>
+    {   
+        try{
+
+            const findCondition = {
+                _id:mongoose.Types.ObjectId(shopId)
+            }; 
+            const updateValues = {$set: {imageUrl: shopImageUrl}}
+            const result = await ShopModel.updateOne(findCondition,updateValues);
+            const shopObj = {};
+            if(result.acknowledged == true){
+                shopObj.shopEdited = true;
+            }else{
+                shopObj.shopEdited = false; 
+            }
+            return shopObj;
+        }catch(err){
+            console.log(err);
+            throw new Error("Error occurred updating shop details");
+        }
+    }
 }

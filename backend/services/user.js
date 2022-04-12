@@ -68,9 +68,7 @@ export default class UserClass
                 _id:mongoose.Types.ObjectId(userId)
             };
             const updateValues = {$set: profileData}
-            console.log(JSON.stringify(updateValues));
             const result = await UserModel.updateOne(findCondition,updateValues);
-            console.log(JSON.stringify(result));
             const userObj = {};
             if(result.acknowledged == true){
                 userObj.userEdited = true;
