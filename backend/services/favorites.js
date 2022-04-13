@@ -45,4 +45,23 @@ export default class FavoritesClass
             throw new Error("Error occurred adding favorite item");
         }
     }
+
+    static getAllFavorites = async (userId)=>
+    {
+        
+        try{
+            const query = {
+                createdBy: mongoose.Types.ObjectId(userId)
+            };
+            const results = await FavoritesModel.find(query);
+            if(results){
+                return results;
+            }else{
+                return {};
+            }
+        }catch(err){
+            console.log(err);
+            throw new Error("Error occurred getting favorite items");
+        }
+    }
 }

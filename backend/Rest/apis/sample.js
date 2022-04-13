@@ -1,132 +1,125 @@
-// import  FavoritesClass from '../../services/favorites.js';
-// import _ from 'lodash';
+/**deprecated  getShopProducts*/
+async function getShopProducts(req, res) {
+    let userId = req.params.userId; // verifiying userId in middleware
+    let shopId = req.params.shopId;
+    try {
+        var products = await query(`select * from products where shopId = '${shopId}'`)
+        var productsSalesCount = await query(`select sum(o.quantity) as salescount, productId from products p where p.shopId='${shopId}' inner join orders o on p._id=o.productId group by o.productId;`)
+        var productsSalesCountMap = {};
+        productsSalesCount.forEach(element => {
+            productsSalesCountMap[element.productId] = element.salescount;
+        });
+        products = products.map((prod) => {
+            let productId = prod._id;
+            prod.salesCount = productsSalesCountMap[productId] || 0
+            return prod;
+        })
+        res.status(200).json({
+            products
+        })
+    } catch (err) {
+        res.status(400).json({ msg: 'Error in fetching shop products' });
+    }
+}
 
-// async function createNewFavarite(req, res) {
-//     try
-//     {
-//         let productId = req.body.productId;
-//         let userId  = req.params; 
-//         let date = new Date();
-//         const results = FavoritesClass.addFavorites(productId,userId,date);
-//         res.status(200).json(results);
-//     }
-//     catch(err) 
-//     {
-//         res.status(400).json(err);
-//     }
-    
-// }
+async function createNewProduct(req, res) {
+    let body = req.body;
+    let { name, imageUrl, categoryId, description, price, quantity } = body
+    let { userId, shopId } = req.params; // verifiying userId in middleware
+    let newProductId = `p-${uuid()}`
+    try {
+        var shopDetails = await query(`select name from shops where _id = '${shopId}'`)
+        let shopName = shopDetails[0].name
+        let productDetails = [newProductId, name, imageUrl, categoryId, description, price, quantity, shopId, userId, new Date(), 0, shopName];
 
-// async function getAllFavorites(req, res) {
-//     let userId = req.params.userId;
-//     let searchWord = req.query.search;
-//     try {
-//         let selectQuery = ''
-//         let favoriteItems = await query(`select * from favorites where createdBy = '${userId}'`);
-//         let productIds = favoriteItems.map((item) => item.productId)
-//         if (searchWord) {
-//             selectQuery = `select * from products where _id IN ("${productIds.join('", "')}") AND name REGEXP '${searchWord}'`;
-//         } else {
-//             selectQuery = `select * from products where _id IN ("${productIds.join('", "')}")`;
-//         }
-//         let products = await query(selectQuery);
-//         let productIdsMap = _.keyBy(products, '_id')
-//         favoriteItems = _.filter(favoriteItems, (item) => productIdsMap[item.productId]);
-//         res.json({
-//             favorites: _.map(favoriteItems, (item) => {
-//                 item.product = productIdsMap[item.productId]
-//                 return item;
-//             })
-//         })
-//     } catch (err) {
-//         console.log("Error : ", err)
-//         res.status(400).json(err);
-//         return;
-//     }
-// }
+        let results = query('INSERT INTO products VALUES (?,?,?,?,?,?,?,?,?,?,?,?)', productDetails)
+        res.status(200).json(results)
+    } catch (err) {
+        res.status(400).json(err);
+    }
+}
 
-// async function removeFavorite(req, res) {
-//     let userId = req.params.userId;
-//     let favoriteId = req.params.favoriteId;
-//     try {
-//         const results = FavoritesClass.removeFavorites(userId,favoriteId);
-//         res.status(200).json(result);
+async function getAllProducts(req, res) {
+    let { userId } = req.params; // verifiying userId in middleware
+    let body = req.body;
+    let {categoryIds, shopIds, excludeShopIds, search} = body;
+    let selectQuery, whereConditions = [];
+    try {
+        // let currentUserShopDetails = await query(`select * from shops where createdBy='${userId}'`);
+        // currentUserShopDetails = _.get(currentUserShopDetails, '0')
+        // if(currentUserShopDetails && currentUserShopDetails._id) {
+        //     body.excludeShopIds = [currentUserShopDetails._id]
+        // }
+        if(search) {
+            whereConditions.push(`name REGEXP '${search}'`)
+        }
+        if (categoryIds && categoryIds.length > 0) {
+            whereConditions.push(`categoryId IN("${categoryIds.join('", "')}")`)
+        }
+        if (body.shopIds && body.shopIds.length) {
+            whereConditions.push(`shopId IN("${shopIds.join('", "')}")`)
+        }
+        if (body.excludeShopIds && body.excludeShopIds.length) {
+            whereConditions.push(`shopId NOT IN("${body.excludeShopIds.join('", "')}")`)
+        }
+        if (body.priceRange && body.priceRange.length == 2) {
+            let lowPrice = body.priceRange[0];
+            let highPrice = body.priceRange[1];
+            whereConditions.push(`price BETWEEN ${lowPrice} AND ${highPrice}`);
+        }
+        if (body.excludeOutOfStock) {
+            whereConditions.push(`quantity > 0`)
+        }
+        if (whereConditions.length) {
+            selectQuery = `select * from products where ${whereConditions.join(' AND ')}`
+        } else {
+            selectQuery = `select * from products`;
+        }
+        let products = await query(selectQuery);
+        // let joinConditionString = whereConditions.map((condition) => `p.${condition}`).join(' AND ');
+        // var productsSalesCount = await query(`select sum(o.quantity) as salescount, productId from products p where ${joinConditionString} inner join orders o on p._id=o.productId group by o.productId;`)
+        res.status(200).json({
+            products,
+            salesCount: _.sumBy(products, 'salesCount')
+        })
+    } catch (err) {
+        res.status(400).json(err);
+    }
+}
 
+async function getProductById(req, res) {
+    let { userId, productId } = req.params; // verifiying userId in middleware
+    let selectQuery, whereConditions = [];
+    try {
+        selectQuery = `select * from products where _id='${productId}'`;
+        let product = await query(selectQuery);
+        product = product[0];
+        res.status(200).json(product);
+    } catch (err) {
+        res.status(400).json({
+            msg: `Error fetching product ${productId}`
+        });
+    }
+}
 
-//         let result = await query(`DELETE FROM favorites WHERE _id ='${favoriteId}' AND createdBy = '${userId}';`);
-//         res.status(200).json(result);
-//     } catch (err) {
-//         console.log(err)
-//         res.status(400).json(err);
-//     }
-// }
-
-// //MY SQL 
-// // function createNewFavarite(req, res) {
-// //     let body = req.body;
-// //     let { productId } = body
-// //     let { userId } = req.params; // verifiying userId in middleware
-// //     let newFavoriteId = `fav-${uuid()}`
-// //     let favoriteDetails = [newFavoriteId, userId, productId, new Date()];
-// //     connection.query('INSERT INTO favorites VALUES (?,?,?,?)', favoriteDetails, (err, results, fields) => {
-// //         !err ? res.status(200).json(results) : res.status(400).json(err);
-// //     })
-// // }
-
-// // async function getAllFavorites(req, res) {
-// //     let userId = req.params.userId;
-// //     let searchWord = req.query.search;
-// //     try {
-// //         let selectQuery = ''
-// //         let favoriteItems = await query(`select * from favorites where createdBy = '${userId}'`);
-// //         let productIds = favoriteItems.map((item) => item.productId)
-// //         if (searchWord) {
-// //             selectQuery = `select * from products where _id IN ("${productIds.join('", "')}") AND name REGEXP '${searchWord}'`;
-// //         } else {
-// //             selectQuery = `select * from products where _id IN ("${productIds.join('", "')}")`;
-// //         }
-// //         let products = await query(selectQuery);
-// //         let productIdsMap = _.keyBy(products, '_id')
-// //         favoriteItems = _.filter(favoriteItems, (item) => productIdsMap[item.productId]);
-// //         res.json({
-// //             favorites: _.map(favoriteItems, (item) => {
-// //                 item.product = productIdsMap[item.productId]
-// //                 return item;
-// //             })
-// //         })
-// //     } catch (err) {
-// //         console.log("Error : ", err)
-// //         res.status(400).json(err);
-// //         return;
-// //     }
-// // }
-
-// // async function removeFavorite(req, res) {
-// //     let userId = req.params.userId;
-// //     let favoriteId = req.params.favoriteId;
-// //     try {
-// //         let result = await query(`DELETE FROM favorites WHERE _id ='${favoriteId}' AND createdBy = '${userId}';`);
-// //         res.status(200).json(result);
-// //     } catch (err) {
-// //         console.log(err)
-// //         res.status(400).json(err);
-// //     }
-// // }
-
-// let endpoints = {
-//     '/users/:userId/favorites': [{
-//             method: 'POST',
-//             callbacks: [createNewFavarite]
-//         },
-//         {
-//             method: 'GET',
-//             callbacks: [getAllFavorites]
-//         }
-//     ],
-//     '/users/:userId/favorites/:favoriteId': [{
-//         method: 'DELETE',
-//         callbacks: [removeFavorite]
-//     }, ]
-// }
-
-// export { endpoints }
+const updateProductById = async (req, res) => {
+    let productId = req.params.productId;
+    try {
+        let productData = [
+            req.body.name,
+            req.body.imageUrl,
+            req.body.description,
+            req.body.price,
+            req.body.quantity,
+            productId
+        ];
+        let results = await query("UPDATE products SET name= ?, imageUrl=?, description=?, price=?, quantity=? where _id = ?", productData);
+        res.status(200).json({
+           msg: 'Updated successfully'
+        });
+    } catch (err) {
+        console.log("err ===>", err);
+        res.status(400).json({ msg: "Error in updating products data" });
+        return;
+    }
+};
