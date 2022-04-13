@@ -5,14 +5,9 @@ export default class ProductClass
 {
     static getAllFavProducts = async (productIds)=>
     {
-        //productIds = '["'+productIds.join('", "')+'"]';
-        //console.log(productIds);
+        
         try{
-            // const query = {
-            //     createdBy: mongoose.Types.ObjectId(userId)
-            // };
              const results = await ProductsModel.find( { _id: { $in: productIds} });
-             console.log(results);
             if(results){
                 return results;
             }else{
@@ -28,19 +23,16 @@ export default class ProductClass
     {
         
         try{
-            const query = {
-                createdBy: mongoose.Types.ObjectId(userId)
-            };
-            const results = await FavoritesModel.find(query);
-            if(results){
-                return results;
-            }else{
-                return {};
-            }
-        }catch(err){
-            console.log(err);
-            throw new Error("Error occurred getting favorite items");
-        }
+            const results = await ProductsModel.find( { _id: { $in: productIds},name:{$regex:searchWord, $options: 'i'} });
+           if(results){
+               return results;
+           }else{
+               return {};
+           }
+       }catch(err){
+           console.log(err);
+           throw new Error("Error occurred getting favorite items with search");
+       }
     }
 
     static createNewProduct = async (productDetails)=>
@@ -97,6 +89,21 @@ export default class ProductClass
         }catch(err){
             console.log(err);
             throw new Error("error occurred getting product details");
+        }
+    }
+
+    static getProductsWithConditions = async (whereConditions)=>
+    {   
+        try{
+            const result = await ProductsModel.find(whereConditions);
+            if(result){
+                return result;
+            }else{
+                return {};
+            }
+        }catch(err){
+            console.log(err);
+            throw new Error("error occurred getting products list");
         }
     }
 

@@ -25,35 +25,24 @@ async function getAllFavorites(req, res) {
     try {
         let favoriteItems = await FavoritesClass.getAllFavorites(userId);
         let productIds = favoriteItems.map((item) => item.productId);
-        console.log(productIds);
+        let products = [];
         if (searchWord) 
         {
-            let products = ProductsClass.getAllFavProductsWithSearch(searchWord,productIds);
+            products = await ProductsClass.getAllFavProductsWithSearch(searchWord,productIds);
+        
         } else 
         {
-            let products = ProductsClass.getAllFavProducts(productIds);
+            products = await ProductsClass.getAllFavProducts(productIds);
+            
         }
-
-
-        // let selectQuery = ''
-        // let favoriteItems = await query(`select * from favorites where createdBy = '${userId}'`);
-        // let productIds = favoriteItems.map((item) => item.productId)
-        // if (searchWord) {
-        //     selectQuery = `select * from products where _id IN ("${productIds.join('", "')}") AND name REGEXP '${searchWord}'`;
-        // } else {
-        //     selectQuery = `select * from products where _id IN ("${productIds.join('", "')}")`;
-        // }
-        // let products = await query(selectQuery);
-
-
-        // let productIdsMap = _.keyBy(products, '_id')
-        // favoriteItems = _.filter(favoriteItems, (item) => productIdsMap[item.productId]);
-        // res.json({
-        //     favorites: _.map(favoriteItems, (item) => {
-        //         item.product = productIdsMap[item.productId]
-        //         return item;
-        //     })
-        // })
+        let productIdsMap = _.keyBy(products, '_id')
+        favoriteItems = _.filter(favoriteItems, (item) => productIdsMap[item.productId]);
+        res.json({
+            favorites: _.map(favoriteItems, (item) => {
+                item.product = productIdsMap[item.productId]
+                return item;
+            })
+        })
     } catch (err) {
         console.log("Error : ", err)
         res.status(400).json(err);

@@ -96,7 +96,7 @@ export default class ShopClass
             const findCondition = {
                 _id:mongoose.Types.ObjectId(shopId)
             }; 
-            const updateValues = {$set: {imageUrl: shopImageUrl}}
+            const updateValues = {$set: {imageUrl: shopImageUrl}};
             const result = await ShopModel.updateOne(findCondition,updateValues);
             const shopObj = {};
             if(result.acknowledged == true){

@@ -66,6 +66,7 @@ async function createNewProduct(req, res) {
 }
 
 async function getAllProducts(req, res) {
+    console.log("ININ");
     let { userId } = req.params; // verifiying userId in middleware
     let body = req.body;
     let {categoryIds, shopIds, excludeShopIds, search} = body;
@@ -78,40 +79,54 @@ async function getAllProducts(req, res) {
         //     body.excludeShopIds = [currentUserShopDetails._id]
         // }
 
-        // if(search) {
-        //     whereConditions.push(`name REGEXP '${search}'`)
-        // }
-        if (categoryIds && categoryIds.length > 0) {
-            let cat = '["'+categoryIds.join('", "')+'"]';
-            whereConditions['categoryId']={ $in:cat};
+        if(search) {
+            var regQuery = { $regex: search };
+            whereConditions['name']=regQuery;
         }
-        console.log(JSON.stringify(whereConditions));
-        // if (body.shopIds && body.shopIds.length) {
-        //     whereConditions.push(`shopId IN("${shopIds.join('", "')}")`)
-        // }
-        // if (body.excludeShopIds && body.excludeShopIds.length) {
-        //     whereConditions.push(`shopId NOT IN("${body.excludeShopIds.join('", "')}")`)
-        // }
-        // if (body.priceRange && body.priceRange.length == 2) {
-        //     let lowPrice = body.priceRange[0];
-        //     let highPrice = body.priceRange[1];
-        //     whereConditions.push(`price BETWEEN ${lowPrice} AND ${highPrice}`);
-        // }
-        // if (body.excludeOutOfStock) {
-        //     whereConditions.push(`quantity > 0`)
-        // }
-        // if (whereConditions.length) {
-        //     selectQuery = `select * from products where ${whereConditions.join(' AND ')}`
-        // } else {
-        //     selectQuery = `select * from products`;
-        // }
-        // let products = await query(selectQuery);
-        // let joinConditionString = whereConditions.map((condition) => `p.${condition}`).join(' AND ');
-        // var productsSalesCount = await query(`select sum(o.quantity) as salescount, productId from products p where ${joinConditionString} inner join orders o on p._id=o.productId group by o.productId;`)
-        // res.status(200).json({
-        //     products,
-        //     salesCount: _.sumBy(products, 'salesCount')
-        // })
+        if (categoryIds && categoryIds.length > 0) {
+            var catQuery = { $in: [] };
+            for(let i=0;i<categoryIds.length;i++)
+            {
+                catQuery.$in.push(categoryIds[i]);
+            }
+            whereConditions['categoryId']=catQuery;
+        }
+        
+        if (body.shopIds && body.shopIds.length>0) {
+            var shopQuery = { $in: [] };
+            for(let i=0;i<shopIds.length;i++)
+            {
+                shopQuery.$in.push(shopIds[i]);
+            }
+            whereConditions['shopId']=shopQuery;
+        }
+        if (body.excludeShopIds && body.excludeShopIds.length>0) {
+            var shopExQuery = { $nin: [] };
+            for(let i=0;i<excludeShopIds.length;i++)
+            {
+                shopExQuery.$nin.push(excludeShopIds[i]);
+            }
+            whereConditions['shopId']=shopExQuery;
+        }
+        if (body.priceRange && body.priceRange.length == 2) {
+            let lowPrice = body.priceRange[0];
+            let highPrice = body.priceRange[1];
+            var priceQuery = { $gt: lowPrice, $lt: highPrice };
+            whereConditions['price']=priceQuery;
+        }
+        if (body.excludeOutOfStock) {
+            var qQuery = { $gt: 0 };
+            whereConditions['quantity']=qQuery;
+        }
+
+        console.log(whereConditions);
+
+        const results = await ProductClass.getProductsWithConditions(whereConditions);
+        console.log(results);
+        res.status(200).json({
+            results,
+            salesCount: _.sumBy(results, 'salesCount')
+        })
     } catch (err) {
         res.status(400).json(err);
     }

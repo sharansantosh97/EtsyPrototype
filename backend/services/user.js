@@ -67,7 +67,8 @@ export default class UserClass
             const findCondition = {
                 _id:mongoose.Types.ObjectId(userId)
             };
-            const updateValues = {$set: profileData}
+            const updateValues = {$set: profileData};
+            console.log(updateValues);
             const result = await UserModel.updateOne(findCondition,updateValues);
             const userObj = {};
             if(result.acknowledged == true){
