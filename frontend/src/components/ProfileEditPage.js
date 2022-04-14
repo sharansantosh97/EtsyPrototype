@@ -1,4 +1,5 @@
 import React, {useState,useContext,useEffect} from 'react';
+import { useSelector } from 'react-redux';
 import axios from "axios";
 import config from "../utils/config.js";
 import {useNavigate} from "react-router-dom";
@@ -7,6 +8,7 @@ import '../styles/ProfileEditPage.css';
 import { GlobalContext } from "../context/Provider";
 import countries from '../countries';
 function ProfileEditPage() {
+    const {user} = useSelector((state)=>state.user);
     const { authState, authDispatch } = useContext(GlobalContext);
     const navigate = useNavigate();
     const [progress , setProgress] = useState(0);
@@ -37,7 +39,7 @@ function ProfileEditPage() {
     const getUserDetails = async () =>
     {
         try{
-        const response = await axios.get(`${config.baseUrl}/users/${authState.auth.data.data.userId}/profile`,{headers:{'Authorization':localStorage.getItem("token")}});
+        const response = await axios.get(`${config.baseUrl}/users/${user.userId}/profile`,{headers:{'Authorization':localStorage.getItem("token")}});
         console.log("RES"+JSON.stringify(response.data));
         if(response && response.data){
             setUserDetails({
@@ -72,7 +74,7 @@ function ProfileEditPage() {
 
         
         console.log(JSON.stringify(userDetails));
-        const response = await axios.put(`${config.baseUrl}/users/${authState.auth.data.data.userId}/profile`,userDetails,{headers:{'Authorization':localStorage.getItem("token"),'Content-Type':"application/json"}});
+        const response = await axios.put(`${config.baseUrl}/users/${user.userId}/profile`,userDetails,{headers:{'Authorization':localStorage.getItem("token"),'Content-Type':"application/json"}});
         console.log(JSON.stringify(response));
         if(response && response.data)
         {

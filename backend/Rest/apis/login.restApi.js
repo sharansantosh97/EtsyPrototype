@@ -27,7 +27,7 @@ async function login(req, res) {
             var userShopDetails = await getUserShopDetails(userId);
             let isValidPassword = bcrypt.compareSync(password, userObj.password); // true
             if (isValidPassword == false) {
-                res.status(401).json({ msg: 'Login failed' });
+                res.status(401).json({ msg: 'Invalid user name or password' });
                 return;
             }
             const token = jwt.sign({
@@ -54,7 +54,7 @@ async function login(req, res) {
         }
     } catch(err) {
         console.log("err", err);
-        res.status(400).json({ msg: 'Failed to login' });
+        res.status(500).json({ msg: 'Failed to login please try again later' });
     }
 }
 

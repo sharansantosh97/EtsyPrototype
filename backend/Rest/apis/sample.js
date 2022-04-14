@@ -1,29 +1,18 @@
-
-
-async function getAllFavorites(req, res) {
-    let userId = req.params.userId;
-    let searchWord = req.query.search;
+async function getOrders(req, res) {
     try {
-        let selectQuery = ''
-        let favoriteItems = await query(`select * from favorites where createdBy = '${userId}'`);
-        let productIds = favoriteItems.map((item) => item.productId)
-        if (searchWord) {
-            selectQuery = `select * from products where _id IN ("${productIds.join('", "')}") AND name REGEXP '${searchWord}'`;
-        } else {
-            selectQuery = `select * from products where _id IN ("${productIds.join('", "')}")`;
-        }
-        let products = await query(selectQuery);
-        let productIdsMap = _.keyBy(products, '_id')
-        favoriteItems = _.filter(favoriteItems, (item) => productIdsMap[item.productId]);
-        res.json({
-            favorites: _.map(favoriteItems, (item) => {
-                item.product = productIdsMap[item.productId]
-                return item;
-            })
-        })
+      let orderData = await query("SELECT * FROM orders WHERE createdBy = ? ORDER BY createdOn DESC;", req.params.userId);
+      let productIds = _.map(orderData, 'productId');
+      let productData = await query(`SELECT * FROM products WHERE  _id IN ("${productIds.join('", "')}") ORDER BY createdOn DESC`);
+      let productIdsMap = _.keyBy(productData, '_id');
+      orderData = _.map(orderData, (orderItem) => {
+        let productId = orderItem.productId;
+        orderItem.product = productIdsMap[productId];
+        return orderItem;
+      })
+      res.status(200).json(orderData);
     } catch (err) {
-        console.log("Error : ", err)
-        res.status(400).json(err);
-        return;
+      log("err ===>", err);
+      res.status(400).json({ msg: "Error in fetching orders" });
+      return;
     }
-}
+  };

@@ -7,7 +7,7 @@ export default class ProductClass
     {
         
         try{
-             const results = await ProductsModel.find( { _id: { $in: productIds} });
+             const results = await ProductsModel.find( { _id: { $in: productIds} }).lean();
             if(results){
                 return results;
             }else{

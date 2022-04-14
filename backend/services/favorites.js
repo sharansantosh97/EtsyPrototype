@@ -53,7 +53,7 @@ export default class FavoritesClass
             const query = {
                 createdBy: mongoose.Types.ObjectId(userId)
             };
-            const results = await FavoritesModel.find(query);
+            const results = await FavoritesModel.find(query).lean();
             if(results){
                 return results;
             }else{

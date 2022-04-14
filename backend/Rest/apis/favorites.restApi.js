@@ -35,6 +35,7 @@ async function getAllFavorites(req, res) {
             products = await ProductsClass.getAllFavProducts(productIds);
             
         }
+        console.log(products);
         let productIdsMap = _.keyBy(products, '_id')
         favoriteItems = _.filter(favoriteItems, (item) => productIdsMap[item.productId]);
         res.json({

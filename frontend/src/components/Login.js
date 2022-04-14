@@ -22,24 +22,20 @@ const EMAIL_REGEX = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
   const [email,setEmail] = useState("");
   const [password,setPassword] = useState("");
   const dispatch = useDispatch();
-  
+  const { error } = useSelector((state) => state.user);
   //const { authState, authDispatch } = useContext(GlobalContext);
   const navigate = useNavigate();
   // const {
   //   auth: { data, loading, error },
   // } = authState
 
+  const [errorMsg, setErrorMsg] = useState("")
 
-
-
-  //const [errorMsg, setErrorMsg] = useState("")
-
-  // useEffect(() => {
-  //   if (error) {
-  //     console.log("error", error)
-  //     setErrorMsg(error.msg)
-  //   }
-  // }, [error])
+  useEffect(() => {
+    if (error && error.status==401) {
+      setErrorMsg("Invalid username or password")
+    }
+  }, [error])
 
   // useEffect(() => {
   //   if (data) {
@@ -58,7 +54,7 @@ const EMAIL_REGEX = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     }
    },[]);
 
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault ();
     console.log(email,password );
 
@@ -69,33 +65,53 @@ const EMAIL_REGEX = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
         email:email,
         password:password
       }
+      try
+      {
         dispatch({
           type:"LoginRequest"
         })
 
-        axiosInstance
-        .post("/login", postBody)
-        .then((response) => {
-          localStorage.token = response.data.token;
-          console.log("response from LOGINAction", response.data);     
+        // axiosInstance
+        // .post("/login", postBody)
+        // .then((response) => {
+        //   localStorage.token = response.data.token;
+        //   console.log("response from LOGINAction", response.data);     
+        //   dispatch({
+        //     type:"LoginSuccess",
+        //     payload: response.data.data
+        //   })
+        //   navigate("/", {replace:true});
+        // })
+        // .catch((error) => {
+        //   console.log("error from LOGINAction", error)
+        //   dispatch({
+        //     type:"LoginFailure",
+        //     payload: error
+        //   })
+        // })
+
+      const response = await axiosInstance.post("/login",postBody);
+      localStorage.token = response.data.token;
+        console.log("response from LOGINAction", response.data);
           dispatch({
             type:"LoginSuccess",
             payload: response.data.data
           })
+          dispatch({ type: "clearErrors" });
           navigate("/", {replace:true});
-        })
-        .catch((error) => {
-          console.log("error from LOGINAction", error)
+      }
+       catch(error)
+       {
+          console.log("error from LOGINAction", error);
           dispatch({
             type:"LoginFailure",
-            error: error
+            payload: error
           })
-        })
+       }
 
     }
 
   }
-    
   return (
     <>
       <section className="vh-100 gradient-custom">
@@ -109,24 +125,20 @@ const EMAIL_REGEX = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
                         <h2 className="fw-bold mb-2 text-uppercase" style={{color:"white"}}>Login</h2>
                         <p className="text-white-50 mb-5" style={{color:"white"}}>Please enter your login and password!</p>
 
-                        {/* {error ? (
+                         {error ? (
                           <div class='alert alert-danger' role='alert'>
                             {errorMsg}
                           </div>
-                        ) : null} */}
+                        ) : null} 
 
                         <div className="form-outline form-white mb-4">
                           <label className="form-label" for="typeEmailX" style={{float: "left"}}>Email</label>
                           <input type="email" id="typeEmailX" className="form-control form-control-lg" value={email} onChange={(e)=>setEmail(e.target.value)} required/>
-                          
                         </div>
-
                         <div className="form-outline form-white mb-4">
                           <label className="form-label" for="typePasswordX" style={{float: "left"}}>Password</label>
                           <input type="password" id="typePasswordX" className="form-control form-control-lg" value={password} onChange={(e)=>setPassword(e.target.value)} required/>
-                          
                         </div>
-
                         <button className="login-btn" type="submit">Login</button>
                     </form>
                   </div>

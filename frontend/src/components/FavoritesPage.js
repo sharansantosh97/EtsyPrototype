@@ -1,4 +1,5 @@
 import React, {useEffect,useContext,useState} from "react";
+import { useSelector } from 'react-redux';
 import {NavLink} from "react-router-dom";
 import axiosInstance from "../utils/axios";
 import axios from "axios";
@@ -14,6 +15,8 @@ import {
   deleteFavoritesAction,
 } from "../context/actions/favoritesAction";
 const FavoritesPage = () => {
+
+  const {user} = useSelector((state)=>state.user);
   const [favoriteItemsList, setFavoriteItemsList] = useState([]);
   const { globalDispatch, globalState } = useContext(GlobalContext);
   const { authState, authDispatch } = useContext(GlobalContext);
@@ -36,7 +39,7 @@ const FavoritesPage = () => {
   {
     try{
     
-      const response = await axios.get(`${config.baseUrl}/users/${authState.auth.data.data.userId}/profile`,{headers:{'Authorization':localStorage.getItem("token")}});
+      const response = await axios.get(`${config.baseUrl}/users/${user.userId}/profile`,{headers:{'Authorization':localStorage.getItem("token")}});
       if(response && response.data){
         setUserDetails({
           username:response.data.username,
@@ -61,11 +64,12 @@ const FavoritesPage = () => {
     }
   }
   const getFavorites = async () => {
-    console.log("url sa "+`${config.baseUrl}/users/${authState.auth.data.data.userId}/favorites`,{headers:{'Authorization':localStorage.getItem("token")}});
+    console.log("url sa "+`${config.baseUrl}/users/${user.userId}/favorites`,{headers:{'Authorization':localStorage.getItem("token")}});
     try{
-        const response = await axios.get(`${config.baseUrl}/users/${authState.auth.data.data.userId}/favorites`,{headers:{'Authorization':localStorage.getItem("token")}});
+        const response = await axios.get(`${config.baseUrl}/users/${user.userId}/favorites`,{headers:{'Authorization':localStorage.getItem("token")}});
         //console.log("API"+JSON.stringify(response));
         if(response && response.data){
+          console.log(response.data.favorites);
           setFavoriteItemsList(response.data.favorites);
             console.log("items in auth"+JSON.stringify(favoriteItemsList));
         }else{
@@ -82,7 +86,7 @@ const FavoritesPage = () => {
         if(!token){
             navigate("/login", {replace:true});
         }else{
-			   console.log("USER ID"+JSON.stringify(authState.auth.data.data.userId));
+			   console.log("USER ID"+JSON.stringify(user.userId));
          getFavorites();
          getUserDetails();
         }
@@ -94,7 +98,7 @@ const FavoritesPage = () => {
         if(!token){
             navigate("/login", {replace:true});
         }else{
-      const response = await axios.get(`${config.baseUrl}/users/${authState.auth.data.data.userId}/favorites?search=${query}`,{headers:{'Authorization':localStorage.getItem("token")}});
+      const response = await axiosInstance.get(`${config.baseUrl}/users/${user.userId}/favorites?search=${query}`,{headers:{'Authorization':localStorage.getItem("token")}});
       if(response && response.data)
       {
         setFavoriteItemsList(response.data.favorites);
@@ -130,7 +134,7 @@ const FavoritesPage = () => {
           favId = favoriteItemsList[i]._id;
         }
       }
-      const response = await axios.delete(`${config.baseUrl}/users/${authState.auth.data.data.userId}/favorites/${favId}`,{headers:{'Authorization':localStorage.getItem("token")}});
+      const response = await axios.delete(`${config.baseUrl}/users/${user.userId}/favorites/${favId}`,{headers:{'Authorization':localStorage.getItem("token")}});
       if(response && response.data)
       {
         console.log("DEL"+JSON.stringify(response.data));
@@ -142,14 +146,15 @@ const FavoritesPage = () => {
       const token = localStorage.getItem("token");
         if (token) {
           console.log(productId);
-        console.log(authState.auth.data.data.userId);
-          putCartAction(authState.auth.data.data.userId, productId)(globalDispatch);
+        console.log(user.userId);
+          putCartAction(user.userId, productId)(globalDispatch);
           //console.log("HI put cart action dispatch");
         }
       };
 
 
     const productsDiv = favoriteItemsList.map((item, index) => {
+      console.log(item);
       let pageLink = `/product/${item.product._id}`;
       let favProductId = item.product._id;
       return (
@@ -218,7 +223,7 @@ const FavoritesPage = () => {
                 </div>
                 <div class='col-lg-8 col-md-8 col-12'>
                   <br />
-                  <h4 class='m-t-0 m-b-0'>{authState.auth.data.data?.username}</h4>
+                  <h4 class='m-t-0 m-b-0'>{user?.username}</h4>
                   <br />
                   <div>
                     <NavLink to="/profileEdit"><button class="editProfile-btn">
