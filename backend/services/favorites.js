@@ -6,10 +6,6 @@ export default class FavoritesClass
 {
     static addFavorites = async (productId,userId,date)=>
     {
-<<<<<<< HEAD
-=======
-        console.log(productId,userId,date);
->>>>>>> e2fbba79d93d02958bfa97fbc758e08bcd2bf100
         try{
             const query = {
                 createdBy: mongoose.Types.ObjectId(userId),

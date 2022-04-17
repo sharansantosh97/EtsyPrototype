@@ -1,6 +1,7 @@
 import { uuid } from 'uuidv4';
 import _ from 'lodash';
 import  ShopClass from '../../services/shop.js';
+import  UserClass from '../../services/user.js';
 
 async function checkShopNameAvailability(req, res) {
     try
@@ -98,6 +99,7 @@ async function getShopByUserId(req, res) {
 }
 
 async function getShopById(req, res) {
+    
     var shopId = req.params.shopId; // verifiying userId in middleware
     try {
         const results = await ShopClass.getShopDetailsById(shopId);
@@ -108,13 +110,14 @@ async function getShopById(req, res) {
             })
             return;
         }
-        shopDetails = results.shop;
+        let shopDetails = results.shop;
+        console.log(shopDetails);
         //let shopSalesCount = await query(`select SUM(quantity) as totalSalesCount from orders where shopId='${shopId}'`)
         // shopDetails = shopDetails[0];
          let shopOwnerId = results.shop.createdBy;
          let userResults = await UserClass.getUserProfile(shopOwnerId);
          userResults.user.password = undefined;
-         shopOwnerDetails = userResults.user;
+         let shopOwnerDetails = userResults.user;
          shopDetails.ownerDetails = shopOwnerDetails;
         // let shopOwnerDetails = await query(`select * from users where _id='${shopOwnerId}'`); 
         // shopOwnerDetails = shopOwnerDetails[0];
@@ -152,7 +155,6 @@ async function updateShopById(req, res) {
     }
 }
 
-<<<<<<< HEAD
 //My SQL Connection
 // function checkShopNameAvailability(req, res) {
 //     let shopname = req.query.shopname;
@@ -258,8 +260,6 @@ async function updateShopById(req, res) {
 // }
 
 
-=======
->>>>>>> e2fbba79d93d02958bfa97fbc758e08bcd2bf100
 let endpoints = {
     '/users/:userId/shop/checkavailability': [{
         method: 'GET',

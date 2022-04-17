@@ -96,6 +96,7 @@ export default class ProductClass
     {   
         try{
             const result = await ProductsModel.find(whereConditions);
+            console.log(result);
             if(result){
                 return result;
             }else{

@@ -93,7 +93,7 @@ function Home() {
     }
   };
   
-  const productsDiv = products?.products.map((item, index) => {
+  const productsDiv = products?.products?.map((item, index) => {
     let pageLink = `/product/${item._id}`;
     return (
 		<>

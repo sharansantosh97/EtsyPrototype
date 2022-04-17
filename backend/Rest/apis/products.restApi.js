@@ -66,11 +66,6 @@ async function createNewProduct(req, res) {
 }
 
 async function getAllProducts(req, res) {
-<<<<<<< HEAD
-
-=======
-    console.log("ININ");
->>>>>>> e2fbba79d93d02958bfa97fbc758e08bcd2bf100
     let { userId } = req.params; // verifiying userId in middleware
     let body = req.body;
     let {categoryIds, shopIds, excludeShopIds, search} = body;
@@ -84,7 +79,7 @@ async function getAllProducts(req, res) {
         // }
 
         if(search) {
-            var regQuery = { $regex: search };
+            var regQuery = { $regex: search, $options: 'i' };
             whereConditions['name']=regQuery;
         }
         if (categoryIds && categoryIds.length > 0) {
@@ -122,21 +117,10 @@ async function getAllProducts(req, res) {
             var qQuery = { $gt: 0 };
             whereConditions['quantity']=qQuery;
         }
-<<<<<<< HEAD
         const products = await ProductClass.getProductsWithConditions(whereConditions);
         res.status(200).json({
             products,
             //salesCount: _.sumBy(results, 'salesCount')
-=======
-
-        console.log(whereConditions);
-
-        const results = await ProductClass.getProductsWithConditions(whereConditions);
-        console.log(results);
-        res.status(200).json({
-            results,
-            salesCount: _.sumBy(results, 'salesCount')
->>>>>>> e2fbba79d93d02958bfa97fbc758e08bcd2bf100
         })
     } catch (err) {
         res.status(400).json(err);

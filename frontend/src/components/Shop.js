@@ -24,7 +24,7 @@ function Shop() {
   {
     console.log("SHOP ID"+id);
     try{
-    const response = await axios.get(`${config.baseUrl}/users/${user.userId}/shops/${id}`,{headers:{'Authorization':localStorage.getItem("token")}});
+    const response = await axiosInstance.get(`/users/${user.userId}/shops/${id}`,{headers:{'Authorization':localStorage.getItem("token")}});
     if(response && response.data)
     {
       setShopDetails(response.data);

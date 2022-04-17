@@ -20,7 +20,6 @@ async function getOrders(req, res) {
     return;
   }
 };
-<<<<<<< HEAD
 //MY SQL
 // async function getOrders(req, res) {
 //   try {
@@ -41,8 +40,6 @@ async function getOrders(req, res) {
 //   }
 // };
 
-=======
->>>>>>> e2fbba79d93d02958bfa97fbc758e08bcd2bf100
 
 let endpoints = {
   "/users/:userId/orders": [

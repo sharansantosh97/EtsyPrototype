@@ -7,18 +7,14 @@ import config from "../utils/config.js";
 import axios from "axios";
 import logout from "../context/actions/logout"
 import { productsAction } from "../context/actions/productsAction";
+import {getproducts} from "../Redux/Actions/product.js";
 //import { useHistory } from "react-router-dom"
-<<<<<<< HEAD
 import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 function Header() {
-
+	const dispatch = useDispatch();
 	const {user} = useSelector((state)=>state.user);
-=======
-
-function Header() {
-
->>>>>>> e2fbba79d93d02958bfa97fbc758e08bcd2bf100
 	// const {
 	// 	authState: { auth: data },
 	// 	globalDispatch,
@@ -37,12 +33,11 @@ function Header() {
 	//   console.log("user from globalState | Header", user);
 	
 	   const [query, setQuery] = useState("");
-	//   useEffect(() => {
-	// 	console.log("Search Items are", query);
-	
-	// 	console.log("products Search action dispatch");
-	// 	productsAction(userId, query)(globalDispatch);
-	//   }, [query]);
+	  useEffect(() => {
+		console.log("Search Items are", query);
+		console.log("products Search action dispatch");
+		dispatch(getproducts(user?.userId,query));
+	  }, [query]);
 
 	//   const handleLogout = () => {
 	// 	logout()(globalDispatch)
@@ -61,11 +56,7 @@ function Header() {
 	  const handlePurchase = ()=>{
 		navigate("/purchases", {replace:true});
 	  }
-<<<<<<< HEAD
 	const shopView = async (e)=>
-=======
-	/*const shopView = async (e)=>
->>>>>>> e2fbba79d93d02958bfa97fbc758e08bcd2bf100
 	{
 		e.preventDefault();
 		const token = localStorage.getItem("token");
@@ -75,15 +66,9 @@ function Header() {
 		else
 		{
 			try{
-<<<<<<< HEAD
 				console.log(`${config.baseUrl}/users/${user.userId}/shops`);
 				const response = await axios.get(`${config.baseUrl}/users/${user.userId}/shops`,{headers:{'Authorization':localStorage.getItem("token")}});
 				console.log(`${config.baseUrl}/users/${user.userId}/shops`);
-=======
-				console.log(`${config.baseUrl}/users/${authState.auth.data.data.userId}/shops`);
-				const response = await axios.get(`${config.baseUrl}/users/${authState.auth.data.data.userId}/shops`,{headers:{'Authorization':localStorage.getItem("token")}});
-				console.log(`${config.baseUrl}/users/${authState.auth.data.data.userId}/shops`);
->>>>>>> e2fbba79d93d02958bfa97fbc758e08bcd2bf100
 				console.log(response);
 				if(response.data)
 				{
@@ -105,11 +90,7 @@ function Header() {
 			}
 		}
 	}
-<<<<<<< HEAD
    
-=======
-   */
->>>>>>> e2fbba79d93d02958bfa97fbc758e08bcd2bf100
 
 
   return (
@@ -209,11 +190,7 @@ function Header() {
 											<div className="product-widget">
 												<div className="product-body">
 													<h3 className="product-name"><a href="" onClick={(e)=>{
-<<<<<<< HEAD
 														 shopView(e)
-=======
-														// shopView(e)
->>>>>>> e2fbba79d93d02958bfa97fbc758e08bcd2bf100
 														}}> View My Shop</a></h3>
 												</div>
 											</div>

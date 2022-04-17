@@ -9,16 +9,10 @@ import ShopProducts from './ShopProducts';
 import ShopModal from './ShopModal';
 import { Button } from "react-bootstrap";
 import axios from "axios";
-<<<<<<< HEAD
 import { useSelector } from 'react-redux';
 function UserShop() {
 
   const {user} = useSelector((state)=>state.user);
-=======
-function UserShop() {
-
-
->>>>>>> e2fbba79d93d02958bfa97fbc758e08bcd2bf100
   const navigate = useNavigate();
   const [selectedFile, setSelectedFile] = useState(null);
   const [imageSuccess, setImageSuccess] = useState(false);
@@ -30,11 +24,7 @@ function UserShop() {
   const [shopDetails,setShopDetails] = useState({});
   const [shopUp,setShopUp] = useState(false);
   const [shopProducts,setShopProducts] = useState([]);
-<<<<<<< HEAD
   //const { authState, authDispatch } = useContext(GlobalContext);
-=======
-  const { authState, authDispatch } = useContext(GlobalContext);
->>>>>>> e2fbba79d93d02958bfa97fbc758e08bcd2bf100
   const [addItemData, setAddItemData] = useState({
   });
   const [newCatShow,setNewCatShow] = useState(false);
@@ -42,11 +32,7 @@ function UserShop() {
   const getShopDetails = async ()=>
   {
     try{
-<<<<<<< HEAD
     const response = await axiosInstance.get(`${config.baseUrl}/users/${user.userId}/shops`,{headers:{'Authorization':localStorage.getItem("token")}});
-=======
-    const response = await axiosInstance.get(`${config.baseUrl}/users/${authState.auth.data.data.userId}/shops`,{headers:{'Authorization':localStorage.getItem("token")}});
->>>>>>> e2fbba79d93d02958bfa97fbc758e08bcd2bf100
     if(response.data)
     {
       setShopDetails(response.data);
@@ -64,11 +50,7 @@ function UserShop() {
 
   const getUserProfileImage = async ()=>
   {
-<<<<<<< HEAD
     const response = await axios.get(`${config.baseUrl}/users/${user.userId}/profile`,{headers:{'Authorization':localStorage.getItem("token")}});
-=======
-    const response = await axios.get(`${config.baseUrl}/users/${authState.auth.data.data.userId}/profile`,{headers:{'Authorization':localStorage.getItem("token")}});
->>>>>>> e2fbba79d93d02958bfa97fbc758e08bcd2bf100
     if(response && response.data)
     {
       setUserProfileImage(response.data.imageUrl);
@@ -91,20 +73,11 @@ function UserShop() {
         excludeShopIds:[]
       }
       bodyFormData.shopIds.push(shopDetails._id);
-<<<<<<< HEAD
       const response = await axios.post(`${config.baseUrl}/users/${user.userId}/products`,bodyFormData,{headers:{'Authorization':localStorage.getItem("token")}});
       //console.log(`${config.baseUrl}/users/${user.userId}/shops/${shopDetails._id}/products`);
       if(response.data)
       {
         setShopProducts(response.data.products);
-=======
-      const response = await axios.post(`${config.baseUrl}/users/${authState.auth.data.data.userId}/products`,bodyFormData,{headers:{'Authorization':localStorage.getItem("token")}});
-      console.log(`${config.baseUrl}/users/${authState.auth.data.data.userId}/shops/${shopDetails._id}/products`);
-      if(response.data)
-      {
-        setShopProducts(response.data.products);
-        console.log(response.data.products);
->>>>>>> e2fbba79d93d02958bfa97fbc758e08bcd2bf100
       }
       else
       {
@@ -155,11 +128,7 @@ function UserShop() {
           "imageUrl":iUrl
         }
 
-<<<<<<< HEAD
       const res = await axios.put(`${config.baseUrl}/users/${user.userId}/shops/${shopDetails._id}`,bd,{headers:{'Authorization':localStorage.getItem("token")}});
-=======
-      const res = await axios.put(`${config.baseUrl}/users/${authState.auth.data.data.userId}/shops/${shopDetails._id}`,bd,{headers:{'Authorization':localStorage.getItem("token")}});
->>>>>>> e2fbba79d93d02958bfa97fbc758e08bcd2bf100
       if(res && res.data)
       {
         setImageSuccess(true);
@@ -180,11 +149,7 @@ function UserShop() {
       try
       {
       setAddProdBtn(true);
-<<<<<<< HEAD
       const response = await axios.get(`${config.baseUrl}/users/${user.userId}/shops/${shopDetails._id}/categories`,{headers:{'Authorization':localStorage.getItem("token")}});
-=======
-      const response = await axios.get(`${config.baseUrl}/users/${authState.auth.data.data.userId}/shops/${shopDetails._id}/categories`,{headers:{'Authorization':localStorage.getItem("token")}});
->>>>>>> e2fbba79d93d02958bfa97fbc758e08bcd2bf100
       if(response.data && response)
       {
         setCategories(response.data.categories);
@@ -237,11 +202,7 @@ function UserShop() {
      
       console.log("form data"+JSON.stringify(addItemData));
       try{
-<<<<<<< HEAD
         const response = await axios.post(`${config.baseUrl}/users/${user.userId}/shops/${shopDetails._id}/products`,addItemData,{headers:{'Authorization':localStorage.getItem("token"),'Content-Type':"application/json"}});
-=======
-        const response = await axios.post(`${config.baseUrl}/users/${authState.auth.data.data.userId}/shops/${shopDetails._id}/products`,addItemData,{headers:{'Authorization':localStorage.getItem("token"),'Content-Type':"application/json"}});
->>>>>>> e2fbba79d93d02958bfa97fbc758e08bcd2bf100
         console.log(JSON.stringify(response));
         if(response && response.data)
         {
@@ -286,17 +247,10 @@ function UserShop() {
     }
     const postNewCatData = async()=>
     {
-<<<<<<< HEAD
       const response = await axios.post(`${config.baseUrl}/users/${user.userId}/shops/${shopDetails._id}/categories`,newCat, {headers:{'Authorization':localStorage.getItem("token")}});
       if(response && response.data)
       {
         const response = await axios.get(`${config.baseUrl}/users/${user.userId}/shops/${shopDetails._id}/categories`,{headers:{'Authorization':localStorage.getItem("token")}});
-=======
-      const response = await axios.post(`${config.baseUrl}/users/${authState.auth.data.data.userId}/shops/${shopDetails._id}/categories`,newCat, {headers:{'Authorization':localStorage.getItem("token")}});
-      if(response && response.data)
-      {
-        const response = await axios.get(`${config.baseUrl}/users/${authState.auth.data.data.userId}/shops/${shopDetails._id}/categories`,{headers:{'Authorization':localStorage.getItem("token")}});
->>>>>>> e2fbba79d93d02958bfa97fbc758e08bcd2bf100
         if(response.data && response)
         {
           setCategories(response.data.categories);
@@ -350,11 +304,7 @@ function UserShop() {
                         <h6 className="small lead text-black-50 text-center">SHOP OWNER</h6>
                           <div className="profile-image rounded-circle" style={{margin: "0px 110px"}}> <img className='' src={userProfileImage?userProfileImage:"https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png"} alt="" width="100px" height="100px"/> </div>
                               <br />
-<<<<<<< HEAD
                               <p className="mt-1 m-b-0 text-center">{user.username}</p>
-=======
-                              <p className="mt-1 m-b-0 text-center">{authState.auth.data.data.username}</p>
->>>>>>> e2fbba79d93d02958bfa97fbc758e08bcd2bf100
                               <br /> <br />
                           </div>                
                     </div>
