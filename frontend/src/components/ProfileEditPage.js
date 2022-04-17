@@ -9,7 +9,11 @@ import { GlobalContext } from "../context/Provider";
 import countries from '../countries';
 function ProfileEditPage() {
     const {user} = useSelector((state)=>state.user);
+<<<<<<< HEAD
     //const { authState, authDispatch } = useContext(GlobalContext);
+=======
+    const { authState, authDispatch } = useContext(GlobalContext);
+>>>>>>> e2fbba79d93d02958bfa97fbc758e08bcd2bf100
     const navigate = useNavigate();
     const [progress , setProgress] = useState(0);
     const [selectedFile, setSelectedFile] = useState(null);

@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react"
 import axios from "axios"
+<<<<<<< HEAD
 
+=======
+>>>>>>> e2fbba79d93d02958bfa97fbc758e08bcd2bf100
 const EditForm = ({
   categories,
   editItemProduct,

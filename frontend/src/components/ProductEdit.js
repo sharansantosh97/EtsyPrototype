@@ -7,6 +7,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { GlobalContext } from "../context/Provider"
 import axiosInstance from "../helpers/axiosInstance"
 import axios from "axios";
+<<<<<<< HEAD
 import { useSelector } from 'react-redux';
 
 function ProductEdit() {
@@ -16,6 +17,15 @@ function ProductEdit() {
     const [selectedFileProduct, setSelectedFileProduct] = useState(null);
     const [categories, setCategories] = useState([])
     //const { authState, authDispatch } = useContext(GlobalContext);
+=======
+
+function ProductEdit() {
+
+    const {id} = useParams();  
+    const [selectedFileProduct, setSelectedFileProduct] = useState(null);
+    const [categories, setCategories] = useState([])
+    const { authState, authDispatch } = useContext(GlobalContext);
+>>>>>>> e2fbba79d93d02958bfa97fbc758e08bcd2bf100
 	const navigate = useNavigate();
     const [product, setProduct] = useState({})
     const [loading, setLoading] = useState(false)
@@ -31,7 +41,11 @@ function ProductEdit() {
 		{
            setLoading(true)
            axiosInstance()
+<<<<<<< HEAD
 		  .get(`/users/${user?.userId}/products/${id}`)
+=======
+		  .get(`/users/${authState.auth.data.data?.userId}/products/${id}`)
+>>>>>>> e2fbba79d93d02958bfa97fbc758e08bcd2bf100
 		  .then((response) => {
 			console.log("response.data", response.data)
 			setProduct(response.data)
@@ -52,7 +66,11 @@ function ProductEdit() {
     const getCategories = async ()=>{
         try
             {
+<<<<<<< HEAD
             const response = await axios.get(`${config.baseUrl}/users/${user.userId}/shops/${product.shopId}/categories`,{headers:{'Authorization':localStorage.getItem("token")}});
+=======
+            const response = await axios.get(`${config.baseUrl}/users/${authState.auth.data.data.userId}/shops/${product.shopId}/categories`,{headers:{'Authorization':localStorage.getItem("token")}});
+>>>>>>> e2fbba79d93d02958bfa97fbc758e08bcd2bf100
             if(response.data && response)
             {
                 setCategories(response.data.categories);
@@ -92,7 +110,11 @@ function ProductEdit() {
     {
         try{
 
+<<<<<<< HEAD
             const response = await axios.put(`${config.baseUrl}/users/${user.userId}/products/${id}`,product,{headers:{'Authorization':localStorage.getItem("token"),'Content-Type':"application/json"}});
+=======
+            const response = await axios.put(`${config.baseUrl}/users/${authState.auth.data.data.userId}/products/${id}`,product,{headers:{'Authorization':localStorage.getItem("token"),'Content-Type':"application/json"}});
+>>>>>>> e2fbba79d93d02958bfa97fbc758e08bcd2bf100
             if(response && response.data)
             {
                 console.log("product updated successfully");
@@ -211,7 +233,11 @@ function ProductEdit() {
                                 <NavLink to="/usershop"><button className="saveChanges-btn"type="submit" style={{margin:"5px"}}>Cancel</button></NavLink>
                             </div>
                             <div>
+<<<<<<< HEAD
                                 <button onClick={postProdData}className="saveChanges-btn" style={{margin:"5px"}}>Edit Product</button>
+=======
+                                <button onClick={postProdData}className="saveChanges-btn" style={{margin:"5px"}}>Create Product</button>
+>>>>>>> e2fbba79d93d02958bfa97fbc758e08bcd2bf100
                             </div>
                                 
                 

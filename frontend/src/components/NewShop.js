@@ -4,22 +4,35 @@ import "../styles/NewShop.css";
 import axiosInstance from "../utils/axios";
 import config from "../utils/config.js";
 import {useNavigate} from "react-router-dom";
+<<<<<<< HEAD
 import { useSelector } from 'react-redux';
+=======
+>>>>>>> e2fbba79d93d02958bfa97fbc758e08bcd2bf100
 function NewShop() {
 
   const [shopName, setShopName] = useState("");
   const [shopAvailable, setShopAvailable] = useState("3");
   const navigate = useNavigate();
+<<<<<<< HEAD
   //const { authState, authDispatch } = useContext(GlobalContext);
   const {user} = useSelector((state)=>state.user);
   const createShop = async ()=>
   {
   
+=======
+  const { authState, authDispatch } = useContext(GlobalContext);
+  const createShop = async ()=>
+  {
+>>>>>>> e2fbba79d93d02958bfa97fbc758e08bcd2bf100
     if(shopName)
     {
       const reqBody = {};
       reqBody.name = shopName;
+<<<<<<< HEAD
       const response = await axiosInstance.post(`${config.baseUrl}/users/${user.userId}/shops`,reqBody,{headers:{'Authorization':localStorage.getItem("token")}});
+=======
+      const response = await axiosInstance.post(`${config.baseUrl}/users/${authState.auth.data.data.userId}/shops`,reqBody,{headers:{'Authorization':localStorage.getItem("token")}});
+>>>>>>> e2fbba79d93d02958bfa97fbc758e08bcd2bf100
       if(response)
       {
         navigate("/usershop");
@@ -36,7 +49,11 @@ function NewShop() {
   {
     if(shopName)
     {
+<<<<<<< HEAD
       const response = await axiosInstance.get(`${config.baseUrl}/users/${user.userId}/shop/checkavailability?shopname=${shopName}`,{headers:{'Authorization':localStorage.getItem("token")}});
+=======
+      const response = await axiosInstance.get(`${config.baseUrl}/users/${authState.auth.data.data.userId}/shop/checkavailability?shopname=${shopName}`,{headers:{'Authorization':localStorage.getItem("token")}});
+>>>>>>> e2fbba79d93d02958bfa97fbc758e08bcd2bf100
       if(response && response.data)
       {
         if(response.data.available==true)

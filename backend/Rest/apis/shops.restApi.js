@@ -152,6 +152,7 @@ async function updateShopById(req, res) {
     }
 }
 
+<<<<<<< HEAD
 //My SQL Connection
 // function checkShopNameAvailability(req, res) {
 //     let shopname = req.query.shopname;
@@ -257,6 +258,8 @@ async function updateShopById(req, res) {
 // }
 
 
+=======
+>>>>>>> e2fbba79d93d02958bfa97fbc758e08bcd2bf100
 let endpoints = {
     '/users/:userId/shop/checkavailability': [{
         method: 'GET',

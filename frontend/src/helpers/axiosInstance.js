@@ -12,7 +12,10 @@ export default (history = null) => {
   const axiosInstance = axios.create({
     baseURL: baseURL,
     headers,
+<<<<<<< HEAD
     //validateStatus: () => true
+=======
+>>>>>>> e2fbba79d93d02958bfa97fbc758e08bcd2bf100
   });
 
   axiosInstance.interceptors.response.use(

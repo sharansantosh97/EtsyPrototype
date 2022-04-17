@@ -9,6 +9,7 @@ import { Dimmer, Loader } from "semantic-ui-react"
 import config from "../utils/config.js";
 import axios from "axios";
 import { putCartAction } from "../context/actions/cartAction";
+<<<<<<< HEAD
 import { useSelector } from 'react-redux';
 function ProductPage() {
 
@@ -16,6 +17,14 @@ function ProductPage() {
 	const {user} = useSelector((state)=>state.user);
 	const {id} = useParams();
 	//const { authState, authDispatch } = useContext(GlobalContext);
+=======
+
+function ProductPage() {
+
+	
+	const {id} = useParams();
+	const { authState, authDispatch } = useContext(GlobalContext);
+>>>>>>> e2fbba79d93d02958bfa97fbc758e08bcd2bf100
 	const navigate = useNavigate();
 	const [product, setProduct] = useState({})
 	const [pagelink, setPagelink] = useState("/shop/")
@@ -24,11 +33,19 @@ function ProductPage() {
 	const { globalDispatch, globalState } = useContext(GlobalContext)
 	const [msg,setMsg] = useState(false);
 	const [msg2,setMsg2] = useState(false);
+<<<<<<< HEAD
 	// const {
 	// 	user,
 	// 	products: { data },
 	//   } = globalState
 	//   const userId = user?.userId
+=======
+	const {
+		user,
+		products: { data },
+	  } = globalState
+	  const userId = user?.userId
+>>>>>>> e2fbba79d93d02958bfa97fbc758e08bcd2bf100
 
 	  useEffect(() => {
 		const token = localStorage.getItem("token");
@@ -39,9 +56,15 @@ function ProductPage() {
 		{
 		setLoading(true)
 		console.log("product page");
+<<<<<<< HEAD
 		console.log(user.userId);
 		axiosInstance()
 		  .get(`/users/${user?.userId}/products/${id}`)
+=======
+		console.log(authState.auth.data.data.userId);
+		axiosInstance()
+		  .get(`/users/${authState.auth.data.data?.userId}/products/${id}`)
+>>>>>>> e2fbba79d93d02958bfa97fbc758e08bcd2bf100
 		  .then((response) => {
 			console.log("response.data", response.data)
 			setProduct(response.data)
@@ -78,8 +101,13 @@ function ProductPage() {
 		const token = localStorage.getItem("token");
 		if (token) {
 		  console.log(productId);
+<<<<<<< HEAD
 		  console.log(user.userId);
 		  putCartAction(user.userId, productId)(globalDispatch);
+=======
+		  console.log(authState.auth.data.data.userId);
+		  putCartAction(authState.auth.data.data.userId, productId)(globalDispatch);
+>>>>>>> e2fbba79d93d02958bfa97fbc758e08bcd2bf100
 		  //console.log("HI put cart action dispatch");
 		  setMsg2(true);
 			setTimeout(() => {setMsg2(false)}, 2000);
@@ -95,7 +123,11 @@ function ProductPage() {
 		// }
 		const token = localStorage.getItem("token");
 		if(token){        
+<<<<<<< HEAD
 		const response = await axios.post(`${config.baseUrl}/users/${user.userId}/favorites`,{ productId },{headers:{'Authorization':localStorage.getItem("token")}});
+=======
+		const response = await axios.post(`${config.baseUrl}/users/${authState.auth.data.data.userId}/favorites`,{ productId },{headers:{'Authorization':localStorage.getItem("token")}});
+>>>>>>> e2fbba79d93d02958bfa97fbc758e08bcd2bf100
 		if(response && response.data)
 		{
 			console.log("Item Added To Favorites Successfully");

@@ -15,6 +15,7 @@ const EMAIL_REGEX = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
   const Login = () => {
   
   
+<<<<<<< HEAD
   //Context API
   //const { authState, authDispatch } = useContext(GlobalContext);
   // const {
@@ -27,6 +28,21 @@ const EMAIL_REGEX = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { error } = useSelector((state) => state.user);
+=======
+
+  const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
+  const EMAIL_REGEX = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+
+  const [email,setEmail] = useState("");
+  const [password,setPassword] = useState("");
+  const dispatch = useDispatch();
+  const { error } = useSelector((state) => state.user);
+  //const { authState, authDispatch } = useContext(GlobalContext);
+  const navigate = useNavigate();
+  // const {
+  //   auth: { data, loading, error },
+  // } = authState
+>>>>>>> e2fbba79d93d02958bfa97fbc758e08bcd2bf100
 
   const [errorMsg, setErrorMsg] = useState("")
 
@@ -64,29 +80,69 @@ const EMAIL_REGEX = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
         email:email,
         password:password
       }
+<<<<<<< HEAD
       // try
       // {
+=======
+      try
+      {
+>>>>>>> e2fbba79d93d02958bfa97fbc758e08bcd2bf100
         dispatch({
           type:"LoginRequest"
         })
 
+<<<<<<< HEAD
         axiosInstance
         .post("/login", postBody)
         .then((response) => {
           localStorage.token = response.data.token;
           console.log("response from LOGINAction", response.data);     
+=======
+        // axiosInstance
+        // .post("/login", postBody)
+        // .then((response) => {
+        //   localStorage.token = response.data.token;
+        //   console.log("response from LOGINAction", response.data);     
+        //   dispatch({
+        //     type:"LoginSuccess",
+        //     payload: response.data.data
+        //   })
+        //   navigate("/", {replace:true});
+        // })
+        // .catch((error) => {
+        //   console.log("error from LOGINAction", error)
+        //   dispatch({
+        //     type:"LoginFailure",
+        //     payload: error
+        //   })
+        // })
+
+      const response = await axiosInstance.post("/login",postBody);
+      localStorage.token = response.data.token;
+        console.log("response from LOGINAction", response.data);
+>>>>>>> e2fbba79d93d02958bfa97fbc758e08bcd2bf100
           dispatch({
             type:"LoginSuccess",
             payload: response.data.data
           })
+<<<<<<< HEAD
           navigate("/", {replace:true});
         })
         .catch((error) => {
           console.log("error from LOGINAction", error)
+=======
+          dispatch({ type: "clearErrors" });
+          navigate("/", {replace:true});
+      }
+       catch(error)
+       {
+          console.log("error from LOGINAction", error);
+>>>>>>> e2fbba79d93d02958bfa97fbc758e08bcd2bf100
           dispatch({
             type:"LoginFailure",
             payload: error
           })
+<<<<<<< HEAD
         })
 
       // const response = await axiosInstance.post("/login",postBody);
@@ -117,6 +173,9 @@ const EMAIL_REGEX = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
       //       payload: error
       //     })
       //  //}
+=======
+       }
+>>>>>>> e2fbba79d93d02958bfa97fbc758e08bcd2bf100
 
     }
 
