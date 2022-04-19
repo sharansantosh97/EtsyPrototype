@@ -5,7 +5,8 @@ import config from "../utils/config.js";
 import "../css/font-awesome.min.css"
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { GlobalContext } from "../context/Provider"
-import axiosInstance from "../helpers/axiosInstance"
+import axiosInstance from "../helpers/axiosInstance";
+import axiosInstance1 from "../utils/axios";
 import axios from "axios";
 import { useSelector } from 'react-redux';
 
@@ -77,15 +78,37 @@ function ProductEdit() {
     }
 
     const handleUploadProd = async ()=>{
-        var bodyFormData = new FormData();
-      bodyFormData.append('myImage',selectedFileProduct);
-      const response = await axios.post(`${config.baseUrl}/upload`,bodyFormData,{headers:{'Authorization':localStorage.getItem("token")}});
-      const iUrl = response.data.imageUrl;
-      console.log(iUrl);
-      setProduct({
+    //     var bodyFormData = new FormData();
+    //   bodyFormData.append('myImage',selectedFileProduct);
+    //   const response = await axios.post(`${config.baseUrl}/upload`,bodyFormData,{headers:{'Authorization':localStorage.getItem("token")}});
+    //   const iUrl = response.data.imageUrl;
+    //   console.log(iUrl);
+    //   setProduct({
+    //       ...product,
+    //       imageUrl: iUrl,
+    //     })
+
+
+    const response = await axiosInstance1.get(`/s3url`);
+        if(response && response.data)
+        {
+            const url = response.data.uploadURL;
+            await fetch(url, {
+                method: "PUT",
+                headers: {
+                  "Content-Type": "multipart/form-data"
+                },
+                body: selectedFileProduct
+              })
+
+              const imageUrl = url.split('?')[0]
+              setProduct({
           ...product,
-          imageUrl: iUrl,
+          imageUrl: imageUrl,
         })
+        }
+
+
     }
 
     const postProdData = async ()=>
@@ -191,10 +214,10 @@ function ProductEdit() {
                                 <div className="row">
                                 <div className="col">
                                 <div>
-                                    <div>Upload Shop Photo</div>
+                                    <div>Upload Product Photo</div>
                                     <input type="file" onChange={handleFileInputProd} style={{margin:"5px"}} name="imageUrl"/>
                                     
-                                    <button style={{margin:"5px"}} onClick={handleUploadProd} >Upload Shop Image</button>
+                                    <button style={{margin:"5px"}} onClick={handleUploadProd} >Upload Product Image</button>
                           
                                  </div>
                                 </div>

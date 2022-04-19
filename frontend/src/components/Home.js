@@ -14,7 +14,8 @@ import { useDispatch } from 'react-redux';
 import {getproducts} from "../Redux/Actions/product.js";
 import axiosInstance from "../utils/axios";
 function Home() {
-
+  const [flag, setFlag] = useState(false);
+  const [flag2, setFlag2] = useState(false);
   const {user} = useSelector((state)=>state.user);
   const {products} = useSelector((state)=>state.products);
   const [favoriteItemsList, setFavoriteItemsList] = useState([]);
@@ -93,6 +94,70 @@ function Home() {
     }
   };
   
+
+
+
+  const sortByPriceLowToHigh = ()=>{
+	let sortP = products?.products?.slice();
+	let sArray = sortP.sort((a,b)=>{
+	  return a.price - b.price
+	});
+	console.log(sArray);
+	dispatch({ type: "PRODUCTS_SUCCESS", payload: {products:sArray} })
+	setFlag(true);
+}
+
+const sortByPriceHighToLow = ()=>{
+	let sortP = products?.products?.slice();
+	const sArray = sortP.sort((a,b)=>{
+	  return b.price - a.price
+	});
+	dispatch({ type: "PRODUCTS_SUCCESS", payload: {products:sArray} })
+	setFlag(true);
+}
+
+const sortByQuantity= ()=>{
+	let sortP = products?.products?.slice();
+	const sArray = sortP.sort((a,b)=>{
+	  return b.quantity - a.quantity
+	});
+	dispatch({ type: "PRODUCTS_SUCCESS", payload: {products:sArray} })
+	setFlag(true);
+}
+
+const sortBySalesCount = ()=>
+{
+	let sortP = products?.products?.slice();
+  const sArray = sortP.sort((a,b)=>{
+	return b.salesCount - a.salesCount
+  });
+  dispatch({ type: "PRODUCTS_SUCCESS", payload: {products:sArray} })
+  setFlag(true);
+}
+
+const priceRange = (low, high)=>
+  {
+    
+	//   dispatch(getproducts(user?.userId));
+    //   const prodArray = products?.products?.slice();
+    //   let rangeArray = [];
+    //   for(let i=0;i<prodArray.length;i++)
+    //   {
+	// 	console.log(prodArray[i].price);
+    //     if(prodArray[i].price >= low && prodArray[i].price <= high)
+    //     {
+    //       rangeArray.push(prodArray[i]);
+    //       console.log(prodArray[i]);
+    //     }
+    //   }
+    //   console.log(rangeArray);
+    //   dispatch({ type: "PRODUCTS_SUCCESS", payload: {products:rangeArray} })
+    //   setFlag2(true);
+      
+  }
+
+
+
   const productsDiv = products?.products?.map((item, index) => {
     let pageLink = `/product/${item._id}`;
     return (
@@ -237,7 +302,30 @@ function Home() {
 		  </div>
 		  {/* /container */}
 		</div>
+		<div class="dropdown" style={{float:"left"}}>
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Price Range
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <button class="dropdown-item" onClick={() => priceRange(0,1000)}>None</button>
+              <button class="dropdown-item" onClick={() => priceRange(0,250)}>0 - 250</button>
+              <button class="dropdown-item" onClick={ () =>priceRange(251,500)}>251 - 500</button>
+              <button class="dropdown-item" onClick={() => priceRange(501,750)}>501 - 750</button>
+              <button class="dropdown-item" onClick={() => priceRange(751,1000)}>751 - 1000</button>
+            </div>
+          </div>   
 
+		<div class="dropdown" style={{float:"right"}}>
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Sort By
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <button class="dropdown-item" onClick={sortByPriceLowToHigh}>Price (Low to High)</button>
+              <button class="dropdown-item" onClick={sortByPriceHighToLow}>Price (High to Low)</button>
+              <button class="dropdown-item" onClick={sortByQuantity}>Quantity (High to Low) </button>
+              <button class="dropdown-item" onClick={sortBySalesCount}>Sales Count (High to Low)</button>
+            </div>
+          </div>
 		<div className="row">{productsDiv}</div>
 		<Footer/>
   </>

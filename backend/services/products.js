@@ -23,7 +23,7 @@ export default class ProductClass
     {
         
         try{
-            const results = await ProductsModel.find( { _id: { $in: productIds},name:{$regex:searchWord, $options: 'i'} });
+            const results = await ProductsModel.find( { _id: { $in: productIds},name:{$regex:searchWord, $options: 'i'} }).lean();
            if(results){
                return results;
            }else{

@@ -1,7 +1,7 @@
 import axiosInstance from "../../utils/axios";
 export const getproducts = (userId, query = "")=>(dispatch)=>
 {
-    
+
     dispatch({ type: "PRODUCTS_LOADING" })
     axiosInstance
       .post(`/users/${userId}/products`, { search: query })

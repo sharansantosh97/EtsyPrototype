@@ -24,6 +24,18 @@ function ProductPage() {
 	const { globalDispatch, globalState } = useContext(GlobalContext)
 	const [msg,setMsg] = useState(false);
 	const [msg2,setMsg2] = useState(false);
+	const [giftWrap,setGiftWrap] = useState(false);
+
+	const giftWrapHandle =(e)=>{
+		const checked = e.target.checked;
+		if(checked)
+		{
+			setGiftWrap(true);
+		}else
+		{
+			setGiftWrap(false);
+		}
+	}
 	// const {
 	// 	user,
 	// 	products: { data },
@@ -148,6 +160,18 @@ function ProductPage() {
 							  </div>
 							  <p className="product-description">{product.description}</p>
 							  <h2 className="price" style={{color:"red"}}>Current Price: $ {product.price}</h2>
+							  <div class="form-check">
+								<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" onClick={(e) => {
+                                giftWrapHandle(e);
+                           			 }}></input>
+								<label class="form-check-label" for="flexCheckDefault">
+									Gift Wrap this product
+								</label>
+							  </div>
+							  {giftWrap ==true &&<div class="form-group">
+								<label for="exampleFormControlTextarea1">Personal Message for Gift Wrap</label>
+								<textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+							  </div>}
 							  {product.quantity==0 && <h3 className="price" style={{color:"red"}}>( OUT OF STOCK! )</h3>}
 							  <div className="action">
 								  <button className="login-btn" type="button" onClick={() => addToCart(id)}>Add to cart</button>

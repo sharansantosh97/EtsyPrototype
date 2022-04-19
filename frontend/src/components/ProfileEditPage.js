@@ -1,6 +1,7 @@
 import React, {useState,useContext,useEffect} from 'react';
 import { useSelector } from 'react-redux';
 import axios from "axios";
+import axiosInstance from "../utils/axios";
 import config from "../utils/config.js";
 import {useNavigate} from "react-router-dom";
 import {NavLink} from "react-router-dom";
@@ -107,15 +108,35 @@ function ProfileEditPage() {
     const handleUpload = async (file)=>
     {
        
-        var bodyFormData = new FormData();
-        bodyFormData.append('myImage',selectedFile);
-        const response = await axios.post(`${config.baseUrl}/upload`,bodyFormData,{headers:{'Authorization':localStorage.getItem("token")}});
-        const iUrl = response.data.imageUrl;
-        console.log(iUrl);
-        setUserDetails({
+        // var bodyFormData = new FormData();
+        // bodyFormData.append('myImage',selectedFile);
+        // const response = await axios.post(`${config.baseUrl}/upload`,bodyFormData,{headers:{'Authorization':localStorage.getItem("token")}});
+        // const iUrl = response.data.imageUrl;
+        // console.log(iUrl);
+        // setUserDetails({
+        //     ...userDetails,
+        //     imageUrl: iUrl,
+        //   })
+
+        const response = await axiosInstance.get(`/s3url`);
+        if(response && response.data)
+        {
+            const url = response.data.uploadURL;
+            await fetch(url, {
+                method: "PUT",
+                headers: {
+                  "Content-Type": "multipart/form-data"
+                },
+                body: selectedFile
+              })
+
+              const imageUrl = url.split('?')[0]
+              setUserDetails({
             ...userDetails,
-            imageUrl: iUrl,
-          })
+            imageUrl: imageUrl,
+            })
+        }
+
 
     }
 

@@ -120,23 +120,38 @@ function UserShop() {
   const handleFileUpload = async (file)=>
     {
        
-        var bodyFormData = new FormData();
-        bodyFormData.append('myImage',selectedFile);
-        const response = await axios.post(`${config.baseUrl}/upload`,bodyFormData,{headers:{'Authorization':localStorage.getItem("token")}});
-        const iUrl = response.data.imageUrl;
-        const bd= {
-          "imageUrl":iUrl
-        }
+        // var bodyFormData = new FormData();
+        // bodyFormData.append('myImage',selectedFile);
+        // const response = await axios.post(`${config.baseUrl}/upload`,bodyFormData,{headers:{'Authorization':localStorage.getItem("token")}});
+        // const iUrl = response.data.imageUrl;
 
-      const res = await axios.put(`${config.baseUrl}/users/${user.userId}/shops/${shopDetails._id}`,bd,{headers:{'Authorization':localStorage.getItem("token")}});
-      if(res && res.data)
-      {
-        setImageSuccess(true);
-        getShopDetails();
-        handleHideUpload();
-      }else{
-        console.log("Error Uploading Image");
-      }
+        const response = await axiosInstance.get(`/s3url`);
+        if(response && response.data)
+        {
+            const url = response.data.uploadURL;
+            await fetch(url, {
+                method: "PUT",
+                headers: {
+                  "Content-Type": "multipart/form-data"
+                },
+                body: selectedFile
+              })
+
+              let imageUrl = url.split('?')[0]
+              const bd= {
+                "imageUrl":imageUrl
+              }
+      
+            const res = await axiosInstance.put(`/users/${user.userId}/shops/${shopDetails._id}`,bd,{headers:{'Authorization':localStorage.getItem("token")}});
+            if(res && res.data)
+            {
+              setImageSuccess(true);
+              getShopDetails();
+              handleHideUpload();
+            }else{
+              console.log("Error Uploading Image");
+            }
+        }
 
     }
 
@@ -187,15 +202,36 @@ function UserShop() {
   const handleUploadProd = async (file)=>
   {
      
-      var bodyFormData = new FormData();
-      bodyFormData.append('myImage',selectedFileProduct);
-      const response = await axios.post(`${config.baseUrl}/upload`,bodyFormData,{headers:{'Authorization':localStorage.getItem("token")}});
-      const iUrl = response.data.imageUrl;
-      console.log(iUrl);
-      setAddItemData({
-          ...addItemData,
-          imageUrl: iUrl,
-        })
+      // var bodyFormData = new FormData();
+      // bodyFormData.append('myImage',selectedFileProduct);
+      // const response = await axios.post(`${config.baseUrl}/upload`,bodyFormData,{headers:{'Authorization':localStorage.getItem("token")}});
+      // const iUrl = response.data.imageUrl;
+      // console.log(iUrl);
+      // setAddItemData({
+      //     ...addItemData,
+      //     imageUrl: iUrl,
+      //   })
+
+
+      const response = await axiosInstance.get(`/s3url`);
+        if(response && response.data)
+        {
+            const url = response.data.uploadURL;
+            await fetch(url, {
+                method: "PUT",
+                headers: {
+                  "Content-Type": "multipart/form-data"
+                },
+                body: selectedFileProduct
+              })
+
+              const imageUrl = url.split('?')[0]
+              //console.log(imageUrl);
+              setAddItemData({
+            ...addItemData,
+            imageUrl: imageUrl,
+            })
+        }
 
   }
     const postProdData = async ()=>{
@@ -412,10 +448,10 @@ function UserShop() {
                                 <div className="row">
                                 <div className="col">
                                 <div>
-                                    <div>Upload Shop Photo</div>
+                                    <div>Upload Product Photo</div>
                                     <input type="file" onChange={handleFileInputProd} style={{margin:"5px"}} name="imageUrl"/>
                                     
-                                    <button style={{margin:"5px"}} onClick={handleUploadProd} >Upload Shop Image</button>
+                                    <button style={{margin:"5px"}} onClick={handleUploadProd} >Upload Product Image</button>
                           
                                  </div>
                                 </div>

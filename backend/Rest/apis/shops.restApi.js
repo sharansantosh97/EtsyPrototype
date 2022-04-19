@@ -142,7 +142,7 @@ async function updateShopById(req, res) {
         if(results && results.shopEdited == true)
         {
             const results = await ShopClass.getShopDetailsById(shopId);
-            shopDetails = results.shop;
+            let shopDetails = results.shop;
             res.status(200).json(shopDetails);
         }else
         {
