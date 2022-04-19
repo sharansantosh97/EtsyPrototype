@@ -11,8 +11,7 @@ async function getSecureUrl(req, res)
 
     const region = "us-east-1"
     const bucketName = "etsyawsbucket"
-    const accessKeyId = "AKIAZP3IZBQZSEHJIWLH"
-    const secretAccessKey = "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"
+    
 
     const s3 = new aws.S3({
     region,
