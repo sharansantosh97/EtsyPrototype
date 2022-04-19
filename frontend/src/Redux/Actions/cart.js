@@ -1,7 +1,9 @@
-import axiosInstance from "../../utils/axios";
+import axiosInstance from "../../helpers/axiosInstance"
 
-export const cartAction = (userId, query = "") => (dispatch) => 
-  {
+
+export const cartAction =
+  (userId, query = "") =>
+  (dispatch) => {
     dispatch({ type: "CART_LOADING" })
     axiosInstance()
       .get(`/users/${userId}/cart`)
@@ -20,6 +22,7 @@ export const cartAction = (userId, query = "") => (dispatch) =>
 
 export const postCartAction = (productId, quantity, userID) => (dispatch) => {
   dispatch({ type: "ADD_CART_ITEM_LOADING" })
+
   axiosInstance()
     .post(`/users/${userID}/cart`, { productId: productId, quantity: quantity })
     .then((response) => {

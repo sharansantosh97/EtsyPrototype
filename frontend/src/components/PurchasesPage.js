@@ -2,15 +2,18 @@ import { useContext, useEffect, useState } from "react";
 import axiosInstance from "../helpers/axiosInstance";
 import { GlobalContext } from "../context/Provider";
 import {useNavigate} from "react-router-dom";
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 function PurchasesPage() {
 
     const [purchaseDeatils, setPurchaseDetails] = useState([]);
     const navigate = useNavigate();
-    const { authState, authDispatch } = useContext(GlobalContext);
+    //const { authState, authDispatch } = useContext(GlobalContext);
+    const {user} = useSelector((state)=>state.user);
     const getAllPurchases = async () =>
     {
         axiosInstance()
-        .get(`/users/${authState.auth.data.data.userId}/orders`)
+        .get(`/users/${user.userId}/orders`)
         .then((response) => {
           console.log("response.data", response.data)  
           setPurchaseDetails(response.data);  
@@ -58,7 +61,7 @@ function PurchasesPage() {
 
                             return (
                                 <tr>
-                                    <th scope="row">{singlePurchase.createdOn.slice(0,10)}</th>
+                                    <th scope="row">{singlePurchase?.createdOn?.slice(0,10)}</th>
                                     <td class="w-25">
                                         <img src={singlePurchase.productImage} class="img-fluid img-thumbnail" alt="Sheep"></img>
                                     </td>

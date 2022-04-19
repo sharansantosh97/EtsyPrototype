@@ -33,12 +33,6 @@ const productsSchema = mongoose.Schema({
     },
     shopName:{
         type:String
-    }, 
-    isGiftWrap:{
-        type:Boolean
-    },
-    giftWrapDescription:{
-        type:Boolean
     }
 },
 {

@@ -1,15 +1,24 @@
 import { useContext, useEffect, useState, useCallback } from "react";
 import { GlobalContext } from "../context/Provider";
-import { cartAction, deleteCartAction } from "../context/actions/cartAction";
+//import { cartAction, deleteCartAction } from "../context/actions/cartAction";
 import { NavLink,useNavigate } from "react-router-dom";
 import axiosInstance from "../helpers/axiosInstance"
-import {UPDATE_CART_ITEM_SUCCESS} from "../context/actions/actionTypes";
+//import {UPDATE_CART_ITEM_SUCCESS} from "../context/actions/actionTypes";
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import {cartAction} from "../Redux/Actions/cart.js";
+import {postCartAction} from "../Redux/Actions/cart.js";
+import {putCartAction} from "../Redux/Actions/cart.js";
+import {deleteCartAction} from "../Redux/Actions/cart.js";
 const Cart = () => {
 
   const navigate = useNavigate();
-  const { globalDispatch, globalState } = useContext(GlobalContext);
-  const { authState, authDispatch } = useContext(GlobalContext);
-  const { user, cart } = globalState;
+  const dispatch = useDispatch();
+  //const { globalDispatch, globalState } = useContext(GlobalContext);
+  //const { authState, authDispatch } = useContext(GlobalContext);
+  const {user} = useSelector((state)=>state.user);
+  const {cart} = useSelector((state)=>state.cart);
+  //const { user, cart } = globalState;
   const userId = user?.userId;
   const [msg,setMsg] = useState(false);
   
@@ -19,7 +28,8 @@ const Cart = () => {
     {
       navigate("/login");
     }else{
-      cartAction(authState.auth.data.data?.userId)(globalDispatch);
+      dispatch(cartAction(user?.userId));
+      //cartAction(user?.userId)(globalDispatch);
     }
 
   }, []);
@@ -27,10 +37,10 @@ const Cart = () => {
   const [cartCount, setCartCount] = useState(0);
   const [cartTotal, setCartTotal] = useState(0);
 
-  console.log("Global Cart State is", globalState);
-  console.log("Cart is ", cart);
+  //console.log("Global Cart State is", globalState);
+  //console.log("Cart is ", cart);
 
-  const cartItems = cart?.data ? cart.data.cartItems : [];
+  const cartItems = cart?.cartItems ? cart.cartItems : [];
 
   useEffect(() => {
     setCartCount(
@@ -49,7 +59,8 @@ const Cart = () => {
 
   const deleteCartItem = useCallback((cartId) => {
     console.log("I'm delete cart");
-    deleteCartAction(authState.auth.data.data?.userId, cartId)(globalDispatch);
+    dispatch(deleteCartAction(user?.userId, cartId));
+    //deleteCartAction(user?.userId, cartId)(globalDispatch);
     // cartAction(userId)(globalDispatch);
   }, []);
 
@@ -59,13 +70,13 @@ const Cart = () => {
 
     
     axiosInstance()
-		  .post(`/users/${authState.auth.data.data.userId}/cart/checkout`)
+		  .post(`/users/${user.userId}/cart/checkout`)
 		  .then((response) => {
 			console.log("response.data", response.data)
       setMsg(true);
       setTimeout(() => {setMsg(false) 
         navigate("/purchases")}, 2000);
-      globalDispatch({ type: UPDATE_CART_ITEM_SUCCESS, payload:[] })
+      dispatch({ type: "UPDATE_CART_ITEM_SUCCESS", payload:[] })
       //navigate("/purchases");
 			//setProduct(response.data)
 			//setLoading(false)

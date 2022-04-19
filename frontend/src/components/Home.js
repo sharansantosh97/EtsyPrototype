@@ -4,7 +4,6 @@ import Footer from './Footer';
 import NavigationBar from './NavigationBar'
 import { productsAction } from "../context/actions/productsAction";
 import { postFavoritesAction } from "../context/actions/favoritesAction";
-import { putCartAction } from "../context/actions/cartAction";
 import config from "../utils/config.js";
 import axios from "axios";
 import {useNavigate, NavLink} from "react-router-dom";
@@ -12,6 +11,7 @@ import {createSearchParams} from "react-router-dom";
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import {getproducts} from "../Redux/Actions/product.js";
+import {putCartAction} from "../Redux/Actions/cart.js";
 import axiosInstance from "../utils/axios";
 function Home() {
   const [flag, setFlag] = useState(false);
@@ -89,6 +89,7 @@ function Home() {
     if (token) {
       console.log(productId);
 	  console.log(user.userId);
+	  dispatch(putCartAction(user?.userId, productId));
       //putCartAction(user.userId, productId)(globalDispatch);
       //console.log("HI put cart action dispatch");
     }

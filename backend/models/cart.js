@@ -1,15 +1,18 @@
 import mongoose from 'mongoose';
 
 const cartSchema = mongoose.Schema({
-    productId:{
-        type:mongoose.Schema.Types.ObjectId, ref: 'products'
+    createdBy: { 
+        type: mongoose.Schema.Types.ObjectId, ref: 'users'
     },
-    quantity:{
-        type:Number
+    productId: { 
+        type: mongoose.Schema.Types.ObjectId, ref: 'products'
+    },    
+    quantity: {
+        type: Number
     },
-    createdBy:{
-        type:mongoose.Schema.Types.ObjectId, ref: 'users'
-    }
+    giftWrapDescription: {
+        type: String
+    },
 },
 {
     versionKey: false

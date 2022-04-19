@@ -1,18 +1,15 @@
 import { uuid } from "uuidv4";
 import _ from 'lodash';
 import mongoose from 'mongoose';
-import {cartModel} from '../../models/cart.js';
-import {productModel} from '../../models/products.js';
-//ßimport {purchaseModel} from '../../models/purchases.js';
-import {orderModel} from '../../models/orders.js';
+import cartModel from '../../models/cart.js';
+import productModel from '../../models/products.js';
+import purchaseModel from '../../models/purchases.js';
+import orderModel from '../../models/orders.js';
+
 
 const getCart = async (req, res) => {
     try {
-        const query = {
-            createdBy: mongoose.Types.ObjectId(req.params.userId)
-        };
-        // let cartData = await query("SELECT * FROM cart WHERE createdBy = ?", req.params.userId );
-        let cartData = await cartModel.find(query).lean();
+        let cartData = await cartModel.find({ createdBy: req.params.userId }).lean();
         console.log("Cart Data ===>", cartData);
         let productData = [];
         for (const cartItem of cartData) {
@@ -112,8 +109,6 @@ const updateCart = async (req, res) => {
 const deleteCart = async(req, res) => {
     try {
         let result = await cartModel.deleteOne({_id : req.params.cartId});
-
-        // let results = await query(`DELETE FROM cart WHERE _id= '${req.params.cartId}';`);
         res.status(200).json({
             msg: "Deleted Successfully",
         });
@@ -152,12 +147,12 @@ const checkoutCart = async(req, res) => {
         //     totalCartPrice,
         // ];
 
-        // const newPurchase = new purchaseModel({
-        //     createdBy: req.params.userId,
-        //     // productId: productId,
-        //     createdOn:  new Date(),
-        //     price: totalCartPrice
-        //   }); ///asasasa
+        const newPurchase = new purchaseModel({
+            createdBy: req.params.userId,
+            // productId: productId,
+            createdOn:  new Date(),
+            price: totalCartPrice
+          }); 
 
         // let purchaseQueryResult = await query(
         //     `INSERT INTO purchases  VALUES (?,?,?,?)`,
@@ -233,6 +228,7 @@ const checkoutCart = async(req, res) => {
         return;
     }
 };
+
 
 
 
