@@ -4,9 +4,14 @@ import { GlobalContext } from "../context/Provider";
 import {useNavigate} from "react-router-dom";
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
+import Pagination from './Pagination';
 function PurchasesPage() {
 
     const [purchaseDeatils, setPurchaseDetails] = useState([]);
+    const [postsPerPage, setPostsPerPage] = useState(3);
+    const [currentPage, setCurrentPage] = useState(1);
+    
+
     const navigate = useNavigate();
     //const { authState, authDispatch } = useContext(GlobalContext);
     const {user} = useSelector((state)=>state.user);
@@ -34,13 +39,26 @@ function PurchasesPage() {
         }
     
       }, []);
-
+      // Get current posts
+    const indexOfLastPost = currentPage * postsPerPage;
+    const indexOfFirstPost = indexOfLastPost - postsPerPage;
+    const currentPosts = purchaseDeatils.slice(indexOfFirstPost, indexOfLastPost);
+    const paginate = pageNumber => setCurrentPage(pageNumber);
   return (
 
     <div>
         <br></br>
        {purchaseDeatils.length !=0 &&<div class="container">
         <h1 style={{color:"black"}} >My Orders</h1>
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            {postsPerPage}
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+            <button class="dropdown-item" type="button" onClick={() => setPostsPerPage(2)}>2</button>
+            <button class="dropdown-item" type="button" onClick={() => setPostsPerPage(5)}>5</button>
+            <button class="dropdown-item" type="button" onClick={() => setPostsPerPage(10)}>10</button>
+        </div>
+        <br></br>
         <br></br>
         <div class="row">
             <div class="col-12">
@@ -57,7 +75,7 @@ function PurchasesPage() {
                 </thead>
                 <tbody>
                     {
-                        purchaseDeatils.map((singlePurchase)=>{
+                        currentPosts.map((singlePurchase)=>{
 
                             return (
                                 <tr>
@@ -77,6 +95,14 @@ function PurchasesPage() {
                 </table>   
             </div>
         </div> 
+        <div style={{paddingLeft: "500px", margin: "100px"}}>
+        <Pagination
+            postsPerPage={postsPerPage}
+            totalPosts={purchaseDeatils.length}
+            paginate={paginate}
+            
+        />
+      </div>
         </div> }
         {purchaseDeatils.length ==0 &&
             <div class="container">

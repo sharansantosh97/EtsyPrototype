@@ -13,6 +13,9 @@ const cartSchema = mongoose.Schema({
     giftWrapDescription: {
         type: String
     },
+    isGift: {
+        type: Boolean, default: false
+    }
 },
 {
     versionKey: false

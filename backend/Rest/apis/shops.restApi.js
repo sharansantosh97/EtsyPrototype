@@ -111,7 +111,7 @@ async function getShopById(req, res) {
             return;
         }
         let shopDetails = results.shop;
-        console.log(shopDetails);
+        //console.log(shopDetails);
         //let shopSalesCount = await query(`select SUM(quantity) as totalSalesCount from orders where shopId='${shopId}'`)
         // shopDetails = shopDetails[0];
          let shopOwnerId = results.shop.createdBy;

@@ -1,7 +1,7 @@
 const log = console.log;
 import _ from 'lodash';
 import  UserClass from '../../services/user.js';
-
+import {make_request} from '../../kafka/client.js'
 async function updateProfile(req, res) {
     try {
         let userId = req.params.userId;
@@ -33,21 +33,40 @@ async function updateProfile(req, res) {
 };
 
 async function getProfile(req, res) {
-    let userId = req.params.userId;
-    try {
-        let exists = await UserClass.getUserProfile(userId);
-        //user = _.get(user, '0');
-        if(exists && exists.userFound==false) {
-            return res.status(400).json({
-                msg: 'User Does not exists'
+    // let userId = req.params.userId;
+    // try {
+    //     let exists = await UserClass.getUserProfile(userId);
+    //     //user = _.get(user, '0');
+    //     if(exists && exists.userFound==false) {
+    //         return res.status(400).json({
+    //             msg: 'User Does not exists'
+    //         })
+    //     }
+    //     exists.user.password = undefined;
+    //     res.status(200).json(exists.user)
+    // } catch(err) {
+    //     console.trace("Err", err);
+    //     res.status(400).json({msg: 'Failed to get user profile'})
+    // }
+
+
+    make_request('get_userdetails',req.body, function(err,results){
+        console.log('in result');
+        console.log(results);
+        if (err){
+            console.log("Inside err"+err);
+            res.json({
+                status:"error",
+                msg:"System Error, Try Again."
             })
-        }
-        exists.user.password = undefined;
-        res.status(200).json(exists.user)
-    } catch(err) {
-        console.trace("Err", err);
-        res.status(400).json({msg: 'Failed to get user profile'})
-    }
+        }else{
+            console.log("Inside else");
+                res.json(results);
+
+                res.end();
+            }
+        
+    });
 }
 
 //MY SQL Conn

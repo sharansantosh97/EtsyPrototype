@@ -41,6 +41,7 @@ const FavoritesPage = () => {
     
       const response = await axios.get(`${config.baseUrl}/users/${user.userId}/profile`,{headers:{'Authorization':localStorage.getItem("token")}});
       if(response && response.data){
+        console.log("RES"+JSON.stringify(response));
         setUserDetails({
           username:response.data.username,
           imageUrl:response.data.imageUrl,
