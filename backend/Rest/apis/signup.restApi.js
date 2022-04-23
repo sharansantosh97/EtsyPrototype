@@ -3,7 +3,8 @@ import * as bcrypt from 'bcrypt';
 import  UserClass from '../../services/user.js';
 var saltRounds = 10;
 
-async function signUp(req, res) {
+async function signUp(req, res) 
+{
     var data = req.body;
     const username = data.username;
     const password = data.password;

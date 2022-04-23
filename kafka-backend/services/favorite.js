@@ -1,6 +1,7 @@
 import  UserClass from '../mongoservices/user.js';
 import  FavoritesClass from '../mongoservices/favorites.js';
-
+import  ProductsClass from '../mongoservices/products.js';
+import _ from 'lodash';
 
 async function createNewFavarite(msg, callback) {
     try

@@ -47,48 +47,103 @@ async function createNewFavarite(req, res)
     
 }
 
-async function getAllFavorites(req, res) {
-    let userId = req.params.userId;
-    let searchWord = req.query.search;
-    try {
-        let favoriteItems = await FavoritesClass.getAllFavorites(userId);
-        let productIds = favoriteItems.map((item) => item.productId);
-        let products = [];
-        if (searchWord) 
-        {
-            products = await ProductsClass.getAllFavProductsWithSearch(searchWord,productIds);
-        
-        } else 
-        {
-            products = await ProductsClass.getAllFavProducts(productIds);
-            
-        }
-        //console.log(products);
-        let productIdsMap = _.keyBy(products, '_id')
-        favoriteItems = _.filter(favoriteItems, (item) => productIdsMap[item.productId]);
-        res.json({
-            favorites: _.map(favoriteItems, (item) => {
-                item.product = productIdsMap[item.productId]
-                return item;
+async function getAllFavorites(req, res) 
+{
+
+    let msg={};
+    msg.params = req.params;
+    msg.query = req.query;
+    msg.path = "get_favorite";
+
+    make_request('favorite_topic',msg, function(err,results){
+        console.log('in result');
+        console.log(results);
+        if (err){
+            console.log("Inside err"+err);
+            res.json({
+                status:"error",
+                msg:"System Error, Try Again."
             })
-        })
-    } catch (err) {
-        console.log("Error : ", err)
-        res.status(400).json(err);
-        return;
-    }
+        }else{
+            console.log("Inside else");
+            res.status(results.status).json(results.result);
+
+                res.end();
+            }
+        
+    });
+
+
+
+
+
+
+    // let userId = req.params.userId;
+    // let searchWord = req.query.search;
+    // try {
+    //     let favoriteItems = await FavoritesClass.getAllFavorites(userId);
+    //     let productIds = favoriteItems.map((item) => item.productId);
+    //     let products = [];
+    //     if (searchWord) 
+    //     {
+    //         products = await ProductsClass.getAllFavProductsWithSearch(searchWord,productIds);
+        
+    //     } else 
+    //     {
+    //         products = await ProductsClass.getAllFavProducts(productIds);
+            
+    //     }
+    //     //console.log(products);
+    //     let productIdsMap = _.keyBy(products, '_id')
+    //     favoriteItems = _.filter(favoriteItems, (item) => productIdsMap[item.productId]);
+    //     res.json({
+    //         favorites: _.map(favoriteItems, (item) => {
+    //             item.product = productIdsMap[item.productId]
+    //             return item;
+    //         })
+    //     })
+    // } catch (err) {
+    //     console.log("Error : ", err)
+    //     res.status(400).json(err);
+    //     return;
+    // }
 }
 
-async function removeFavorite(req, res) {
-    let userId = req.params.userId;
-    let favoriteId = req.params.favoriteId;
-    try {
-        const result = await FavoritesClass.removeFavorites(userId,favoriteId);
-        res.status(200).json(result);
-    } catch (err) {
-        console.log(err)
-        res.status(400).json(err);
-    }
+async function removeFavorite(req, res) 
+{
+
+
+    let msg={};
+    msg.params = req.params;
+    msg.path = "remove_favorite";
+
+    make_request('favorite_topic',msg, function(err,results){
+        console.log('in result');
+        console.log(results);
+        if (err){
+            console.log("Inside err"+err);
+            res.json({
+                status:"error",
+                msg:"System Error, Try Again."
+            })
+        }else{
+            console.log("Inside else");
+            res.status(results.status).json(results.result);
+
+                res.end();
+            }
+        
+    });
+
+    // let userId = req.params.userId;
+    // let favoriteId = req.params.favoriteId;
+    // try {
+    //     const result = await FavoritesClass.removeFavorites(userId,favoriteId);
+    //     res.status(200).json(result);
+    // } catch (err) {
+    //     console.log(err)
+    //     res.status(400).json(err);
+    // }
 }
 
 //MY SQL 
