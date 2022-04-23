@@ -1,4 +1,4 @@
-import axiosInstance from "../../helpers/axiosInstance"
+import axiosInstance from "../../utils/axios"
 import {
   FAVORITES_ERROR,
   FAVORITES_LOADING,

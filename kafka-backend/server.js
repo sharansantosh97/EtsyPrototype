@@ -7,7 +7,8 @@ var connection = new ConnectionProvider();
 //var Books = require('./services/books.js');
 //var User = require('./services/user.js');
 import {handle_request} from './services/user.js';
-mongoose.connect('mongodb://127.0.0.1:27017/Etsy', (err, res) => {
+
+mongoose.connect('mongodb+srv://ETSYUSER:ETSYPASSWORD@etsy.74ekf.mongodb.net/Etsy?retryWrites=true&w=majority', (err, res) => {
         if (err) {
             console.log(err);
             console.log(`MongoDB Connection Failed`);
@@ -15,6 +16,7 @@ mongoose.connect('mongodb://127.0.0.1:27017/Etsy', (err, res) => {
             console.log(`MongoDB Connected`);
         }
     });
+
 
 function handleTopicRequest(topic_name,fname){
     //var topic_name = 'root_topic';
@@ -49,4 +51,4 @@ function handleTopicRequest(topic_name,fname){
 //first argument is topic name
 //second argument is a function that will handle this topic request
 //handleTopicRequest("post_book",Books)
-handleTopicRequest("get_userdetails",handle_request)
+handleTopicRequest("profile_topic",handle_request)

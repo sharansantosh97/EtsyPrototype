@@ -39,7 +39,7 @@ const FavoritesPage = () => {
   {
     try{
     
-      const response = await axios.get(`${config.baseUrl}/users/${user.userId}/profile`,{headers:{'Authorization':localStorage.getItem("token")}});
+      const response = await axiosInstance().get(`/users/${user.userId}/profile`,{headers:{'Authorization':localStorage.getItem("token")}});
       if(response && response.data){
         console.log("RES"+JSON.stringify(response));
         setUserDetails({
@@ -67,7 +67,7 @@ const FavoritesPage = () => {
   const getFavorites = async () => {
     console.log("url sa "+`${config.baseUrl}/users/${user.userId}/favorites`,{headers:{'Authorization':localStorage.getItem("token")}});
     try{
-        const response = await axios.get(`${config.baseUrl}/users/${user.userId}/favorites`,{headers:{'Authorization':localStorage.getItem("token")}});
+        const response = await axiosInstance().get(`/users/${user.userId}/favorites`,{headers:{'Authorization':localStorage.getItem("token")}});
         //console.log("API"+JSON.stringify(response));
         if(response && response.data){
           console.log(response.data.favorites);
@@ -99,7 +99,7 @@ const FavoritesPage = () => {
         if(!token){
             navigate("/login", {replace:true});
         }else{
-      const response = await axiosInstance.get(`${config.baseUrl}/users/${user.userId}/favorites?search=${query}`,{headers:{'Authorization':localStorage.getItem("token")}});
+      const response = await axiosInstance().get(`/users/${user.userId}/favorites?search=${query}`,{headers:{'Authorization':localStorage.getItem("token")}});
       if(response && response.data)
       {
         setFavoriteItemsList(response.data.favorites);
@@ -135,7 +135,7 @@ const FavoritesPage = () => {
           favId = favoriteItemsList[i]._id;
         }
       }
-      const response = await axios.delete(`${config.baseUrl}/users/${user.userId}/favorites/${favId}`,{headers:{'Authorization':localStorage.getItem("token")}});
+      const response = await axiosInstance().delete(`/users/${user.userId}/favorites/${favId}`,{headers:{'Authorization':localStorage.getItem("token")}});
       if(response && response.data)
       {
         console.log("DEL"+JSON.stringify(response.data));

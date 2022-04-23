@@ -40,7 +40,6 @@ export default class ProductClass
         try{
             const product = new ProductsModel(productDetails);
             const result = await product.save();
-            console.log(result);
             if(result){
                 return result;
             }else{
@@ -96,7 +95,6 @@ export default class ProductClass
     {   
         try{
             const result = await ProductsModel.find(whereConditions);
-            console.log(result);
             if(result){
                 return result;
             }else{

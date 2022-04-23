@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from 'axios';
 import { NavLink } from 'react-router-dom';
 import '../styles/Login.css';
 import {useState, useRef, useEffect,useContext} from 'react';
@@ -70,7 +69,7 @@ const EMAIL_REGEX = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
           type:"LoginRequest"
         })
 
-        axiosInstance
+        axiosInstance()
         .post("/login", postBody)
         .then((response) => {
           localStorage.token = response.data.token;
@@ -89,7 +88,7 @@ const EMAIL_REGEX = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
           })
         })
 
-      // const response = await axiosInstance.post("/login",postBody);
+      // const response = await axiosInstance().post("/login",postBody);
       // localStorage.token = response.data.token;
       //   console.log("response from LOGINAction", response.data);
       //   if(response.status == 200)
@@ -152,10 +151,10 @@ const EMAIL_REGEX = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
                     </form>
                   </div>
 
-                  {/* <div>
-                   {loading ? <p>Loading..</p> : null}
+                  <div>
+                   {/* {loading ? <p>Loading..</p> : null} */}
                     <p className="mb-0">Don't have an account? <NavLink to="/signup" style={{textDecoration:"none"}}> <p className="text-white-50 fw-bold">Sign Up</p></NavLink></p>
-                  </div> */}
+                  </div>
 
                 </div>
               </div>

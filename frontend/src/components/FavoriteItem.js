@@ -1,6 +1,7 @@
 import React from 'react';
 import {useNavigate} from "react-router-dom";
 import {NavLink} from "react-router-dom";
+import axiosInstance from "../utils/axios";
 function FavoriteItem({key,item}) {
 
     const navigate = useNavigate();

@@ -47,7 +47,7 @@ export default class CategoryClass
     {
         
         try{
-            const cat = await CategoryModel.find({ $or: [ {shopId: shopId}, {isSystem: true} ] });
+            const cat = await CategoryModel.find({ $or: [ {shopId: mongoose.Types.ObjectId(shopId)}, {isSystem: true} ] });
             if(cat){
                 return cat;
             }else{

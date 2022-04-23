@@ -2,7 +2,7 @@ import { useContext, useEffect, useState, useCallback } from "react";
 import { GlobalContext } from "../context/Provider";
 //import { cartAction, deleteCartAction } from "../context/actions/cartAction";
 import { NavLink,useNavigate } from "react-router-dom";
-import axiosInstance from "../helpers/axiosInstance"
+import axiosInstance from "../utils/axios";
 //import {UPDATE_CART_ITEM_SUCCESS} from "../context/actions/actionTypes";
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
@@ -10,6 +10,7 @@ import {cartAction} from "../Redux/Actions/cart.js";
 import {postCartAction} from "../Redux/Actions/cart.js";
 import {putCartAction} from "../Redux/Actions/cart.js";
 import {deleteCartAction} from "../Redux/Actions/cart.js";
+import { Form } from "react-bootstrap";
 const Cart = () => {
 
   const navigate = useNavigate();
@@ -87,6 +88,14 @@ const Cart = () => {
 		  })
   }
 
+
+  const updateCartItem = ((cartId, productId, quantity, isGiftWrap, giftWrapDescription) => {
+    console.log("I'm update cart", quantity, isGiftWrap);
+    dispatch(putCartAction(userId, productId, quantity, isGiftWrap, giftWrapDescription));
+    // cartAction(userId)(globalDispatch);
+  });
+
+  
   let cartsDiv = cartItems.map((cartItem) => {
     return (
       <tr>
@@ -99,6 +108,19 @@ const Cart = () => {
                 className="img-fluid d-none d-md-block rounded mb-2 shadow "
               />
             </div>
+            <div key={`default-checkbox`} className="mb-3">
+            <Form.Check 
+              type={"checkbox"}
+              id={`default-checkbox`}
+              label={`Add Gift Wrap`}
+              onChange = {()=> updateCartItem(cartItem?._id,cartItem?.product?._id, null, !(cartItem?.isGift))}
+              defaultChecked={cartItem?.isGift}
+            />
+            {console.log("Debug value is", cartItem?.isGift)}
+            {cartItem?.isGift
+            && <Form.Control type="text" placeholder="Gift Message" onChange={(e) => updateCartItem(cartItem?._id,cartItem?.product?._id, null, cartItem?.isGift, e.target.value)}/>
+            }
+          </div>
             <div className="col-md-9 text-left mt-sm-2">
               <h4>{cartItem?.product?.name}</h4>
               <p className="font-weight-light">{cartItem?.product?.shopName}</p>

@@ -3,7 +3,7 @@ export const getproducts = (userId, query = "")=>(dispatch)=>
 {
 
     dispatch({ type: "PRODUCTS_LOADING" })
-    axiosInstance
+    axiosInstance()
       .post(`/users/${userId}/products`, { search: query })
       .then((response) => {
         console.log("response from productsAction", response.data)

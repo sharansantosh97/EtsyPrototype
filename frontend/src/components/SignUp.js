@@ -8,30 +8,30 @@ import { REGISTER_ERROR, REGISTER_LOADING, REGISTER_SUCCESS, } from "../context/
 
 function SignUp() {
 
-  const { authState, authDispatch } = useContext(GlobalContext);
+  //const { authState, authDispatch } = useContext(GlobalContext);
   const navigate = useNavigate();
-  const { auth } = authState
-  const { loading, error, data } = auth
+  //const { auth } = authState
+  //const { loading, error, data } = auth
   const [form, setForm] = useState({
     username: "",
     email: "",
     password: "",
   })
   const [errorMsg, setErrorMsg] = useState("")
-  useEffect(() => {
-    if (error) {
-      console.log("error", error)
-      setErrorMsg(error.msg)
-    }
-  }, [error])
+  // useEffect(() => {
+  //   if (error) {
+  //     console.log("error", error)
+  //     setErrorMsg(error.msg)
+  //   }
+  // }, [error])
 
-  useEffect(() => {
-    if (data) {
-      setForm({ username: "", email: "", password: "" })
-      setTimeout(() => {
-      }, 2000)
-    }
-  }, [data])
+  // useEffect(() => {
+  //   if (data) {
+  //     setForm({ username: "", email: "", password: "" })
+  //     setTimeout(() => {
+  //     }, 2000)
+  //   }
+  // }, [data])
 
   const handleChange = (e) => {
     const value = e.target.value
@@ -44,22 +44,22 @@ function SignUp() {
   const submitHandler = (e) => {
     if(form.email!="" && form.password!="" && form.username!="")
     {
-    axiosInstance
-    .post("/signUp", form)
-    .then((response) => {
-      console.log("response from registerAction", response.data)
-      authDispatch({ type: REGISTER_SUCCESS, payload: response.data })
-      navigate("/login", {replace:true});
-    })
-    .catch((error) => {
-      console.log("error from registerAction", error)
-      authDispatch({
-        type: REGISTER_ERROR,
-        payload: error.response ? error.response.data : "Could not connect",
+      axiosInstance()
+      .post("/signUp", form)
+      .then((response) => {
+        console.log("response from registerAction", response.data)
+        //authDispatch({ type: REGISTER_SUCCESS, payload: response.data })
+        navigate("/login", {replace:true});
       })
-    })
-    console.log(authState)
-  }
+      .catch((error) => {
+        console.log("error from registerAction", error)
+        // authDispatch({
+        //   type: REGISTER_ERROR,
+        //   payload: error.response ? error.response.data : "Could not connect",
+        // })
+      })
+      //console.log(authState)
+    }
   }
 
   return (
@@ -76,11 +76,11 @@ function SignUp() {
                   <h2 class="fw-bold mb-2 text-uppercase" style={{color:"white"}}>Create an Account</h2>
                   <p class="text-white-50 mb-5">Please enter the below details</p>
 
-                      {error ? (
+                      {/* {error ? (
                     <div class='alert alert-danger' role='alert'>
                       {errorMsg}
                     </div>
-                  ) : null}
+                  ) : null} */}
                   
                   <div class="form-outline form-white mb-4">
                     <label class="form-label" for="typeNameX" style={{float: "left"}}>Username</label>

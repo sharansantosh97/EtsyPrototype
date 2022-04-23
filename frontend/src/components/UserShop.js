@@ -8,7 +8,6 @@ import FavoriteItem from "./FavoriteItem";
 import ShopProducts from './ShopProducts';
 import ShopModal from './ShopModal';
 import { Button } from "react-bootstrap";
-import axios from "axios";
 import { useSelector } from 'react-redux';
 function UserShop() {
 
@@ -32,7 +31,7 @@ function UserShop() {
   const getShopDetails = async ()=>
   {
     try{
-    const response = await axiosInstance.get(`${config.baseUrl}/users/${user.userId}/shops`,{headers:{'Authorization':localStorage.getItem("token")}});
+    const response = await axiosInstance().get(`${config.baseUrl}/users/${user.userId}/shops`,{headers:{'Authorization':localStorage.getItem("token")}});
     if(response.data)
     {
       setShopDetails(response.data);
@@ -50,7 +49,7 @@ function UserShop() {
 
   const getUserProfileImage = async ()=>
   {
-    const response = await axios.get(`${config.baseUrl}/users/${user.userId}/profile`,{headers:{'Authorization':localStorage.getItem("token")}});
+    const response = await axiosInstance().get(`/users/${user.userId}/profile`,{headers:{'Authorization':localStorage.getItem("token")}});
     if(response && response.data)
     {
       setUserProfileImage(response.data.imageUrl);
@@ -73,7 +72,7 @@ function UserShop() {
         excludeShopIds:[]
       }
       bodyFormData.shopIds.push(shopDetails._id);
-      const response = await axios.post(`${config.baseUrl}/users/${user.userId}/products`,bodyFormData,{headers:{'Authorization':localStorage.getItem("token")}});
+      const response = await axiosInstance().post(`/users/${user.userId}/products`,bodyFormData,{headers:{'Authorization':localStorage.getItem("token")}});
       //console.log(`${config.baseUrl}/users/${user.userId}/shops/${shopDetails._id}/products`);
       if(response.data)
       {
@@ -122,10 +121,10 @@ function UserShop() {
        
         // var bodyFormData = new FormData();
         // bodyFormData.append('myImage',selectedFile);
-        // const response = await axios.post(`${config.baseUrl}/upload`,bodyFormData,{headers:{'Authorization':localStorage.getItem("token")}});
+        // const response = await axiosInstance().post(`${config.baseUrl}/upload`,bodyFormData,{headers:{'Authorization':localStorage.getItem("token")}});
         // const iUrl = response.data.imageUrl;
 
-        const response = await axiosInstance.get(`/s3url`);
+        const response = await axiosInstance().get(`/s3url`);
         if(response && response.data)
         {
             const url = response.data.uploadURL;
@@ -142,7 +141,7 @@ function UserShop() {
                 "imageUrl":imageUrl
               }
       
-            const res = await axiosInstance.put(`/users/${user.userId}/shops/${shopDetails._id}`,bd,{headers:{'Authorization':localStorage.getItem("token")}});
+            const res = await axiosInstance().put(`/users/${user.userId}/shops/${shopDetails._id}`,bd,{headers:{'Authorization':localStorage.getItem("token")}});
             if(res && res.data)
             {
               setImageSuccess(true);
@@ -164,7 +163,7 @@ function UserShop() {
       try
       {
       setAddProdBtn(true);
-      const response = await axios.get(`${config.baseUrl}/users/${user.userId}/shops/${shopDetails._id}/categories`,{headers:{'Authorization':localStorage.getItem("token")}});
+      const response = await axiosInstance().get(`/users/${user.userId}/shops/${shopDetails._id}/categories`,{headers:{'Authorization':localStorage.getItem("token")}});
       if(response.data && response)
       {
         setCategories(response.data.categories);
@@ -204,7 +203,7 @@ function UserShop() {
      
       // var bodyFormData = new FormData();
       // bodyFormData.append('myImage',selectedFileProduct);
-      // const response = await axios.post(`${config.baseUrl}/upload`,bodyFormData,{headers:{'Authorization':localStorage.getItem("token")}});
+      // const response = await axiosInstance().post(`${config.baseUrl}/upload`,bodyFormData,{headers:{'Authorization':localStorage.getItem("token")}});
       // const iUrl = response.data.imageUrl;
       // console.log(iUrl);
       // setAddItemData({
@@ -213,7 +212,7 @@ function UserShop() {
       //   })
 
 
-      const response = await axiosInstance.get(`/s3url`);
+      const response = await axiosInstance().get(`/s3url`);
         if(response && response.data)
         {
             const url = response.data.uploadURL;
@@ -238,7 +237,7 @@ function UserShop() {
      
       console.log("form data"+JSON.stringify(addItemData));
       try{
-        const response = await axios.post(`${config.baseUrl}/users/${user.userId}/shops/${shopDetails._id}/products`,addItemData,{headers:{'Authorization':localStorage.getItem("token"),'Content-Type':"application/json"}});
+        const response = await axiosInstance().post(`/users/${user.userId}/shops/${shopDetails._id}/products`,addItemData,{headers:{'Authorization':localStorage.getItem("token"),'Content-Type':"application/json"}});
         console.log(JSON.stringify(response));
         if(response && response.data)
         {
@@ -283,10 +282,10 @@ function UserShop() {
     }
     const postNewCatData = async()=>
     {
-      const response = await axios.post(`${config.baseUrl}/users/${user.userId}/shops/${shopDetails._id}/categories`,newCat, {headers:{'Authorization':localStorage.getItem("token")}});
+      const response = await axiosInstance().post(`/users/${user.userId}/shops/${shopDetails._id}/categories`,newCat, {headers:{'Authorization':localStorage.getItem("token")}});
       if(response && response.data)
       {
-        const response = await axios.get(`${config.baseUrl}/users/${user.userId}/shops/${shopDetails._id}/categories`,{headers:{'Authorization':localStorage.getItem("token")}});
+        const response = await axiosInstance().get(`/users/${user.userId}/shops/${shopDetails._id}/categories`,{headers:{'Authorization':localStorage.getItem("token")}});
         if(response.data && response)
         {
           setCategories(response.data.categories);

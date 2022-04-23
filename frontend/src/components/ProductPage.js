@@ -4,15 +4,15 @@ import "../css/style.css";
 import "../css/font-awesome.min.css"
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { GlobalContext } from "../context/Provider"
-import axiosInstance from "../helpers/axiosInstance"
+import axiosInstance from "../utils/axios";
 import { Dimmer, Loader } from "semantic-ui-react"
 import config from "../utils/config.js";
-import axios from "axios";
 import { putCartAction } from "../context/actions/cartAction";
 import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 function ProductPage() {
 
-	
+	const dispatch = useDispatch();
 	const {user} = useSelector((state)=>state.user);
 	const {id} = useParams();
 	//const { authState, authDispatch } = useContext(GlobalContext);
@@ -91,7 +91,7 @@ function ProductPage() {
 		if (token) {
 		  console.log(productId);
 		  console.log(user.userId);
-		  putCartAction(user.userId, productId)(globalDispatch);
+		  dispatch(putCartAction(user?.userId, productId));
 		  //console.log("HI put cart action dispatch");
 		  setMsg2(true);
 			setTimeout(() => {setMsg2(false)}, 2000);
@@ -107,7 +107,7 @@ function ProductPage() {
 		// }
 		const token = localStorage.getItem("token");
 		if(token){        
-		const response = await axios.post(`${config.baseUrl}/users/${user.userId}/favorites`,{ productId },{headers:{'Authorization':localStorage.getItem("token")}});
+		const response = await axiosInstance().post(`/users/${user.userId}/favorites`,{ productId },{headers:{'Authorization':localStorage.getItem("token")}});
 		if(response && response.data)
 		{
 			console.log("Item Added To Favorites Successfully");
@@ -160,18 +160,18 @@ function ProductPage() {
 							  </div>
 							  <p className="product-description">{product.description}</p>
 							  <h2 className="price" style={{color:"red"}}>Current Price: $ {product.price}</h2>
-							  <div class="form-check">
+							  {/* <div class="form-check">
 								<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" onClick={(e) => {
                                 giftWrapHandle(e);
                            			 }}></input>
 								<label class="form-check-label" for="flexCheckDefault">
 									Gift Wrap this product
 								</label>
-							  </div>
-							  {giftWrap ==true &&<div class="form-group">
+							  </div> */}
+							  {/* {giftWrap ==true &&<div class="form-group">
 								<label for="exampleFormControlTextarea1">Personal Message for Gift Wrap</label>
 								<textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-							  </div>}
+							  </div>} */}
 							  {product.quantity==0 && <h3 className="price" style={{color:"red"}}>( OUT OF STOCK! )</h3>}
 							  <div className="action">
 								  <button className="login-btn" type="button" onClick={() => addToCart(id)}>Add to cart</button>

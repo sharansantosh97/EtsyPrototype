@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router';
 import { NavLink } from 'react-router-dom';
-import axiosInstance from "../helpers/axiosInstance"
+import axiosInstance from "../utils/axios";
 
 function ShopProducts({item,handleEdit,shopOwner,loggedUser}) {
     const navigate = useNavigate();

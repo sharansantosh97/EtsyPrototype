@@ -41,8 +41,9 @@ export const cartReducer = createReducer(initialState, {
     state.loading = true;
   },
   DELETE_CART_SUCCESS: (state, action) => {
+    console.log(action.payload);
     state.loading = false;
-    state.cart = action.payload;
+    state.cart = {cartItems: state.cart?.cartItems.filter((item) => item._id !== action.payload)};
   },
   DELETE_CART_ERROR: (state, action) => {
     state.loading = false;

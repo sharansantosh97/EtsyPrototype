@@ -1,5 +1,4 @@
 
-import axios from "axios";
 import assert from "assert";
 import { log } from "console";
 
@@ -14,7 +13,7 @@ let userID="u-be49480a-686f-487a-a434-821948f4f1c0";
 //      try
 //      {
       
-//       const response = await axios.post(url+"/signUp",{ username:"mocha test user", email: "mochatestuser@gmail.com", password: "12345" })
+//       const response = await axiosInstance()..post(url+"/signUp",{ username:"mocha test user", email: "mochatestuser@gmail.com", password: "12345" })
 //       if(response)
 //       {
 //         assert.equal(response.status, 200);
@@ -34,7 +33,7 @@ describe("POST /login", () => {
      try
      {
       
-      const response = await axios.post(url+"/login",{ email: "mochatestuser@gmail.com", password: "12345" })
+      const response = await axiosInstance().post(url+"/login",{ email: "mochatestuser@gmail.com", password: "12345" })
       if(response)
       {
         
@@ -56,7 +55,7 @@ describe("POST /login", () => {
 //      try
 //      {
       
-//       const response = await axios.post(url+"/users/"+userID+"/shops",{ name: "mocha test store", imageUrl: "https://getyess.com/wp-content/uploads/elementor/thumbs/image-store-placeholder-logo-otvjzfjc3ejvns87twki2x32mhcrzdj70dmj1pghjk.png" }, {headers:{'Authorization':JWTTOKEN}})
+//       const response = await axiosInstance().post(url+"/users/"+userID+"/shops",{ name: "mocha test store", imageUrl: "https://getyess.com/wp-content/uploads/elementor/thumbs/image-store-placeholder-logo-otvjzfjc3ejvns87twki2x32mhcrzdj70dmj1pghjk.png" }, {headers:{'Authorization':JWTTOKEN}})
 
 //       if(response)
 //       {
@@ -84,7 +83,7 @@ describe("POST /users/:userId/products", () => {
         shopIds: [],
         excludeOutOfStock: true
       }
-      const response = await axios.post(url+"/users/"+userID+"/products",obj, {headers:{'Authorization':JWTTOKEN}})
+      const response = await axiosInstance().post(url+"/users/"+userID+"/products",obj, {headers:{'Authorization':JWTTOKEN}})
       if(response)
       {
         assert.equal(response.status, 200);
@@ -104,7 +103,7 @@ describe("GET /users/:userId/favorites?search=", () => {
   it("It should Login the User", async () => {
      try
      {
-      const response = await axios.get(url+"/users/"+userID+"/favorites?search=", {headers:{'Authorization':JWTTOKEN}})
+      const response = await axiosInstance().get(url+"/users/"+userID+"/favorites?search=", {headers:{'Authorization':JWTTOKEN}})
       if(response)
       {
         assert.equal(response.status, 200);
@@ -123,7 +122,7 @@ describe("GET /users/:userId/orders", () => {
   it("It should get the orders of the User", async () => {
      try
      {
-      const response = await axios.get(url+"/users/"+userID+"/orders", {headers:{'Authorization':JWTTOKEN}})
+      const response = await axiosInstance().get(url+"/users/"+userID+"/orders", {headers:{'Authorization':JWTTOKEN}})
       if(response)
       {
         assert.equal(response.status, 200);
@@ -142,7 +141,7 @@ describe("GET /users/:userId/cart", () => {
   it("It should get the cart of the User", async () => {
      try
      {
-      const response = await axios.get(url+"/users/"+userID+"/cart", {headers:{'Authorization':JWTTOKEN}})
+      const response = await axiosInstance().get(url+"/users/"+userID+"/cart", {headers:{'Authorization':JWTTOKEN}})
       if(response)
       {
         assert.equal(response.status, 200);

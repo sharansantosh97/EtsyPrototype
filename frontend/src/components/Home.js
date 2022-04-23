@@ -5,7 +5,6 @@ import NavigationBar from './NavigationBar'
 import { productsAction } from "../context/actions/productsAction";
 import { postFavoritesAction } from "../context/actions/favoritesAction";
 import config from "../utils/config.js";
-import axios from "axios";
 import {useNavigate, NavLink} from "react-router-dom";
 import {createSearchParams} from "react-router-dom";
 import { useSelector } from 'react-redux';
@@ -13,6 +12,7 @@ import { useDispatch } from 'react-redux';
 import {getproducts} from "../Redux/Actions/product.js";
 import {putCartAction} from "../Redux/Actions/cart.js";
 import axiosInstance from "../utils/axios";
+
 function Home() {
   const [flag, setFlag] = useState(false);
   const [flag2, setFlag2] = useState(false);
@@ -74,7 +74,7 @@ function Home() {
     // }
 	const token = localStorage.getItem("token");
  	if(token){        
-	const response = await axios.post(`${config.baseUrl}/users/${user.userId}/favorites`,{ productId },{headers:{'Authorization':localStorage.getItem("token")}});
+	const response = await axiosInstance().post(`/users/${user.userId}/favorites`,{ productId },{headers:{'Authorization':localStorage.getItem("token")}});
 	if(response && response.data)
 	{
 		console.log("FAVVRES"+JSON.stringify(response.data));

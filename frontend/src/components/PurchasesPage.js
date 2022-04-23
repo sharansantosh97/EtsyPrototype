@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import axiosInstance from "../helpers/axiosInstance";
+import axiosInstance from "../utils/axios";
 import { GlobalContext } from "../context/Provider";
 import {useNavigate} from "react-router-dom";
 import { useSelector } from 'react-redux';
@@ -71,6 +71,7 @@ function PurchasesPage() {
                     <th scope="col" style={{color:"red"}}>Price</th>
                     <th scope="col" style={{color:"red"}}>Quantity</th>
                     <th scope="col" style={{color:"red"}}>Order ID</th>
+                    <th scope="col" style={{color:"red"}}>Gift Wrap Message</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -87,6 +88,7 @@ function PurchasesPage() {
                                     <td>{singlePurchase.price}</td>
                                     <td>{singlePurchase.quantity}</td>
                                     <td>{singlePurchase._id}</td>
+                                    <td>{singlePurchase.giftWrapDescription}</td>
                                 </tr>
                             );
                         })

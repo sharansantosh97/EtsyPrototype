@@ -49,7 +49,7 @@ export const userReducer = createReducer(initialState, {
   LogoutUserRequest: (state) => {
     state.loading = true;
   },
-  LogoutUserSuccess: (state) => {
+  LogoutUser: (state) => {
     state.loading = false;
     state.user = null;
     state.isAuthenticated = false;

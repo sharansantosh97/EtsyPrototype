@@ -19,7 +19,7 @@ function NewShop() {
     {
       const reqBody = {};
       reqBody.name = shopName;
-      const response = await axiosInstance.post(`${config.baseUrl}/users/${user.userId}/shops`,reqBody,{headers:{'Authorization':localStorage.getItem("token")}});
+      const response = await axiosInstance().post(`${config.baseUrl}/users/${user.userId}/shops`,reqBody,{headers:{'Authorization':localStorage.getItem("token")}});
       if(response)
       {
         navigate("/usershop");
@@ -36,7 +36,7 @@ function NewShop() {
   {
     if(shopName)
     {
-      const response = await axiosInstance.get(`${config.baseUrl}/users/${user.userId}/shop/checkavailability?shopname=${shopName}`,{headers:{'Authorization':localStorage.getItem("token")}});
+      const response = await axiosInstance().get(`${config.baseUrl}/users/${user.userId}/shop/checkavailability?shopname=${shopName}`,{headers:{'Authorization':localStorage.getItem("token")}});
       if(response && response.data)
       {
         if(response.data.available==true)

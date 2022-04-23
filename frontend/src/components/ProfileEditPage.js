@@ -1,6 +1,5 @@
 import React, {useState,useContext,useEffect} from 'react';
 import { useSelector } from 'react-redux';
-import axios from "axios";
 import axiosInstance from "../utils/axios";
 import config from "../utils/config.js";
 import {useNavigate} from "react-router-dom";
@@ -40,7 +39,7 @@ function ProfileEditPage() {
     const getUserDetails = async () =>
     {
         try{
-        const response = await axios.get(`${config.baseUrl}/users/${user.userId}/profile`,{headers:{'Authorization':localStorage.getItem("token")}});
+        const response = await axiosInstance().get(`/users/${user.userId}/profile`,{headers:{'Authorization':localStorage.getItem("token")}});
         console.log("RES"+JSON.stringify(response.data));
         if(response && response.data){
             setUserDetails({
@@ -75,7 +74,7 @@ function ProfileEditPage() {
 
         
         console.log(JSON.stringify(userDetails));
-        const response = await axios.put(`${config.baseUrl}/users/${user.userId}/profile`,userDetails,{headers:{'Authorization':localStorage.getItem("token"),'Content-Type':"application/json"}});
+        const response = await axiosInstance().put(`/users/${user.userId}/profile`,userDetails,{headers:{'Authorization':localStorage.getItem("token"),'Content-Type':"application/json"}});
         console.log(JSON.stringify(response));
         if(response && response.data)
         {
@@ -110,7 +109,7 @@ function ProfileEditPage() {
        
         // var bodyFormData = new FormData();
         // bodyFormData.append('myImage',selectedFile);
-        // const response = await axios.post(`${config.baseUrl}/upload`,bodyFormData,{headers:{'Authorization':localStorage.getItem("token")}});
+        // const response = await axiosInstance().post(`${config.baseUrl}/upload`,bodyFormData,{headers:{'Authorization':localStorage.getItem("token")}});
         // const iUrl = response.data.imageUrl;
         // console.log(iUrl);
         // setUserDetails({
@@ -118,7 +117,7 @@ function ProfileEditPage() {
         //     imageUrl: iUrl,
         //   })
 
-        const response = await axiosInstance.get(`/s3url`);
+        const response = await axiosInstance().get(`/s3url`);
         if(response && response.data)
         {
             const url = response.data.uploadURL;

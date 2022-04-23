@@ -1,4 +1,4 @@
-import axiosInstance from "../../helpers/axiosInstance"
+import axiosInstance from "../../utils/axios"
 import {
   PRODUCTS_ERROR,
   PRODUCTS_LOADING,

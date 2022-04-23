@@ -8,7 +8,6 @@ import FavoriteItem from "./FavoriteItem";
 import ShopProducts from './ShopProducts';
 import ShopModal from './ShopModal';
 import { Button } from "react-bootstrap";
-import axios from "axios";
 import { useSelector } from 'react-redux';
 function Shop() {
 
@@ -24,7 +23,7 @@ function Shop() {
   {
     console.log("SHOP ID"+id);
     try{
-    const response = await axiosInstance.get(`/users/${user.userId}/shops/${id}`,{headers:{'Authorization':localStorage.getItem("token")}});
+    const response = await axiosInstance().get(`/users/${user.userId}/shops/${id}`,{headers:{'Authorization':localStorage.getItem("token")}});
     if(response && response.data)
     {
       setShopDetails(response.data);
@@ -55,7 +54,7 @@ function Shop() {
         excludeShopIds:[]
       }
       bodyFormData.shopIds.push(id);
-      const response = await axios.post(`${config.baseUrl}/users/${user.userId}/products`,bodyFormData,{headers:{'Authorization':localStorage.getItem("token")}});
+      const response = await axiosInstance().post(`/users/${user.userId}/products`,bodyFormData,{headers:{'Authorization':localStorage.getItem("token")}});
       console.log(`${config.baseUrl}/users/${user.userId}/shops/${shopDetails._id}/products`);
       if(response.data)
       {

@@ -1,4 +1,4 @@
-import axiosInstance from "../../helpers/axiosInstance"
+import axiosInstance from "../../utils/axios"
 import {
   REGISTER_ERROR,
   REGISTER_LOADING,
@@ -9,7 +9,7 @@ import {
 export const registerAction = (user) => (dispatch) => {
   dispatch({ type: REGISTER_LOADING })
 
-  axiosInstance()
+  axiosInstance().
     .post("/signUp", user)
     .then((response) => {
       console.log("response from registerAction", response.data)

@@ -1,5 +1,6 @@
 import React from "react";
 import {Modal,Button} from "react-bootstrap";
+import axiosInstance from "../utils/axios";
 function ShopModal(props) {
 
     return (

@@ -1,6 +1,7 @@
 import React,{Fragment, useState} from 'react'
 import {Modal} from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
+import axiosInstance from "../utils/axios";
 function Sample() {
 
 

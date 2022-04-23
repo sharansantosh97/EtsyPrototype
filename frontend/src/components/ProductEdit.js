@@ -5,9 +5,7 @@ import config from "../utils/config.js";
 import "../css/font-awesome.min.css"
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { GlobalContext } from "../context/Provider"
-import axiosInstance from "../helpers/axiosInstance";
-import axiosInstance1 from "../utils/axios";
-import axios from "axios";
+import axiosInstance from "../utils/axios";
 import { useSelector } from 'react-redux';
 
 function ProductEdit() {
@@ -53,9 +51,10 @@ function ProductEdit() {
     const getCategories = async ()=>{
         try
             {
-            const response = await axios.get(`${config.baseUrl}/users/${user.userId}/shops/${product.shopId}/categories`,{headers:{'Authorization':localStorage.getItem("token")}});
+            const response = await axiosInstance().get(`/users/${user.userId}/shops/${product.shopId}/categories`,{headers:{'Authorization':localStorage.getItem("token")}});
             if(response.data && response)
             {
+                console.log(response.data);
                 setCategories(response.data.categories);
             }else{
                 console.log("Error getting categories from AOI");
@@ -80,7 +79,7 @@ function ProductEdit() {
     const handleUploadProd = async ()=>{
     //     var bodyFormData = new FormData();
     //   bodyFormData.append('myImage',selectedFileProduct);
-    //   const response = await axios.post(`${config.baseUrl}/upload`,bodyFormData,{headers:{'Authorization':localStorage.getItem("token")}});
+    //   const response = await axiosInstance().post(`${config.baseUrl}/upload`,bodyFormData,{headers:{'Authorization':localStorage.getItem("token")}});
     //   const iUrl = response.data.imageUrl;
     //   console.log(iUrl);
     //   setProduct({
@@ -88,11 +87,12 @@ function ProductEdit() {
     //       imageUrl: iUrl,
     //     })
 
-
-    const response = await axiosInstance1.get(`/s3url`);
+    
+    const response = await axiosInstance().get(`/s3url`);
         if(response && response.data)
         {
             const url = response.data.uploadURL;
+            console.log(url);
             await fetch(url, {
                 method: "PUT",
                 headers: {
@@ -102,6 +102,7 @@ function ProductEdit() {
               })
 
               const imageUrl = url.split('?')[0]
+              console.log(imageUrl);
               setProduct({
           ...product,
           imageUrl: imageUrl,
@@ -115,7 +116,7 @@ function ProductEdit() {
     {
         try{
 
-            const response = await axios.put(`${config.baseUrl}/users/${user.userId}/products/${id}`,product,{headers:{'Authorization':localStorage.getItem("token"),'Content-Type':"application/json"}});
+            const response = await axiosInstance().put(`/users/${user.userId}/products/${id}`,product,{headers:{'Authorization':localStorage.getItem("token"),'Content-Type':"application/json"}});
             if(response && response.data)
             {
                 console.log("product updated successfully");

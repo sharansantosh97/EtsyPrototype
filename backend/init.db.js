@@ -61,7 +61,7 @@ async function initdb() {
 async function initmongodb() 
 {
 
-    mongoose.connect('mongodb://127.0.0.1:27017/Etsy', (err, res) => {
+    mongoose.connect('mongodb+srv://ETSYUSER:ETSYPASSWORD@etsy.74ekf.mongodb.net/Etsy?retryWrites=true&w=majority', (err, res) => {
         if (err) {
             console.log(err);
             console.log(`MongoDB Connection Failed`);

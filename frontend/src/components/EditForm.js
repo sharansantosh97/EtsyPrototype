@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import axios from "axios"
+import axiosInstance from "../utils/axios";
 const EditForm = ({
   categories,
   editItemProduct,
@@ -29,7 +29,7 @@ const EditForm = ({
     formData.append("myImage", e.target.files[0])
     console.log(e.target.files[0])
     console.log(formData)
-    axios({
+    axiosInstance({
       method: "post",
       //url: "https://sharansantosh-etsyprototype.herokuapp.com/upload",
       url: "http://localhost:3001",

@@ -4,7 +4,6 @@ import {NavLink} from "react-router-dom";
 import axiosInstance from "../utils/axios";
 import {useNavigate} from "react-router-dom";
 import config from "../utils/config.js";
-import axios from "axios";
 import logout from "../context/actions/logout"
 import { productsAction } from "../context/actions/productsAction";
 import {getproducts} from "../Redux/Actions/product.js";
@@ -39,10 +38,15 @@ function Header() {
 		dispatch(getproducts(user?.userId,query));
 	  }, [query]);
 
-	//   const handleLogout = () => {
-	// 	logout()(globalDispatch)
-	// 	logout()(authDispatch)
-	//   }
+	  const handleLogout = () => {
+		  console.log("Asas");
+		localStorage.removeItem("token")
+		//localStorage.removeItem("userDetails")
+		dispatch({
+			type: "LogoutUser",
+		})
+		navigate("/", {replace:true});
+	  }
 	  const handleProfile = ()=>{
 		const token = localStorage.getItem("token");
         if(!token){
@@ -67,7 +71,7 @@ function Header() {
 		{
 			try{
 				console.log(`${config.baseUrl}/users/${user.userId}/shops`);
-				const response = await axios.get(`${config.baseUrl}/users/${user.userId}/shops`,{headers:{'Authorization':localStorage.getItem("token")}});
+				const response = await axiosInstance().get(`/users/${user.userId}/shops`,{headers:{'Authorization':localStorage.getItem("token")}});
 				console.log(`${config.baseUrl}/users/${user.userId}/shops`);
 				console.log(response);
 				if(response.data)
@@ -203,9 +207,9 @@ function Header() {
 								</div> }
 								{ localStorage.getItem("token") &&
 								<div className="loginbutton">
-								<NavLink to="/"><button className="login-btn" onClick={
-									{/*handleLogout*/}
-									}>Logout</button></NavLink>
+								<button className="login-btn" onClick={
+									handleLogout
+									}>Logout</button>
 								</div>
 								}								
 

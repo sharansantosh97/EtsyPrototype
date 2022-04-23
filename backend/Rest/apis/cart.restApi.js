@@ -9,8 +9,9 @@ import orderModel from '../../models/orders.js';
 
 const getCart = async (req, res) => {
     try {
+        // let cartData = await query("SELECT * FROM cart WHERE createdBy = ?", req.params.userId );
         let cartData = await cartModel.find({ createdBy: req.params.userId }).lean();
-        console.log("Cart Data ===>", cartData);
+        //console.log("Cart Data ===>", cartData);
         let productData = [];
         for (const cartItem of cartData) {
             // productData = await query("SELECT * FROM products WHERE _id = ?", cartItem.productId);
@@ -25,8 +26,10 @@ const getCart = async (req, res) => {
 };
 
 const createOrUpdateCart = async(req, res) => {
-    let { productId, quantity} = req.body;
-    quantity=quantity || 1;
+    let { productId, quantity,          isGiftWrap, giftWrapDescription} = req.body;
+    quantity = quantity ? quantity : 1;
+    console.log("Quantity Log is ", quantity);
+    giftWrapDescription=giftWrapDescription || "";
     let userId = req.params.userId;
     try {
         // let userCartItem = await query(`select * from cart where productId='${productId}' AND createdBy='${userId}'`);
@@ -35,18 +38,59 @@ const createOrUpdateCart = async(req, res) => {
         if(userCartItem) {
             let cartId = userCartItem._id;
             // let updateCartP = await query(`UPDATE cart SET quantity= quantity+${quantity} where  _id= '${cartId}'`);
+            if(giftWrapDescription !== "") {
             let results = await cartModel.update(
                 { _id: cartId },
                 {
-                     $inc: { quantity: 1 } 
+                     $inc: { quantity: 1 },
+                     $set: { isGift: isGiftWrap, giftWrapDescription: giftWrapDescription }
+                      
                 }
-             )
-            return res.status(200).json({
-                _id: cartId,
-                productId,
-                createdBy: userId,
-                msg: 'successfully added product to cart'
-            })
+             )}else if(giftWrapDescription !== "" && quantity !== 1) {
+                let results = await cartModel.update(
+                    { _id: cartId },
+                    {
+                         $set: { isGift: isGiftWrap, giftWrapDescription: giftWrapDescription, quantity: quantity }
+                          
+                    }
+                 )}else if( isGiftWrap !== null) {
+                    let results = await cartModel.update(
+                        { _id: cartId },
+                        {
+                            $set: { isGift: isGiftWrap}
+                              
+                        }
+                     )}else if( quantity !== 1) {
+                    let results = await cartModel.update(
+                        { _id: cartId },
+                        {
+                             $set: {  quantity: quantity }
+                              
+                        }
+                     )}else{
+                let results = await cartModel.update(
+                    { _id: cartId },
+                    {
+                         $inc: { quantity: 1 },
+                          
+                    }
+                 )
+             }
+             let cartData = await cartModel.find({ createdBy: req.params.userId }).lean();
+        console.log("Cart Data ===>", cartData);
+        let productData = [];
+        for (const cartItem of cartData) {
+            // productData = await query("SELECT * FROM products WHERE _id = ?", cartItem.productId);
+            productData = await productModel.findOne({ _id: cartItem.productId}).lean();
+            cartItem["product"] = productData;
+        }
+        res.status(200).json({ cartItems: cartData });
+            // return res.status(200).json({
+            //     _id: cartId,
+            //     productId,
+            //     createdBy: userId,
+            //     msg: 'successfully added product to cart'
+            // })
         } else {
             // const insertQuery = `INSERT INTO cart (_id, createdBy, productId, quantity) VALUES ('${cartId}', '${req.params.userId}', '${req.body.productId}', '${quantity}')`;
             const newCart = new cartModel({
@@ -64,7 +108,7 @@ const createOrUpdateCart = async(req, res) => {
                         }
                         else {
                             res.status(200).json({
-                                _id: cartId,
+                                _id: userCartItem._id,
                                 createdBy: req.params.userId,
                                 productId: req.body.productId,
                                 quantity: quantity,
@@ -109,6 +153,8 @@ const updateCart = async (req, res) => {
 const deleteCart = async(req, res) => {
     try {
         let result = await cartModel.deleteOne({_id : req.params.cartId});
+
+        // let results = await query(`DELETE FROM cart WHERE _id= '${req.params.cartId}';`);
         res.status(200).json({
             msg: "Deleted Successfully",
         });
@@ -186,7 +232,10 @@ const checkoutCart = async(req, res) => {
             //     purchaseId,
             // ];
             // orderQuery = await query(`INSERT INTO orders VALUES (?,?,?,?,?,now(),?,?,?,?)`, orderData);
-
+            console.log("Gift wrap ===>", cartRecord.giftWrapDescription);
+            if(!cartRecord.isGift){
+                cartRecord.giftWrapDescription = null;
+            }
             const newOrder = new orderModel({
                 createdBy: cartRecord.createdBy,
                 productId: cartRecord.productId,
@@ -196,7 +245,8 @@ const checkoutCart = async(req, res) => {
                 shopId: cartRecord.product.shopId,
                 productImage: cartRecord.product.imageUrl,
                 productName: cartRecord.product.name,
-                purchaseId: purchaseId
+                purchaseId: purchaseId,
+                giftWrapDescription: cartRecord.giftWrapDescription,
               }); 
 
               newOrder.save((error, data) => {

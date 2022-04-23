@@ -1,4 +1,4 @@
-import axiosInstance from "../../helpers/axiosInstance"
+import axiosInstance from "../../utils/axios"
 import {
   GET_SHOP_LOADING,
   GET_SHOP_SUCCESS,
@@ -11,7 +11,7 @@ import {
 export const shopAction = (userId, shopId) => (dispatch) => {
   dispatch({ type: GET_SHOP_LOADING })
   // /users/${userId}/shops/${response.data.shopId}
-  axiosInstance()
+  axiosInstance().
     .get(`/users/${userId}/shops/${shopId}`)
     .then((response) => {
       console.log("response from GET_SHOPAction", response.data)
@@ -29,7 +29,7 @@ export const shopAction = (userId, shopId) => (dispatch) => {
 // export const getShopProductsAction = (userId, shopData) => (dispatch) => {
 //   dispatch({ type: GET_SHOP_PRODUCTS_LOADING })
 //   // /{{host}}/users/{{userId}}/products
-//   axiosInstance()
+//   axiosInstance().
 //     .post(`/users/${userId}/products`, shopData)
 //     .then((response) => {
 //       console.log("response from GET_SHOP_PRODUCTS_ACTION", response.data)

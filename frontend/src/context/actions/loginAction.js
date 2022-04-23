@@ -1,4 +1,4 @@
-import axiosInstance from "../../helpers/axiosInstance"
+import axiosInstance from "../../utils/axios"
 import { LOGIN_ERROR, LOGIN_LOADING, LOGIN_SUCCESS } from "./actionTypes"
 // so actions are responsible for making api calls and tells the reducer how to update the state.
 

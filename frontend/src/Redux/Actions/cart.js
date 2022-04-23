@@ -1,4 +1,4 @@
-import axiosInstance from "../../helpers/axiosInstance"
+import axiosInstance from "../../utils/axios"
 
 
 export const cartAction =
@@ -39,7 +39,7 @@ export const postCartAction = (productId, quantity, userID) => (dispatch) => {
 }
 
 export const putCartAction =
-  (userID, productId, quantity = null) =>
+  (userID, productId, quantity = null, isGiftWrap = null, giftWrapDescription = null) =>
   (dispatch) => {
     dispatch({ type: "UPDATE_CART_ITEM_LOADING" })
 
@@ -47,6 +47,8 @@ export const putCartAction =
       .put(`/users/${userID}/cart/`, {
         productId: productId,
         quantity: quantity,
+        isGiftWrap: isGiftWrap,
+        giftWrapDescription: giftWrapDescription
       })
       .then((response) => {
         console.log("response from  put cart action", response.data)

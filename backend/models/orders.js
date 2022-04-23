@@ -24,7 +24,8 @@ const ordersSchema = mongoose.Schema({
     },
     createdOn:{
         type:Date
-    }
+    },
+    giftWrapDescription: {type: String}
 },
 {
     versionKey: false

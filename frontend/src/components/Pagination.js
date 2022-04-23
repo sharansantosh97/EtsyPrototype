@@ -1,5 +1,5 @@
 import React from 'react';
-
+import axiosInstance from "../utils/axios";
 const Pagination = ({ postsPerPage, totalPosts, paginate }) => {
   const pageNumbers = [];
 
