@@ -10,7 +10,6 @@ export default class UserClass
                 email
             };
             const result = await UserModel.findOne(query);
-            console.log(result);
             const userObj = {};
             if(result){
                 userObj.userFound = true;

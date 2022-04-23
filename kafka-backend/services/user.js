@@ -33,7 +33,7 @@ async function updateProfile(msg, callback)
             "email":body.email ? body.email:null,
             "phoneNo":body.phoneNo ? body.phoneNo:null 
         };
-        console.log("EEEEEEEEEEEE"+profileData);
+        
         let exists = await UserClass.editUser(profileData,userId);
         if(exists && exists.userEdited == true)
         {
@@ -47,7 +47,7 @@ async function updateProfile(msg, callback)
         callback(null,  "Error in updating User profile data");
     }
 }
-async function handle_request(msg, callback)
+async function handle_request_User(msg, callback)
 {
     if (msg.path === "get_profile") {
         getProfile(msg, callback);
@@ -58,6 +58,6 @@ async function handle_request(msg, callback)
         
 };
 
-export {handle_request};
+export {handle_request_User};
 
 

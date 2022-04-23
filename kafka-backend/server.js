@@ -6,7 +6,8 @@ var connection = new ConnectionProvider();
 //var signin = require('./services/signin.js');
 //var Books = require('./services/books.js');
 //var User = require('./services/user.js');
-import {handle_request} from './services/user.js';
+import {handle_request_User} from './services/user.js';
+import {handle_request_Shop} from './services/shop.js';
 
 mongoose.connect('mongodb+srv://ETSYUSER:ETSYPASSWORD@etsy.74ekf.mongodb.net/Etsy?retryWrites=true&w=majority', (err, res) => {
         if (err) {
@@ -51,4 +52,5 @@ function handleTopicRequest(topic_name,fname){
 //first argument is topic name
 //second argument is a function that will handle this topic request
 //handleTopicRequest("post_book",Books)
-handleTopicRequest("profile_topic",handle_request)
+handleTopicRequest("profile_topic",handle_request_User);
+handleTopicRequest("shop_topic",handle_request_Shop);
