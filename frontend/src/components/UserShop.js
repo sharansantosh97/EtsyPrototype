@@ -31,11 +31,7 @@ function UserShop() {
   const getShopDetails = async ()=>
   {
     try{
-<<<<<<< HEAD
     const response = await axiosInstance().get(`/users/${user.userId}/shops`,{headers:{'Authorization':localStorage.getItem("token")}});
-=======
-    const response = await axiosInstance().get(`${config.baseUrl}/users/${user.userId}/shops`,{headers:{'Authorization':localStorage.getItem("token")}});
->>>>>>> b8ae70d35a253ff0a93fc4277d8dc193ab40b46b
     if(response.data)
     {
       setShopDetails(response.data);
@@ -77,11 +73,7 @@ function UserShop() {
       }
       bodyFormData.shopIds.push(shopDetails._id);
       const response = await axiosInstance().post(`/users/${user.userId}/products`,bodyFormData,{headers:{'Authorization':localStorage.getItem("token")}});
-<<<<<<< HEAD
       //console.log(`/users/${user.userId}/shops/${shopDetails._id}/products`);
-=======
-      //console.log(`${config.baseUrl}/users/${user.userId}/shops/${shopDetails._id}/products`);
->>>>>>> b8ae70d35a253ff0a93fc4277d8dc193ab40b46b
       if(response.data)
       {
         setShopProducts(response.data.products);
@@ -129,11 +121,7 @@ function UserShop() {
        
         // var bodyFormData = new FormData();
         // bodyFormData.append('myImage',selectedFile);
-<<<<<<< HEAD
         // const response = await axiosInstance().post(`/upload`,bodyFormData,{headers:{'Authorization':localStorage.getItem("token")}});
-=======
-        // const response = await axiosInstance().post(`${config.baseUrl}/upload`,bodyFormData,{headers:{'Authorization':localStorage.getItem("token")}});
->>>>>>> b8ae70d35a253ff0a93fc4277d8dc193ab40b46b
         // const iUrl = response.data.imageUrl;
 
         const response = await axiosInstance().get(`/s3url`);
@@ -215,11 +203,7 @@ function UserShop() {
      
       // var bodyFormData = new FormData();
       // bodyFormData.append('myImage',selectedFileProduct);
-<<<<<<< HEAD
       // const response = await axiosInstance().post(`/upload`,bodyFormData,{headers:{'Authorization':localStorage.getItem("token")}});
-=======
-      // const response = await axiosInstance().post(`${config.baseUrl}/upload`,bodyFormData,{headers:{'Authorization':localStorage.getItem("token")}});
->>>>>>> b8ae70d35a253ff0a93fc4277d8dc193ab40b46b
       // const iUrl = response.data.imageUrl;
       // console.log(iUrl);
       // setAddItemData({

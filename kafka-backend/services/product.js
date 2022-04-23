@@ -132,7 +132,6 @@ async function getAllProducts(msg, callback)
 
 
 
-<<<<<<< HEAD
 async function getProductById(msg, callback) {
     try{
     let { userId, productId } = msg.params; 
@@ -211,11 +210,9 @@ const updateProductById = async (msg, callback) =>
          response.status = 200;
          response.result = { msg: "Error in updating products data" }
          callback(null, response);
-        return;
+        
     }
 };
-=======
->>>>>>> b8ae70d35a253ff0a93fc4277d8dc193ab40b46b
 
 
 async function handle_request_Product(msg, callback)
@@ -226,7 +223,6 @@ async function handle_request_Product(msg, callback)
     else if (msg.path === "getproducts") {
         getAllProducts(msg, callback);
     }
-<<<<<<< HEAD
     else if (msg.path === "getproductbyid") 
       {
         getProductById(msg, callback);
@@ -235,8 +231,6 @@ async function handle_request_Product(msg, callback)
       {
         updateProductById(msg, callback);
       }
-=======
->>>>>>> b8ae70d35a253ff0a93fc4277d8dc193ab40b46b
         
 };
 

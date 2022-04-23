@@ -70,15 +70,9 @@ function Header() {
 		else
 		{
 			try{
-<<<<<<< HEAD
 				console.log(`/users/${user.userId}/shops`);
 				const response = await axiosInstance().get(`/users/${user.userId}/shops`,{headers:{'Authorization':localStorage.getItem("token")}});
 				console.log(`/users/${user.userId}/shops`);
-=======
-				console.log(`${config.baseUrl}/users/${user.userId}/shops`);
-				const response = await axiosInstance().get(`/users/${user.userId}/shops`,{headers:{'Authorization':localStorage.getItem("token")}});
-				console.log(`${config.baseUrl}/users/${user.userId}/shops`);
->>>>>>> b8ae70d35a253ff0a93fc4277d8dc193ab40b46b
 				console.log(response);
 				if(response.data)
 				{

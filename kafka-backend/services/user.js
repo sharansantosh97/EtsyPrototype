@@ -47,11 +47,8 @@ async function updateProfile(msg, callback)
         callback(null,  "Error in updating User profile data");
     }
 }
-<<<<<<< HEAD
 
 
-=======
->>>>>>> b8ae70d35a253ff0a93fc4277d8dc193ab40b46b
 async function handle_request_User(msg, callback)
 {
     if (msg.path === "get_profile") {
@@ -60,10 +57,7 @@ async function handle_request_User(msg, callback)
       {
         updateProfile(msg, callback);
       }
-<<<<<<< HEAD
       
-=======
->>>>>>> b8ae70d35a253ff0a93fc4277d8dc193ab40b46b
         
 };
 

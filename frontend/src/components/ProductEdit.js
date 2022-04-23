@@ -28,7 +28,6 @@ function ProductEdit() {
 			navigate("/login", {replace:true});
 		}else
 		{
-<<<<<<< HEAD
         //    setLoading(true)
         //    await axiosInstance()
 		//   .get(`/users/${user?.userId}/products/${id}`)
@@ -45,29 +44,10 @@ function ProductEdit() {
 		  ? setProductQuantity(20)
 		  : setProductQuantity(product.quantity)
           //getCategories();
-=======
-           setLoading(true)
-           axiosInstance()
-		  .get(`/users/${user?.userId}/products/${id}`)
-		  .then((response) => {
-			console.log("response.data", response.data)
-			setProduct(response.data)
-			setLoading(false)
-		  })
-		  .catch((err) => {
-			setLoading(false)
-		  })
-
-          product?.quantity >= 20
-		  ? setProductQuantity(20)
-		  : setProductQuantity(product.quantity)
-          getCategories();
->>>>>>> b8ae70d35a253ff0a93fc4277d8dc193ab40b46b
         }
         
 	}, [])
 
-<<<<<<< HEAD
     useEffect(() => {
         if(product?.shopId)
         {
@@ -97,11 +77,6 @@ function ProductEdit() {
         try
             {
             console.log("EEE"+JSON.stringify(product));
-=======
-    const getCategories = async ()=>{
-        try
-            {
->>>>>>> b8ae70d35a253ff0a93fc4277d8dc193ab40b46b
             const response = await axiosInstance().get(`/users/${user.userId}/shops/${product.shopId}/categories`,{headers:{'Authorization':localStorage.getItem("token")}});
             if(response.data && response)
             {
@@ -130,11 +105,7 @@ function ProductEdit() {
     const handleUploadProd = async ()=>{
     //     var bodyFormData = new FormData();
     //   bodyFormData.append('myImage',selectedFileProduct);
-<<<<<<< HEAD
     //   const response = await axiosInstance().post(`/upload`,bodyFormData,{headers:{'Authorization':localStorage.getItem("token")}});
-=======
-    //   const response = await axiosInstance().post(`${config.baseUrl}/upload`,bodyFormData,{headers:{'Authorization':localStorage.getItem("token")}});
->>>>>>> b8ae70d35a253ff0a93fc4277d8dc193ab40b46b
     //   const iUrl = response.data.imageUrl;
     //   console.log(iUrl);
     //   setProduct({

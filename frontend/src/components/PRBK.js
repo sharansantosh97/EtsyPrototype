@@ -51,11 +51,7 @@
 //     {
 //         try{
 //         console.log("asas"+authState.auth.data.data.userId);
-<<<<<<< HEAD
 //         const response = await axiosInstance().get(`/users/${authState.auth.data.data.userId}/profile`,{headers:{'Authorization':localStorage.getItem("token")}});
-=======
-//         const response = await axiosInstance().get(`${config.baseUrl}/users/${authState.auth.data.data.userId}/profile`,{headers:{'Authorization':localStorage.getItem("token")}});
->>>>>>> b8ae70d35a253ff0a93fc4277d8dc193ab40b46b
 //         if(response && response.data){
 //             setUserDetails({
 //             username:response.data.username,

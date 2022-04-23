@@ -65,11 +65,7 @@ const FavoritesPage = () => {
     }
   }
   const getFavorites = async () => {
-<<<<<<< HEAD
     console.log("url sa "+`/users/${user.userId}/favorites`,{headers:{'Authorization':localStorage.getItem("token")}});
-=======
-    console.log("url sa "+`${config.baseUrl}/users/${user.userId}/favorites`,{headers:{'Authorization':localStorage.getItem("token")}});
->>>>>>> b8ae70d35a253ff0a93fc4277d8dc193ab40b46b
     try{
         const response = await axiosInstance().get(`/users/${user.userId}/favorites`,{headers:{'Authorization':localStorage.getItem("token")}});
         //console.log("API"+JSON.stringify(response));

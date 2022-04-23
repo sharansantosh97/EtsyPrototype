@@ -2,20 +2,48 @@ import  FavoritesClass from '../../services/favorites.js';
 import  ProductsClass from '../../services/products.js';
 import mongoose from 'mongoose';
 import _ from 'lodash';
+import {make_request} from '../../kafka/client.js'
 
-async function createNewFavarite(req, res) {
-    try
-    {
-        let productId = req.body.productId;
-        let userId  = req.params.userId; 
-        let date = new Date();
-        const results = await FavoritesClass.addFavorites(productId,userId,date);
-        res.status(200).json(results);
-    }
-    catch(err) 
-    {
-        res.status(400).json(err);
-    }
+async function createNewFavarite(req, res) 
+{
+
+    let msg={};
+    msg.params = req.params;
+    msg.body = req.body;
+    msg.path = "create_favorite";
+
+    make_request('favorite_topic',msg, function(err,results){
+        console.log('in result');
+        console.log(results);
+        if (err){
+            console.log("Inside err"+err);
+            res.json({
+                status:"error",
+                msg:"System Error, Try Again."
+            })
+        }else{
+            console.log("Inside else");
+            res.status(results.status).json(results.result);
+
+                res.end();
+            }
+        
+    });
+
+
+
+    // try
+    // {
+    //     let productId = req.body.productId;
+    //     let userId  = req.params.userId; 
+    //     let date = new Date();
+    //     const results = await FavoritesClass.addFavorites(productId,userId,date);
+    //     res.status(200).json(results);
+    // }
+    // catch(err) 
+    // {
+    //     res.status(400).json(err);
+    // }
     
 }
 
