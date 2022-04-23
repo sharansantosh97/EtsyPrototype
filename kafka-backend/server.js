@@ -8,6 +8,7 @@ var connection = new ConnectionProvider();
 //var User = require('./services/user.js');
 import {handle_request_User} from './services/user.js';
 import {handle_request_Shop} from './services/shop.js';
+import {handle_request_Product} from './services/product.js';
 
 mongoose.connect('mongodb+srv://ETSYUSER:ETSYPASSWORD@etsy.74ekf.mongodb.net/Etsy?retryWrites=true&w=majority', (err, res) => {
         if (err) {
@@ -54,3 +55,4 @@ function handleTopicRequest(topic_name,fname){
 //handleTopicRequest("post_book",Books)
 handleTopicRequest("profile_topic",handle_request_User);
 handleTopicRequest("shop_topic",handle_request_Shop);
+handleTopicRequest("product_topic",handle_request_Product);
