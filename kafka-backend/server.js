@@ -10,6 +10,7 @@ import {handle_request_User} from './services/user.js';
 import {handle_request_Shop} from './services/shop.js';
 import {handle_request_Product} from './services/product.js';
 import {handle_request_Favorite} from './services/favorite.js';
+import {handle_request_Category} from './services/category.js';
 
 mongoose.connect('mongodb+srv://ETSYUSER:ETSYPASSWORD@etsy.74ekf.mongodb.net/Etsy?retryWrites=true&w=majority', (err, res) => {
         if (err) {
@@ -58,3 +59,4 @@ handleTopicRequest("profile_topic",handle_request_User);
 handleTopicRequest("shop_topic",handle_request_Shop);
 handleTopicRequest("product_topic",handle_request_Product);
 handleTopicRequest("favorite_topic",handle_request_Favorite);
+handleTopicRequest("category_topic",handle_request_Category);
