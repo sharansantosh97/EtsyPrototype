@@ -1,5 +1,8 @@
 import mongoose from 'mongoose';
+<<<<<<< HEAD
 import { log } from 'util';
+=======
+>>>>>>> b8ae70d35a253ff0a93fc4277d8dc193ab40b46b
 import CategoryModel from '../models/category.js';
 
 
@@ -49,7 +52,10 @@ export default class CategoryClass
         
         try{
             const cat = await CategoryModel.find({ $or: [ {shopId: mongoose.Types.ObjectId(shopId)}, {isSystem: true} ] });
+<<<<<<< HEAD
             console.log(cat);
+=======
+>>>>>>> b8ae70d35a253ff0a93fc4277d8dc193ab40b46b
             if(cat){
                 return cat;
             }else{

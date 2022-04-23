@@ -176,6 +176,7 @@ async function getAllProducts(req, res)
     // }
 }
 
+<<<<<<< HEAD
 async function getProductById(req, res) 
 {
 
@@ -269,6 +270,53 @@ const updateProductById = async (req, res) =>
     //     res.status(400).json({ msg: "Error in updating products data" });
     //     return;
     // }
+=======
+async function getProductById(req, res) {
+    try{
+    let { userId, productId } = req.params; 
+    const results = await ProductClass.getProductById(productId);
+        if(results && results.prodFound==false)
+        {
+            res.status(200).json({
+                'msg': `Shop doesn't exist for user`
+            })
+            return;
+        }
+        const p = results.prod;
+        res.status(200).json(p);
+    } catch (err) {
+        res.status(400).json({
+            msg: `Error fetching product ${productId}`
+        });
+    }
+}
+
+const updateProductById = async (req, res) => {
+    let productId = req.params.productId;
+    try {
+        let productData = {
+            name:req.body.name,
+            imageUrl:req.body.imageUrl,
+            description:req.body.description,
+            price:req.body.price,
+            quantity:req.body.quantity
+        };
+        let results = await ProductClass.updateProduct(productData,productId);
+        if(results && results.prodEdited == true)
+        {
+            res.status(200).json({
+                msg: 'Updated successfully'
+            });
+        }else
+        {
+            res.status(400).json({ msg: "could not update product details" });
+        }
+    } catch (err) {
+        console.log("err ===>", err);
+        res.status(400).json({ msg: "Error in updating products data" });
+        return;
+    }
+>>>>>>> b8ae70d35a253ff0a93fc4277d8dc193ab40b46b
 };
 
 

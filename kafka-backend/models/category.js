@@ -11,7 +11,11 @@ const categorySchema = mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId, ref: 'users'
     },
     isSystem:{
+<<<<<<< HEAD
         type:Boolean
+=======
+        type:Number
+>>>>>>> b8ae70d35a253ff0a93fc4277d8dc193ab40b46b
     }
 },
 {

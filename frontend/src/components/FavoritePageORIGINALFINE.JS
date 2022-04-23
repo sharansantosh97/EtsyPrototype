@@ -34,7 +34,11 @@
 //   {
 //     try{
     
+<<<<<<< HEAD
 //       const response = await axiosInstance().get(`/users/${authState.auth.data.data.userId}/profile`,{headers:{'Authorization':localStorage.getItem("token")}});
+=======
+//       const response = await axiosInstance().get(`${config.baseUrl}/users/${authState.auth.data.data.userId}/profile`,{headers:{'Authorization':localStorage.getItem("token")}});
+>>>>>>> b8ae70d35a253ff0a93fc4277d8dc193ab40b46b
 //       if(response && response.data){
 //         setUserDetails({
 //           username:response.data.username,
@@ -59,9 +63,15 @@
 //     }
 //   }
 //   const getFavorites = async () => {
+<<<<<<< HEAD
 //     console.log("url sa "+`/users/${authState.auth.data.data.userId}/favorites`,{headers:{'Authorization':localStorage.getItem("token")}});
 //     try{
 //         const response = await axiosInstance().get(`/users/${authState.auth.data.data.userId}/favorites`,{headers:{'Authorization':localStorage.getItem("token")}});
+=======
+//     console.log("url sa "+`${config.baseUrl}/users/${authState.auth.data.data.userId}/favorites`,{headers:{'Authorization':localStorage.getItem("token")}});
+//     try{
+//         const response = await axiosInstance().get(`${config.baseUrl}/users/${authState.auth.data.data.userId}/favorites`,{headers:{'Authorization':localStorage.getItem("token")}});
+>>>>>>> b8ae70d35a253ff0a93fc4277d8dc193ab40b46b
 //         //console.log("API"+JSON.stringify(response));
 //         if(response && response.data){
 //           setFavoriteItemsList(response.data.favorites);

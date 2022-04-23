@@ -55,7 +55,11 @@ function Shop() {
       }
       bodyFormData.shopIds.push(id);
       const response = await axiosInstance().post(`/users/${user.userId}/products`,bodyFormData,{headers:{'Authorization':localStorage.getItem("token")}});
+<<<<<<< HEAD
       console.log(`/users/${user.userId}/shops/${shopDetails._id}/products`);
+=======
+      console.log(`${config.baseUrl}/users/${user.userId}/shops/${shopDetails._id}/products`);
+>>>>>>> b8ae70d35a253ff0a93fc4277d8dc193ab40b46b
       if(response.data)
       {
         setShopProducts(response.data.products);

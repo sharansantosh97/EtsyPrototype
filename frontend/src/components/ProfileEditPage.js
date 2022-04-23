@@ -109,7 +109,11 @@ function ProfileEditPage() {
        
         // var bodyFormData = new FormData();
         // bodyFormData.append('myImage',selectedFile);
+<<<<<<< HEAD
         // const response = await axiosInstance().post(`/upload`,bodyFormData,{headers:{'Authorization':localStorage.getItem("token")}});
+=======
+        // const response = await axiosInstance().post(`${config.baseUrl}/upload`,bodyFormData,{headers:{'Authorization':localStorage.getItem("token")}});
+>>>>>>> b8ae70d35a253ff0a93fc4277d8dc193ab40b46b
         // const iUrl = response.data.imageUrl;
         // console.log(iUrl);
         // setUserDetails({
