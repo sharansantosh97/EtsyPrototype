@@ -55,8 +55,8 @@ function handleTopicRequest(topic_name,fname){
 //first argument is topic name
 //second argument is a function that will handle this topic request
 //handleTopicRequest("post_book",Books)
-handleTopicRequest("profile_topic",handle_request_User);
-handleTopicRequest("shop_topic",handle_request_Shop);
+//handleTopicRequest("profile_topic",handle_request_User);
+//handleTopicRequest("shop_topic",handle_request_Shop);
 handleTopicRequest("product_topic",handle_request_Product);
-handleTopicRequest("favorite_topic",handle_request_Favorite);
-handleTopicRequest("category_topic",handle_request_Category);
+//handleTopicRequest("favorite_topic",handle_request_Favorite);
+//handleTopicRequest("category_topic",handle_request_Category);
