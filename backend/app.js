@@ -55,3 +55,5 @@ if (cluster.isMaster) {
 } else {
     createServer()
 }
+
+//module.exports = app;

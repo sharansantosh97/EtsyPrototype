@@ -6,7 +6,7 @@
   "scripts": {
     "start": "cd Backend && node app.js",
     "heroku-postbuild": "cd frontend && npm install && npm run build",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
@@ -21,6 +21,7 @@
   "type": "module",
   "dependencies": {
     "aws-sdk": "^2.1116.0",
+    "axios": "^0.26.1",
     "bcrypt": "^5.0.1",
     "bluebird": "^3.7.2",
     "cors": "^2.8.5",

@@ -11,6 +11,7 @@ import {postCartAction} from "../Redux/Actions/cart.js";
 import {putCartAction} from "../Redux/Actions/cart.js";
 import {deleteCartAction} from "../Redux/Actions/cart.js";
 import { Form } from "react-bootstrap";
+import { Add, Remove } from "@material-ui/icons";
 const Cart = () => {
 
   const navigate = useNavigate();
@@ -44,6 +45,7 @@ const Cart = () => {
   const cartItems = cart?.cartItems ? cart.cartItems : [];
 
   useEffect(() => {
+    console.log("cart total is", cartTotal);
     setCartCount(
       cartItems.reduce(
         (totalItems, cartItem) => (totalItems += cartItem.quantity),
@@ -51,19 +53,31 @@ const Cart = () => {
       )
     );
     setCartTotal(
-      cartItems.reduce(
-        (totalPrice, cartItem) => (totalPrice += cartItem?.product?.price),
-        0
-      )
+      cartItems
+        .reduce(
+          (totalPrice, cartItem) => (totalPrice += cartItem?.product?.price * cartItem.quantity),
+          0
+        )
+        .toFixed(2)
     );
   }, [cartItems,msg]);
 
-  const deleteCartItem = useCallback((cartId) => {
+  // const deleteCartItem = useCallback((cartId) => {
+  //   console.log("I'm delete cart");
+  //   dispatch(deleteCartAction(user?.userId, cartId));
+  //   //deleteCartAction(user?.userId, cartId)(globalDispatch);
+  //   // cartAction(userId)(globalDispatch);
+  // }, []);
+
+
+  const deleteCartItem = ((cartId) => {
     console.log("I'm delete cart");
-    dispatch(deleteCartAction(user?.userId, cartId));
-    //deleteCartAction(user?.userId, cartId)(globalDispatch);
+    dispatch(deleteCartAction(userId, cartId));
+    // dispatch(cartAction(userId));
     // cartAction(userId)(globalDispatch);
-  }, []);
+  });
+
+
 
   const checkOutCartItems = async ()=>
   {
@@ -128,15 +142,21 @@ const Cart = () => {
           </div>
         </td>
         <td data-th="Price">
-          ${cartItem?.product?.price * cartItem?.quantity}
+          ${(cartItem?.product?.price * cartItem?.quantity).toFixed(2)}
         </td>
         <td data-th="Quantity">
-          <input
+          {/* <input
             type="number"
             value={cartItem?.quantity}
             className="form-control form-control-lg text-center"
           />
-          {cartItem?.quantity.toString}
+          {cartItem?.quantity.toString} */}
+
+          <div style={{ padding: "10px 10px" }}>
+                      <Remove style = {{cursor: "pointer"}} onClick={() => updateCartItem(cartItem?._id,cartItem?.product?._id, cartItem?.quantity - 1 )}  />
+                          {cartItem?.quantity}
+                        <Add style = {{cursor: "pointer"}} onClick={() => updateCartItem(cartItem?._id,cartItem?.product?._id, cartItem?.quantity + 1 )} />
+              </div>
         </td>
         <td className="actions" data-th="">
           <div className="text-right">
