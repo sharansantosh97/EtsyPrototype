@@ -4,8 +4,6 @@ import  UserClass from '../../services/user.js';
 import {make_request} from '../../kafka/client.js'
 async function updateProfile(req, res) {
     
-
-
     const msg = {};
     msg.userId = req.params.userId;
     msg.path = "update_profile";
@@ -58,7 +56,8 @@ async function updateProfile(req, res) {
     // }
 };
 
-async function getProfile(req, res) {
+async function getProfile(req, res) 
+{
     let userId = req.params.userId;
     // try {
     //     let exists = await UserClass.getUserProfile(userId);
@@ -153,5 +152,7 @@ let endpoints = {
     }
  ],
 };
+
+
 
 export { endpoints };

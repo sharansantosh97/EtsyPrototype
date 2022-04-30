@@ -4,7 +4,7 @@ import kafka from "kafka-node";
 const ipAddress = "localhost";
 function ConnectionProvider() {
   this.getConsumer = function (topic_name) {
-    this.client = new kafka.KafkaClient({kafkaHost: `4.tcp.ngrok.io:19648`});//${ipAddress}:2181
+    this.client = new kafka.KafkaClient(`${ipAddress}:2181`);//${ipAddress}:2181
     this.kafkaConsumerConnection = new kafka.Consumer(this.client, [
       { topic: topic_name, partition: 0 }
     ]);
@@ -18,7 +18,7 @@ function ConnectionProvider() {
   //Code will be executed when we start Producer
   this.getProducer = function () {
     if (!this.kafkaProducerConnection) {
-      this.client = new kafka.KafkaClient({kafkaHost: `4.tcp.ngrok.io:19648`});
+      this.client = new kafka.KafkaClient(`${ipAddress}:2181`);
       console.log("EEEEEEEEE",this.client);
       var HighLevelProducer = kafka.HighLevelProducer;
       this.kafkaProducerConnection = new HighLevelProducer(this.client);
