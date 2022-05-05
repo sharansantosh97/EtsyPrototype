@@ -3,7 +3,7 @@ import { uuid } from 'uuidv4';
 import  ShopClass from '../../services/shop.js';
 import  ProductClass from '../../services/products.js';
 import mongoose from 'mongoose';
-import {make_request} from '../../kafka/client.js'
+//import {make_request} from '../../kafka/client.js'
 
 // /**deprecated  getShopProducts*/
 async function getShopProducts(req, res) {
@@ -32,243 +32,243 @@ async function getShopProducts(req, res) {
 async function createNewProduct(req, res) 
 {
 
-    let msg = {};
-    msg.path = "create_product";
-    msg.body = req.body;
-    msg.params = req.params;
-    make_request('product_topic',msg, function(err,results){
-        console.log('in result');
-        console.log(results);
-        if (err){
-            console.log("Inside err"+err);
-            res.json({
-                status:"error",
-                msg:"System Error, Try Again."
-            })
-        }else{
-            console.log("Inside else");
-                res.status(results.status).json(results.result);
+    // let msg = {};
+    // msg.path = "create_product";
+    // msg.body = req.body;
+    // msg.params = req.params;
+    // make_request('product_topic',msg, function(err,results){
+    //     console.log('in result');
+    //     console.log(results);
+    //     if (err){
+    //         console.log("Inside err"+err);
+    //         res.json({
+    //             status:"error",
+    //             msg:"System Error, Try Again."
+    //         })
+    //     }else{
+    //         console.log("Inside else");
+    //             res.status(results.status).json(results.result);
 
-                res.end();
-            }
+    //             res.end();
+    //         }
         
-    });
+    // });
 
     
-    // let body = req.body;
-    // let { name, imageUrl, categoryId, description, price, quantity } = body
-    // let { userId, shopId } = req.params;
-    // try {
+    let body = req.body;
+    let { name, imageUrl, categoryId, description, price, quantity } = body
+    let { userId, shopId } = req.params;
+    try {
 
-    //     let results = await ShopClass.getShopDetailsById(shopId);
-    //     if(results && results.shopFound==false)
-    //     {
-    //         res.status(200).json({
-    //             'msg': `Error creating product for user`
-    //         })
-    //         return;
-    //     }
-    //      let shopDetails = results.shop;
-    //      let shopName = shopDetails.name;
-    //     let productDetails = {
-    //         name:name, 
-    //         imageUrl:imageUrl,
-    //         categoryId: mongoose.Types.ObjectId(categoryId), 
-    //         description:description, 
-    //         price:price, 
-    //         quantity:quantity, 
-    //         shopId: mongoose.Types.ObjectId(shopId), 
-    //         createdBy: mongoose.Types.ObjectId(userId), 
-    //         date:new Date(), 
-    //         salesCount:0, 
-    //         shopName:shopName
-    //     };
-    //      const resultsPro = await ProductClass.createNewProduct(productDetails);
-    //      res.status(200).json(resultsPro);
-    // } catch (err) {
-    //     res.status(400).json(err);
-    // }
+        let results = await ShopClass.getShopDetailsById(shopId);
+        if(results && results.shopFound==false)
+        {
+            res.status(200).json({
+                'msg': `Error creating product for user`
+            })
+            return;
+        }
+         let shopDetails = results.shop;
+         let shopName = shopDetails.name;
+        let productDetails = {
+            name:name, 
+            imageUrl:imageUrl,
+            categoryId: mongoose.Types.ObjectId(categoryId), 
+            description:description, 
+            price:price, 
+            quantity:quantity, 
+            shopId: mongoose.Types.ObjectId(shopId), 
+            createdBy: mongoose.Types.ObjectId(userId), 
+            date:new Date(), 
+            salesCount:0, 
+            shopName:shopName
+        };
+         const resultsPro = await ProductClass.createNewProduct(productDetails);
+         res.status(200).json(resultsPro);
+    } catch (err) {
+        res.status(400).json(err);
+    }
 }
 
 async function getAllProducts(req, res) 
 {
 
 
-    let msg = {};
-    msg.path = "getproducts";
-    msg.body = req.body;
-    msg.params = req.params;
-    make_request('product_topic',msg, function(err,results){
-        console.log('in result');
-        console.log(results);
-        if (err){
-            console.log("Inside err"+err);
-            res.json({
-                status:"error",
-                msg:"System Error, Try Again."
-            })
-        }else{
-            console.log("Inside else");
-                res.status(results.status).json(results.result);
-                res.end();
+    // let msg = {};
+    // msg.path = "getproducts";
+    // msg.body = req.body;
+    // msg.params = req.params;
+    // make_request('product_topic',msg, function(err,results){
+    //     console.log('in result');
+    //     console.log(results);
+    //     if (err){
+    //         console.log("Inside err"+err);
+    //         res.json({
+    //             status:"error",
+    //             msg:"System Error, Try Again."
+    //         })
+    //     }else{
+    //         console.log("Inside else");
+    //             res.status(results.status).json(results.result);
+    //             res.end();
+    //         }
+        
+    // });
+
+    let { userId } = req.params; // verifiying userId in middleware
+    let body = req.body;
+    let {categoryIds, shopIds, excludeShopIds, search} = body;
+    let selectQuery;
+    let whereConditions = {};
+    try {
+        // let currentUserShopDetails = await query(`select * from shops where createdBy='${userId}'`);
+        // currentUserShopDetails = _.get(currentUserShopDetails, '0')
+        // if(currentUserShopDetails && currentUserShopDetails._id) {
+        //     body.excludeShopIds = [currentUserShopDetails._id]
+        // }
+
+        if(search) {
+            var regQuery = { $regex: search, $options: 'i' };
+            whereConditions['name']=regQuery;
+        }
+        if (categoryIds && categoryIds.length > 0) {
+            var catQuery = { $in: [] };
+            for(let i=0;i<categoryIds.length;i++)
+            {
+                catQuery.$in.push(categoryIds[i]);
             }
+            whereConditions['categoryId']=catQuery;
+        }
         
-    });
-
-    // let { userId } = req.params; // verifiying userId in middleware
-    // let body = req.body;
-    // let {categoryIds, shopIds, excludeShopIds, search} = body;
-    // let selectQuery;
-    // let whereConditions = {};
-    // try {
-    //     // let currentUserShopDetails = await query(`select * from shops where createdBy='${userId}'`);
-    //     // currentUserShopDetails = _.get(currentUserShopDetails, '0')
-    //     // if(currentUserShopDetails && currentUserShopDetails._id) {
-    //     //     body.excludeShopIds = [currentUserShopDetails._id]
-    //     // }
-
-    //     if(search) {
-    //         var regQuery = { $regex: search, $options: 'i' };
-    //         whereConditions['name']=regQuery;
-    //     }
-    //     if (categoryIds && categoryIds.length > 0) {
-    //         var catQuery = { $in: [] };
-    //         for(let i=0;i<categoryIds.length;i++)
-    //         {
-    //             catQuery.$in.push(categoryIds[i]);
-    //         }
-    //         whereConditions['categoryId']=catQuery;
-    //     }
-        
-    //     if (body.shopIds && body.shopIds.length>0) {
-    //         var shopQuery = { $in: [] };
-    //         for(let i=0;i<shopIds.length;i++)
-    //         {
-    //             shopQuery.$in.push(shopIds[i]);
-    //         }
-    //         whereConditions['shopId']=shopQuery;
-    //     }
-    //     if (body.excludeShopIds && body.excludeShopIds.length>0) {
-    //         var shopExQuery = { $nin: [] };
-    //         for(let i=0;i<excludeShopIds.length;i++)
-    //         {
-    //             shopExQuery.$nin.push(excludeShopIds[i]);
-    //         }
-    //         whereConditions['shopId']=shopExQuery;
-    //     }
-    //     if (body.priceRange && body.priceRange.length == 2) {
-    //         let lowPrice = body.priceRange[0];
-    //         let highPrice = body.priceRange[1];
-    //         var priceQuery = { $gt: lowPrice, $lt: highPrice };
-    //         whereConditions['price']=priceQuery;
-    //     }
-    //     if (body.excludeOutOfStock) {
-    //         var qQuery = { $gt: 0 };
-    //         whereConditions['quantity']=qQuery;
-    //     }
-    //     const products = await ProductClass.getProductsWithConditions(whereConditions);
-    //     res.status(200).json({
-    //         products,
-    //         //salesCount: _.sumBy(results, 'salesCount')
-    //     })
-    // } catch (err) {
-    //     res.status(400).json(err);
-    // }
+        if (body.shopIds && body.shopIds.length>0) {
+            var shopQuery = { $in: [] };
+            for(let i=0;i<shopIds.length;i++)
+            {
+                shopQuery.$in.push(shopIds[i]);
+            }
+            whereConditions['shopId']=shopQuery;
+        }
+        if (body.excludeShopIds && body.excludeShopIds.length>0) {
+            var shopExQuery = { $nin: [] };
+            for(let i=0;i<excludeShopIds.length;i++)
+            {
+                shopExQuery.$nin.push(excludeShopIds[i]);
+            }
+            whereConditions['shopId']=shopExQuery;
+        }
+        if (body.priceRange && body.priceRange.length == 2) {
+            let lowPrice = body.priceRange[0];
+            let highPrice = body.priceRange[1];
+            var priceQuery = { $gt: lowPrice, $lt: highPrice };
+            whereConditions['price']=priceQuery;
+        }
+        if (body.excludeOutOfStock) {
+            var qQuery = { $gt: 0 };
+            whereConditions['quantity']=qQuery;
+        }
+        const products = await ProductClass.getProductsWithConditions(whereConditions);
+        res.status(200).json({
+            products,
+            //salesCount: _.sumBy(results, 'salesCount')
+        })
+    } catch (err) {
+        res.status(400).json(err);
+    }
 }
 
 async function getProductById(req, res) 
 {
 
-    let msg = {};
-    msg.path = "getproductbyid";
-    msg.params = req.params;
-    make_request('product_topic',msg, function(err,results){
-        console.log('in result');
-        console.log(results);
-        if (err){
-            console.log("Inside err"+err);
-            res.json({
-                status:"error",
-                msg:"System Error, Try Again."
-            })
-        }else{
-            console.log("Inside else");
-                res.status(results.status).json(results.result);
-
-                res.end();
-            }
-        
-    });
-
-
-    // try{
-    // let { userId, productId } = req.params; 
-    // const results = await ProductClass.getProductById(productId);
-    //     if(results && results.prodFound==false)
-    //     {
-    //         res.status(200).json({
-    //             'msg': `Shop doesn't exist for user`
+    // let msg = {};
+    // msg.path = "getproductbyid";
+    // msg.params = req.params;
+    // make_request('product_topic',msg, function(err,results){
+    //     console.log('in result');
+    //     console.log(results);
+    //     if (err){
+    //         console.log("Inside err"+err);
+    //         res.json({
+    //             status:"error",
+    //             msg:"System Error, Try Again."
     //         })
-    //         return;
-    //     }
-    //     const p = results.prod;
-    //     res.status(200).json(p);
-    // } catch (err) {
-    //     res.status(400).json({
-    //         msg: `Error fetching product ${productId}`
-    //     });
-    // }
+    //     }else{
+    //         console.log("Inside else");
+    //             res.status(results.status).json(results.result);
+
+    //             res.end();
+    //         }
+        
+    // });
+
+
+    try{
+    let { userId, productId } = req.params; 
+    const results = await ProductClass.getProductById(productId);
+        if(results && results.prodFound==false)
+        {
+            res.status(200).json({
+                'msg': `Shop doesn't exist for user`
+            })
+            return;
+        }
+        const p = results.prod;
+        res.status(200).json(p);
+    } catch (err) {
+        res.status(400).json({
+            msg: `Error fetching product ${productId}`
+        });
+    }
 }
 
 const updateProductById = async (req, res) => 
 {
 
-    let msg = {};
-    msg.path = "updateproduct";
-    msg.params = req.params;
-    msg.body = req.body;
-    make_request('product_topic',msg, function(err,results){
-        console.log('in result');
-        console.log(results);
-        if (err){
-            console.log("Inside err"+err);
-            res.json({
-                status:"error",
-                msg:"System Error, Try Again."
-            })
-        }else{
-            console.log("Inside else");
-                res.status(results.status).json(results.result);
+    // let msg = {};
+    // msg.path = "updateproduct";
+    // msg.params = req.params;
+    // msg.body = req.body;
+    // make_request('product_topic',msg, function(err,results){
+    //     console.log('in result');
+    //     console.log(results);
+    //     if (err){
+    //         console.log("Inside err"+err);
+    //         res.json({
+    //             status:"error",
+    //             msg:"System Error, Try Again."
+    //         })
+    //     }else{
+    //         console.log("Inside else");
+    //             res.status(results.status).json(results.result);
 
-                res.end();
-            }
+    //             res.end();
+    //         }
         
-    });
+    // });
 
-    // let productId = req.params.productId;
-    // try {
-    //     let productData = {
-    //         name:req.body.name,
-    //         imageUrl:req.body.imageUrl,
-    //         description:req.body.description,
-    //         price:req.body.price,
-    //         quantity:req.body.quantity
-    //     };
-    //     let results = await ProductClass.updateProduct(productData,productId);
-    //     if(results && results.prodEdited == true)
-    //     {
-    //         res.status(200).json({
-    //             msg: 'Updated successfully'
-    //         });
-    //     }else
-    //     {
-    //         res.status(400).json({ msg: "could not update product details" });
-    //     }
-    // } catch (err) {
-    //     console.log("err ===>", err);
-    //     res.status(400).json({ msg: "Error in updating products data" });
-    //     return;
-    // }
+    let productId = req.params.productId;
+    try {
+        let productData = {
+            name:req.body.name,
+            imageUrl:req.body.imageUrl,
+            description:req.body.description,
+            price:req.body.price,
+            quantity:req.body.quantity
+        };
+        let results = await ProductClass.updateProduct(productData,productId);
+        if(results && results.prodEdited == true)
+        {
+            res.status(200).json({
+                msg: 'Updated successfully'
+            });
+        }else
+        {
+            res.status(400).json({ msg: "could not update product details" });
+        }
+    } catch (err) {
+        console.log("err ===>", err);
+        res.status(400).json({ msg: "Error in updating products data" });
+        return;
+    }
 };
 
 

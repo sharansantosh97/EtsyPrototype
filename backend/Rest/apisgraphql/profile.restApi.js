@@ -1,34 +1,36 @@
 const log = console.log;
 import _ from 'lodash';
 import  UserClass from '../../services/user.js';
-async function updateProfile(req, res) {
-    
+async function updateProfile(userInput) {
+    console.log("#######",JSON.stringify(userInput));
     try {
-        let userId = req.params.userId;
+        let userId = userInput.userId;
+        console.log(userId);
         let profileData = {
-            "username":req.body.username ? req.body.username : null,
-            "imageUrl":req.body.imageUrl ? req.body.imageUrl : null,
-            "dob":req.body.dob ? req.body.dob : null,
-            "gender":req.body.gender ? req.body.gender : null,
-            "address":req.body.address ? req.body.address : null,
-            "city":req.body.city ? req.body.city : null,
-            "state":req.body.state ? req.body.state : null,
-            "country":req.body.country ? req.body.country : null,
-            "about":req.body.about ? req.body.about : null,
-            "email":req.body.email ? req.body.email:null,
-            "phoneNo":req.body.phoneNo ? req.body.phoneNo:null 
+            "username":userInput.username ? userInput.username : null,
+            "imageUrl":userInput.imageUrl ? userInput.imageUrl : null,
+            "dob":userInput.dob ? userInput.dob : null,
+            "gender":userInput.gender ? userInput.gender : null,
+            "address":userInput.address ? userInput.address : null,
+            "city":userInput.city ? userInput.city : null,
+            "state":userInput.state ? userInput.state : null,
+            "country":userInput.country ? userInput.country : null,
+            "about":userInput.about ? userInput.about : null,
+            "email":userInput.email ? userInput.email:null,
+            "phoneNo":userInput.phoneNo ? userInput.phoneNo:null 
         };
         let exists = await UserClass.editUser(profileData,userId);
         if(exists && exists.userEdited == true)
         {
-            res.status(200).json(exists);
+            //return exists;
+            return "updated";
         }else
         {
-            res.status(400).json({msg:"Could not update User data"});
+            return {msg:"Could not update User data"};
         }
     } catch (err) {
         log("Err", err);
-        res.status(400).json({ msg: "Error in updating User profile data" });
+        return { msg: "Error in updating User profile data" };
     }
 };
 

@@ -1,7 +1,10 @@
-import { getProfile } from '../Rest/apisgraphql/profile.restApi.js';
+import { getProfile, updateProfile } from '../Rest/apisgraphql/profile.restApi.js';
 const root = {
     getProfileDetails: ({ userId }) =>
-    getProfile(userId)
+    getProfile(userId),
+
+    updateProfileDetails: ({ userInput }) =>
+    updateProfile(userInput),
   };
 
   export default root;

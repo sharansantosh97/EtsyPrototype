@@ -16,10 +16,28 @@ const schema = buildSchema(`
     password:String
   }
 
+  input UserInput{
+    username:String,
+    imageUrl:String,
+    dob:String,
+    gender:String,
+    address:String,
+    city:String,
+    state:String,
+    country:String,
+    about:String,
+    email:String,
+    phoneNo:String,
+    userId:String
+  }
+
   type Query {
     getProfileDetails(userId:String):User
   }
 
+  type Mutation{
+    updateProfileDetails(userInput:UserInput):String
+  }
 
 `);
 
