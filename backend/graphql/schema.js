@@ -5,6 +5,7 @@ import {getProfile, updateProfile} from '../Rest/apisgraphql/profile.restApi.js'
 import {signUp} from '../Rest/apisgraphql/signup.restApi.js';
 import {checkShopNameAvailability, createShop, getShopByUserId, getShopById, updateShopById} from '../Rest/apisgraphql/shops.restApi.js';
 import {createNewProduct,  getProductById, updateProductById} from '../Rest/apisgraphql/products.restApi.js';
+import {getOrders} from '../Rest/apisgraphql/orders.restApi.js';
 const {
     GraphQLObjectType,
     GraphQLString,
@@ -32,6 +33,20 @@ const SignUpType = new GraphQLObjectType({
     username: { type: GraphQLString },
     email: { type: GraphQLString },
     msg: { type: GraphQLString }
+  })
+});
+
+const AllOrdersType = new GraphQLObjectType({
+  name: 'AllOrdersType',
+  fields: () => ({
+    productName: { type: GraphQLString },
+    emproductIdail: { type: GraphQLString },
+    quantity: { type: GraphQLInt },
+    price: { type: GraphQLInt },
+    shopId: { type: GraphQLString },
+    createdBy: { type: GraphQLString },
+    createdOn: { type: GraphQLString },
+    giftWrapDescription: { type: GraphQLString }
   })
 });
 
@@ -90,7 +105,17 @@ const RootQuery = new GraphQLObjectType({
       {
           return getProductById(args);
       }
-    }
+    },
+    getOrders: {
+      type: new GraphQLList(AllOrdersType),
+      args: {
+        userId: { type: GraphQLString }
+      },
+      resolve(parent, args) {
+
+          return getOrders(args); 
+      }
+  },
     }
 });
 

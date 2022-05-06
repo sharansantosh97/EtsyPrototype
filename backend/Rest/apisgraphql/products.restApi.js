@@ -39,7 +39,7 @@ async function createNewProduct(args)
             shopName:shopName
         };
          const resultsPro = await ProductClass.createNewProduct(productDetails);
-         console.log(resultsPro);
+    
          return resultsPro;
     } catch (err) {
         return err;
