@@ -1,7 +1,10 @@
 import graphql from 'graphql';
+import { ShopDetailsType, CreateShopType, CheckShopNameAvailableType} from '../types/shop.js'
+import { CreateProductType } from '../types/product.js'
 import {getProfile, updateProfile} from '../Rest/apisgraphql/profile.restApi.js';
 import {signUp} from '../Rest/apisgraphql/signup.restApi.js';
 import {checkShopNameAvailability, createShop, getShopByUserId, getShopById, updateShopById} from '../Rest/apisgraphql/shops.restApi.js';
+import {createNewProduct,  getProductById, updateProductById} from '../Rest/apisgraphql/products.restApi.js';
 const {
     GraphQLObjectType,
     GraphQLString,
@@ -31,36 +34,6 @@ const SignUpType = new GraphQLObjectType({
     msg: { type: GraphQLString }
   })
 });
-
-const CheckShopNameAvailableType = new GraphQLObjectType({
-  name: 'CheckShopName',
-  fields: () => ({
-    available: { type: GraphQLBoolean },
-    msg: { type: GraphQLString }
-  })
-});
-
-const CreateShopType = new GraphQLObjectType({
-  name: 'CreateShop',
-  fields: () => ({
-    shopId: { type: GraphQLString },
-    shopName: { type: GraphQLString },
-    msg: { type: GraphQLString }
-  })
-});
-
-const ShopDetailsType = new GraphQLObjectType({
-  name: 'GetShopDetails',
-  fields: () => ({
-    imageUrl: { type: GraphQLString },
-    name: { type: GraphQLString },
-    _id: { type: GraphQLString },
-    createdOn: { type: GraphQLString },
-    createdBy: { type: GraphQLString },
-    msg: { type: GraphQLString }
-  })
-});
-
 
 
 const RootQuery = new GraphQLObjectType({
@@ -105,6 +78,17 @@ const RootQuery = new GraphQLObjectType({
       resolve(parent, args) 
       {
           return getShopById(args);
+      }
+    },
+    getProductById: {
+      type: CreateProductType,
+      args: {
+        userId: { type: GraphQLString },
+        productId: { type: GraphQLString }
+      },
+      resolve(parent, args) 
+      {
+          return getProductById(args);
       }
     }
     }
@@ -168,6 +152,38 @@ const Mutation = new GraphQLObjectType({
       async resolve(parent, args) 
       {
           return updateShopById(args);
+      }
+    },
+    createProduct: {
+      type: CreateProductType,
+      args: {
+        categoryId: { type: GraphQLString },
+        imageUrl: { type: GraphQLString },
+        name: { type: GraphQLString },
+        description: { type: GraphQLString },
+        price: { type: GraphQLInt },
+        quantity: { type: GraphQLInt },
+        shopId: { type: GraphQLString },
+        userId: { type: GraphQLString }
+      },
+      async resolve(parent, args) 
+      {
+          return createNewProduct(args);
+      }
+    },
+    updateProductById: {
+      type: CreateProductType,
+      args: {
+        productId: { type: GraphQLString },
+        name: { type: GraphQLString },
+        imageUrl: { type: GraphQLString },
+        description: { type: GraphQLString },
+        price: { type: GraphQLInt },
+        quantity: { type: GraphQLInt }
+      },
+      resolve(parent, args) 
+      {
+          return updateProductById(args);
       }
     }
 
