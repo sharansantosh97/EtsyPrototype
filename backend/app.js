@@ -11,7 +11,7 @@ import path from 'path'
 import fs from 'fs'
 import { fileURLToPath } from 'url';
 import   schema   from './graphql/schema.js';
-import   root   from './graphql/root.js';
+
 
 
 const __filename = fileURLToPath(
@@ -44,9 +44,9 @@ async function createServer()
 
     app.use("/graphql",graphqlHTTP({
         schema,
-        graphiql: true,
-        rootValue: root
+        graphiql: true
     }));
+    
 
 }
 

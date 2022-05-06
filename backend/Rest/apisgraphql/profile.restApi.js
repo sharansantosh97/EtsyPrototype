@@ -1,7 +1,8 @@
 const log = console.log;
 import _ from 'lodash';
 import  UserClass from '../../services/user.js';
-async function updateProfile(userInput) {
+async function updateProfile(userInput) 
+{
     console.log("#######",JSON.stringify(userInput));
     try {
         let userId = userInput.userId;
@@ -22,8 +23,8 @@ async function updateProfile(userInput) {
         let exists = await UserClass.editUser(profileData,userId);
         if(exists && exists.userEdited == true)
         {
-            //return exists;
-            return "updated";
+            return exists;
+            //return "updated";
         }else
         {
             return {msg:"Could not update User data"};
