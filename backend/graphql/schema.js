@@ -1,11 +1,13 @@
 import graphql from 'graphql';
 import { ShopDetailsType, CreateShopType, CheckShopNameAvailableType} from '../types/shop.js'
 import { CreateProductType } from '../types/product.js'
+import { CartType } from '../types/cart.js'
 import {getProfile, updateProfile} from '../Rest/apisgraphql/profile.restApi.js';
 import {signUp} from '../Rest/apisgraphql/signup.restApi.js';
 import {checkShopNameAvailability, createShop, getShopByUserId, getShopById, updateShopById} from '../Rest/apisgraphql/shops.restApi.js';
 import {createNewProduct,  getProductById, updateProductById} from '../Rest/apisgraphql/products.restApi.js';
 import {getOrders} from '../Rest/apisgraphql/orders.restApi.js';
+import {getCart, deleteCart, updateCart, checkoutCart} from '../Rest/apisgraphql/cart.restApi.js';
 const {
     GraphQLObjectType,
     GraphQLString,
@@ -116,6 +118,16 @@ const RootQuery = new GraphQLObjectType({
           return getOrders(args); 
       }
   },
+  getCart: {
+    type: new GraphQLList(CartType),
+    args: {
+      userId: { type: GraphQLString }
+    },
+    resolve(parent, args) {
+
+        return getCart(args); 
+    }
+    }
     }
 });
 
@@ -209,6 +221,37 @@ const Mutation = new GraphQLObjectType({
       resolve(parent, args) 
       {
           return updateProductById(args);
+      }
+    },
+    deleteCart: {
+      type: CartType,
+      args: {
+        cartId: { type: GraphQLString }
+      },
+      resolve(parent, args) 
+      {
+          return deleteCart(args);
+      }
+    },
+    updateCart: {
+      type: CartType,
+      args: {
+        cartId: { type: GraphQLString },
+        quantity: { type: GraphQLInt }
+      },
+      resolve(parent, args) 
+      {
+          return updateCart(args);
+      }
+    },
+    checkOutCart: {
+      type: CartType,
+      args: {
+        userId: { type: GraphQLString }
+      },
+      resolve(parent, args) 
+      {
+          return checkoutCart(args);
       }
     }
 
