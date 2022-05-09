@@ -29,6 +29,24 @@ const UserType = new GraphQLObjectType({
   })
 });
 
+const UserTypeFull = new GraphQLObjectType({
+  name: 'UserFull',
+  fields: () => ({
+    msg: { type: GraphQLString },
+    username: { type: GraphQLString },
+    imageUrl: { type: GraphQLString },
+    dob: { type: GraphQLString },
+    gender: { type: GraphQLString },
+    address: { type: GraphQLString },
+    city: { type: GraphQLString },
+    state: { type: GraphQLString },
+    country: { type: GraphQLString },
+    about: { type: GraphQLString },
+    email: { type: GraphQLString },
+    phoneNo: { type: GraphQLString }
+  })
+});
+
 const SignUpType = new GraphQLObjectType({
   name: 'SignUp',
   fields: () => ({
@@ -42,7 +60,6 @@ const AllOrdersType = new GraphQLObjectType({
   name: 'AllOrdersType',
   fields: () => ({
     productName: { type: GraphQLString },
-    emproductIdail: { type: GraphQLString },
     quantity: { type: GraphQLInt },
     price: { type: GraphQLInt },
     shopId: { type: GraphQLString },
@@ -60,7 +77,7 @@ const RootQuery = new GraphQLObjectType({
     {
         user: 
         {
-          type: UserType,
+          type: UserTypeFull,
           args: { id: { type: GraphQLString } },
           resolve(parent, args) 
           {
